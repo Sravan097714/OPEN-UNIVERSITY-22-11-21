@@ -1,7 +1,7 @@
-report 50098 "AR - GL Entries"
+report 50103 "AP - Payroll GL Entries"
 {
     DefaultLayout = RDLC;
-    RDLCLayout = 'Report\Layout\AR-GLRegister.rdl';
+    RDLCLayout = 'Report\Layout\AP-Payroll GLRegister.rdl';
     //Caption = 'G/L Register';
     PreviewMode = PrintLayout;
     UsageCategory = ReportsAndAnalysis;
@@ -236,6 +236,8 @@ report 50098 "AR - GL Entries"
                 begin
                     SETRANGE("Entry No.", "G/L Register"."From Entry No.", "G/L Register"."To Entry No.");
                     //CurrReport.CREATETOTALS(Amount);
+                    if "G/L Register"."Source Code" = 'GENJNL' then
+                        SetRange("Journal Batch Name", 'PAYROLL');
                 end;
             }
 
@@ -272,7 +274,7 @@ report 50098 "AR - GL Entries"
                             GLReg: Record "G/L Register";
                         begin
                             GLReg.Reset();
-                            GLReg.SetFilter("Source Code", '%1|%2', 'CASHRECJNL', 'SALES');
+                            GLReg.SetFilter("Source Code", '%1|%2|%3', 'PAYMENTJNL', 'PURCHASES', 'GENJNL');
                             if Page.RunModal(0, GLReg) = Action::LookupOK then
                                 NoGVar := GLReg."No.";
                         end;

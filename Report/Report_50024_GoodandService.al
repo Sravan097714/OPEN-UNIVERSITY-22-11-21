@@ -187,7 +187,7 @@ report 50024 "Goods and Services"
                                                 PurchInvLine.SetRange("Document No.", VLE."Document No.");
                                                 PurchInvLine.SetFilter(Type, '<>%1', PurchInvLine.Type::" ");
                                                 if PurchInvLine.FindSet() then
-                                                    VarDesc := DELCHR(PurchInvLine."Description 2");
+                                                    VarDesc := PurchInvLine."Description 2";
                                                 //VarDesc := DELCHR(PurchInvHdr."Posting Description");
                                                 //VarDesc := PurchInvHdr."Posting Description";
                                                 IF PurchInvHdr."Currency Code" <> '' THEN BEGIN
@@ -233,7 +233,7 @@ report 50024 "Goods and Services"
                                                 PurchCrMemoLine.SetRange("Document No.", VLE."Document No.");
                                                 PurchCrMemoLine.SetFilter(Type, '<>%1', PurchCrMemoLine.Type::" ");
                                                 if PurchCrMemoLine.FindSet() then
-                                                    VarDesc := DELCHR(PurchCrMemoLine."Description 2");
+                                                    VarDesc := PurchCrMemoLine."Description 2";
                                                 //VarDesc := DELCHR(PurchCrMemoHdr."Posting Description");
                                                 IF PurchCrMemoHdr."Currency Code" <> '' THEN BEGIN
                                                     //VarAmtExclVAT := (PurchCrMemoHdr.Amount) * -1;
@@ -679,7 +679,7 @@ report 50024 "Goods and Services"
         ExcelBuf.AddColumn("Company Information"."Telephone Number", FALSE, '', FALSE, FALSE, FALSE, '', ExcelBuf."Cell Type"::Text);
         ExcelBuf.AddColumn("Company Information"."Mobile Number", FALSE, '', FALSE, FALSE, FALSE, '', ExcelBuf."Cell Type"::Text);
         ExcelBuf.AddColumn("Company Information"."Name of Declarant", FALSE, '', FALSE, FALSE, FALSE, '', ExcelBuf."Cell Type"::Text);
-        ExcelBuf.AddColumn("Company Information"."MRA VAT Email Address", FALSE, '', FALSE, FALSE, FALSE, '', ExcelBuf."Cell Type"::Text);
+        ExcelBuf.AddColumn("Company Information"."E-mail Payer", FALSE, '', FALSE, FALSE, FALSE, '', ExcelBuf."Cell Type"::Text);
 
         ExcelBuf.NewRow;
         ExcelBuf.AddColumn('Date of Invoice', FALSE, '', TRUE, FALSE, FALSE, '', ExcelBuf."Cell Type"::Text);

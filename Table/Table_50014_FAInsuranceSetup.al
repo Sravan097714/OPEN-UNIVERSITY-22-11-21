@@ -17,6 +17,11 @@ table 50014 "FA Insurance Setup"
         {
             TableRelation = "New Categories".Code where("Table Name" = filter('Fixed Asset'), "Field Name" = filter('Insurance Type'));
         }
+        field(6; "FA Class Code"; Code[20])
+        {
+            TableRelation = "FA Class".Code;
+            DataClassification = ToBeClassified;
+        }
     }
 
     keys

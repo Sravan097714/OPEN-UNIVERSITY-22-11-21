@@ -16,7 +16,7 @@ page 50042 "G/L Budget by Account Category"
                     ApplicationArea = All;
                     TableRelation = "G/L Budget Name";
 
-                    trigger OnLookup(var Text: Text): Boolean
+                    /*trigger OnLookup(var Text: Text): Boolean
                     var
                         grecBudgetCategory: Record "Budget Category";
                         grecGLBudgetByAccCategory: Record "G/L Budget by Account Category";
@@ -34,26 +34,41 @@ page 50042 "G/L Budget by Account Category"
                                 until grecBudgetCategory.Next = 0;
                             end;
                         end;
-                    end;
+                    end;*/
 
                     trigger OnValidate()
                     var
                         grecBudgetCategory: Record "Budget Category";
                         grecGLBudgetByAccCategory: Record "G/L Budget by Account Category";
+                        grecGLBudgetByAccCategory2: Record "G/L Budget by Account Category";
+                        EntryNo: Integer;
                     begin
                         if gtextBudgetName <> '' then begin
+                            grecGLBudgetByAccCategory2.Reset();
+                            if grecGLBudgetByAccCategory2.FindLast() then
+                                EntryNo := grecGLBudgetByAccCategory2."Entry No." + 1
+                            else
+                                EntryNo := 1;
                             grecBudgetCategory.Reset();
                             grecBudgetCategory.SetRange("Budget Category Code");
                             if grecBudgetCategory.FindFirst() then begin
                                 repeat
-                                    grecGLBudgetByAccCategory.Init();
-                                    grecGLBudgetByAccCategory."Budget Name" := gtextBudgetName;
-                                    grecGLBudgetByAccCategory."Budget Category" := grecBudgetCategory."Budget Category Code";
-                                    grecGLBudgetByAccCategory.Description := grecBudgetCategory.Description;
-                                    grecGLBudgetByAccCategory.Insert;
+                                    grecGLBudgetByAccCategory2.Reset();
+                                    grecGLBudgetByAccCategory2.SetRange("Budget Name", gtextBudgetName);
+                                    grecGLBudgetByAccCategory2.SetRange("Budget Category", grecBudgetCategory."Budget Category Code");
+                                    if not grecGLBudgetByAccCategory2.FindFirst() then begin
+                                        grecGLBudgetByAccCategory.Init();
+                                        grecGLBudgetByAccCategory."Entry No." := EntryNo;
+                                        grecGLBudgetByAccCategory."Budget Name" := gtextBudgetName;
+                                        grecGLBudgetByAccCategory."Budget Category" := grecBudgetCategory."Budget Category Code";
+                                        grecGLBudgetByAccCategory.Description := grecBudgetCategory.Description;
+                                        grecGLBudgetByAccCategory.Insert();
+                                        EntryNo += 1;
+                                    end;
                                 until grecBudgetCategory.Next = 0;
                             end;
                         end;
+                        CurrPage.Update(true);
                     end;
                 }
                 field("Date From"; gdateDateFrom)
@@ -115,12 +130,12 @@ page 50042 "G/L Budget by Account Category"
                         gpageGLEntry.Run();
                     end;
                 }
-                field("Budgeted Amt on Purch Orders"; gdecBudgetedAmtUsed) { ApplicationArea = All; }
-                field("Remaining Amount for the Year"; gdecRemainingAmt) { ApplicationArea = All; }
+                field("Budgeted Amt on Released Purch Orders"; gdecBudgetedAmtUsed) { Editable = false; ApplicationArea = All; }
                 field("Active Remaining Amount Earmarked"; ActiveRemainingAmountEarmarked)
                 {
                     ApplicationArea = All;
-                    trigger OnLookup(var Text: Text): Boolean
+                    Editable = false;
+                    trigger OnDrillDown()
                     begin
                         GLAccount.Reset();
                         GLAccount.SetRange("Budget Category", "Budget Category");
@@ -138,6 +153,8 @@ page 50042 "G/L Budget by Account Category"
                         Page.RunModal(50061, grecEarmarkingClaim)
                     end;
                 }
+                field("Remaining Amount for the Year"; gdecRemainingAmt) { Editable = false; ApplicationArea = All; }
+
             }
         }
     }
@@ -195,9 +212,14 @@ page 50042 "G/L Budget by Account Category"
         }
     }
 
+    trigger OnInsertRecord(BelowxRec: Boolean): Boolean
+    begin
+        "Budget Name" := gtextBudgetName;
+    end;
 
     trigger OnAfterGetRecord()
     begin
+        SetRange("Budget Name", gtextBudgetName);
         Clear(gdecActualAmt);
         Clear(gdecBudgetedAmtUsed);
         Clear(gdecRemainingAmt);

@@ -54,6 +54,13 @@ table 50016 "G/L Budget by Account Category"
         field(15; "Budget Category"; Code[20])
         {
             TableRelation = "Budget Category"."Budget Category Code";
+            trigger OnValidate()
+            Var
+                BudgetCategory: Record "Budget Category";
+            begin
+                if BudgetCategory.Get("Budget Category") then
+                    Description := BudgetCategory.Description;
+            end;
         }
         field(16; "Budget Name"; Text[250]) { }
         field(17; "Date From"; Date) { }
@@ -67,4 +74,5 @@ table 50016 "G/L Budget by Account Category"
             Clustered = true;
         }
     }
+
 }

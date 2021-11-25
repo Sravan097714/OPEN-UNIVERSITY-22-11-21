@@ -9,6 +9,7 @@ report 50057 "Fixed Asset Insurance Report"
     {
         dataitem("Fixed Asset"; "Fixed Asset")
         {
+            RequestFilterFields = "Insurance Type", "FA Class Code";
             column(CompanyName; grecCompanyInfo.Name) { }
             column(No_; "No.") { }
             column(Description; Description) { }
@@ -48,6 +49,8 @@ report 50057 "Fixed Asset Insurance Report"
                     grecFAInsuranceSetup.Reset();
                     grecFAInsuranceSetup.SetCurrentKey("Entry No.");
                     grecFAInsuranceSetup.SetRange("FA Posting Group", "FA Posting Group");
+                    grecFAInsuranceSetup.SetRange("FA Class Code", "FA Class Code");
+                    grecFAInsuranceSetup.SetRange("Insurance Type", "Insurance Type");
                     if grecFAInsuranceSetup.FindFirst() then begin
                         repeat
                             gdateStartDate := gdateInitialStartDate;
@@ -66,6 +69,8 @@ report 50057 "Fixed Asset Insurance Report"
                     grecFAInsuranceSetup.Reset();
                     grecFAInsuranceSetup.SetCurrentKey("Entry No.");
                     grecFAInsuranceSetup.SetRange("FA Posting Group", "FA Posting Group");
+                    grecFAInsuranceSetup.SetRange("FA Class Code", "FA Class Code");
+                    grecFAInsuranceSetup.SetRange("Insurance Type", "Insurance Type");
                     if grecFAInsuranceSetup.FindLast() then begin
                         if grecFAInsuranceSetup."Insurance Amount %" > 1 then
                             gdecAmount := grecFAInsuranceSetup."Insurance Amount %"

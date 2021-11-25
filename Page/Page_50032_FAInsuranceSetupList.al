@@ -20,6 +20,7 @@ page 50032 "FA Insurance Setup List"
                 field(Year; Year) { ApplicationArea = All; }
                 field("Insurance Amount %"; "Insurance Amount %") { ApplicationArea = All; }
                 field("Insurance Type"; "Insurance Type") { ApplicationArea = All; }
+                field("FA Class Code"; "FA Class Code") { ApplicationArea = All; }
             }
         }
     }

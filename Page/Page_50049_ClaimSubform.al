@@ -1141,6 +1141,8 @@ page 50049 "Claim Subform"
                             grecPurchLine.SetRange(PAYE, true);
                             if grecPurchLine.FindFirst() then begin
                                 repeat
+                                    grecPurchaseAndPayables.TestField("PAYE Claims");
+
                                     grecPurchLine2.Init();
                                     grecPurchLine2."System-Created Entry" := true;
                                     grecPurchLine2."Document No." := grecPurchLine."Document No.";
@@ -1160,7 +1162,7 @@ page 50049 "Claim Subform"
                                         grecPurchLine2.validate("Direct Unit Cost", ROUND((grecGeneralLedgerSetup."VAT %" * grecPurchLine."Line Amount"), 1, '='));
 
                                     grecPurchLine2.PAYE := true;
-                                    grecPurchLine."System-Created Entry" := true;
+                                    grecPurchLine2."System-Created Entry" := true;
                                     grecPurchLine2.Insert;
 
                                 until grecPurchLine.Next = 0;

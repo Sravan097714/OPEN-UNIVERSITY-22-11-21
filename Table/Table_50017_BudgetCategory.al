@@ -1,5 +1,6 @@
 table 50017 "Budget Category"
 {
+    LookupPageId = "Budget Category";
     fields
     {
         field(1; "Budget Category Code"; Code[20]) { }

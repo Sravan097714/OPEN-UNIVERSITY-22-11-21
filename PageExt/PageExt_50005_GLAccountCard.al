@@ -102,6 +102,10 @@ pageextension 50005 GLAccountCard extends "G/L Account Card"
         {
             Visible = false;
         }
+        modify("Tax Group Code")
+        {
+            Visible = false;
+        }
 
     }
 }

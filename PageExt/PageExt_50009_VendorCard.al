@@ -239,6 +239,14 @@ pageextension 50009 VendorExt extends "Vendor Card"
                 field("SWIFT Code"; "SWIFT Code") { ApplicationArea = All; }
                 field("SORT Code"; "SORT Code") { ApplicationArea = All; }
                 field("Bank Code"; "Bank Code") { ApplicationArea = All; }
+                field("BSB No"; "BSB No") { ApplicationArea = All; }
+                field("BANK SORT CODE"; "BANK SORT CODE") { ApplicationArea = All; }
+                field(BIC; BIC) { ApplicationArea = All; }
+                field("IFSC CODE"; "IFSC CODE") { ApplicationArea = All; }
+                field("MICR CODE"; "MICR CODE") { ApplicationArea = All; }
+                field("BANK IDENTIFIER CODE"; "BANK IDENTIFIER CODE") { ApplicationArea = All; }
+                field("BRANCH CODE"; "BRANCH CODE") { ApplicationArea = All; }
+                field("ROUTING Number"; "ROUTING Number") { ApplicationArea = All; }
             }
         }
 
@@ -344,6 +352,31 @@ pageextension 50009 VendorExt extends "Vendor Card"
             {
                 ApplicationArea = all;
             }
+        }
+        modify(Name)
+        {
+            trigger OnBeforeValidate()
+            var
+                grecVendor: Record Vendor;
+                gtextVendor: Text;
+                gintVendorNo: Integer;
+                gtextVendorNo: Text;
+            begin
+                gtextVendor := CopyStr(Name, 1, 3);
+
+                grecVendor.Reset();
+                grecVendor.SetCurrentKey("No.");
+                grecVendor.SetFilter("No.", gtextVendor + '*');
+                if grecVendor.FindLast() then;
+                if grecVendor."No." <> '' then
+                    Evaluate(gintVendorNo, CopyStr(grecVendor."No.", 4))
+                else
+                    gintVendorNo := 0;
+
+                gintVendorNo += 1;
+                gtextVendorNo := gtextVendor + PadStr('', 3 - StrLen(Format(gintVendorNo)), '0') + format(gintVendorNo);
+                "No." := gtextVendorNo;
+            end;
         }
     }
 

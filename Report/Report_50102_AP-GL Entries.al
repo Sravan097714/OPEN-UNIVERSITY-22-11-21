@@ -1,7 +1,7 @@
-report 50098 "AR - GL Entries"
+report 50102 "AP - GL Entries"
 {
     DefaultLayout = RDLC;
-    RDLCLayout = 'Report\Layout\AR-GLRegister.rdl';
+    RDLCLayout = 'Report\Layout\AP-GLRegister.rdl';
     //Caption = 'G/L Register';
     PreviewMode = PrintLayout;
     UsageCategory = ReportsAndAnalysis;
@@ -272,7 +272,7 @@ report 50098 "AR - GL Entries"
                             GLReg: Record "G/L Register";
                         begin
                             GLReg.Reset();
-                            GLReg.SetFilter("Source Code", '%1|%2', 'CASHRECJNL', 'SALES');
+                            GLReg.SetFilter("Source Code", '%1|%2', 'PAYMENTJNL', 'PURCHASES');
                             if Page.RunModal(0, GLReg) = Action::LookupOK then
                                 NoGVar := GLReg."No.";
                         end;

@@ -54,31 +54,6 @@ tableextension 50002 VendorExt extends Vendor
         field(50026; "SORT Code"; Code[6]) { }
         field(50027; "Bank Code"; Code[5]) { }
 
-        modify(Name)
-        {
-            trigger OnAfterValidate()
-            var
-                grecVendor: Record Vendor;
-                gtextVendor: Text;
-                gintVendorNo: Integer;
-                gtextVendorNo: Text;
-            begin
-                gtextVendor := CopyStr(Name, 1, 3);
-
-                grecVendor.Reset();
-                grecVendor.SetCurrentKey("No.");
-                grecVendor.SetFilter("No.", gtextVendor + '*');
-                if grecVendor.FindLast() then;
-                if grecVendor."No." <> '' then
-                    Evaluate(gintVendorNo, CopyStr(grecVendor."No.", 4))
-                else
-                    gintVendorNo := 0;
-
-                gintVendorNo += 1;
-                gtextVendorNo := gtextVendor + PadStr('', 3 - StrLen(Format(gintVendorNo)), '0') + format(gintVendorNo);
-                "No." := gtextVendorNo;
-            end;
-        }
         field(50028; "Surname"; Text[50])
         {
             DataClassification = ToBeClassified;
@@ -89,6 +64,14 @@ tableextension 50002 VendorExt extends Vendor
             DataClassification = ToBeClassified;
             Caption = 'Other Names';
         }
+        field(50030; "BSB No"; Code[20]) { }
+        field(50031; "BANK SORT CODE"; Code[20]) { }
+        field(50032; "BIC"; Code[20]) { }
+        field(50033; "IFSC CODE"; Code[20]) { }
+        field(50034; "MICR CODE"; Code[20]) { }
+        field(50035; "BANK IDENTIFIER CODE"; Code[20]) { }
+        field(50036; "BRANCH CODE"; Code[20]) { }
+        field(50037; "ROUTING Number"; Code[20]) { }
     }
 
     trigger OnInsert()
