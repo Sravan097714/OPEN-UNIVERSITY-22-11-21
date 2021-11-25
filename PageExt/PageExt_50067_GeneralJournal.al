@@ -26,7 +26,7 @@ pageextension 50067 GeneralJournal extends "General Journal"
         }
         modify("Currency Code")
         {
-            Visible = true;
+            //Visible = true;
             ApplicationArea = All;
         }
         modify("Gen. Posting Type")
@@ -51,12 +51,12 @@ pageextension 50067 GeneralJournal extends "General Journal"
         }
         modify("Bal. Account Type")
         {
-            Visible = true;
+            //Visible = true;
             ApplicationArea = All;
         }
         modify("Bal. Account No.")
         {
-            Visible = true;
+            //Visible = true;
             ApplicationArea = All;
         }
         modify("Bal. Gen. Posting Type")
@@ -106,10 +106,20 @@ pageextension 50067 GeneralJournal extends "General Journal"
         }
         modify("Bal. VAT Prod. Posting Group")
         {
-            Visible = false;
+            //Visible = false;
             ApplicationArea = All;
         }
         modify("Bal. VAT Bus. Posting Group")
+        {
+            //Visible = false;
+            ApplicationArea = All;
+        }
+        modify("Amount (LCY)")
+        {
+            Visible = false;
+            ApplicationArea = All;
+        }
+        modify(Comment)
         {
             Visible = false;
             ApplicationArea = All;

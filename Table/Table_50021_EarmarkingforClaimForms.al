@@ -42,10 +42,21 @@ table 50021 "Earmarking Claim Forms Table"
             end;
         }
         field(5; "Earmarked By"; text[50]) { }
-        field(6; "Amount Earmarked"; Decimal) { }
+        field(6; "Amount Earmarked"; Decimal)
+        {
+            trigger OnValidate()
+            begin
+                if "Remaining Amount Earmarked" = 0 then
+                    "Remaining Amount Earmarked" := "Amount Earmarked"
+                else
+                    if Confirm('Do you want to update field Remaining Amount also?', true) then
+                        "Remaining Amount Earmarked" := "Amount Earmarked";
+            end;
+        }
         field(7; Description; Text[100]) { }
         field(8; Active; Boolean) { }
         field(9; "G/L Description"; Text[100]) { }
+        field(10; "Remaining Amount Earmarked"; Decimal) { }
     }
 
     keys

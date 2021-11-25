@@ -117,6 +117,27 @@ page 50042 "G/L Budget by Account Category"
                 }
                 field("Budgeted Amt on Purch Orders"; gdecBudgetedAmtUsed) { ApplicationArea = All; }
                 field("Remaining Amount for the Year"; gdecRemainingAmt) { ApplicationArea = All; }
+                field("Active Remaining Amount Earmarked"; ActiveRemainingAmountEarmarked)
+                {
+                    ApplicationArea = All;
+                    trigger OnLookup(var Text: Text): Boolean
+                    begin
+                        GLAccount.Reset();
+                        GLAccount.SetRange("Budget Category", "Budget Category");
+                        if GLAccount.FindSet() then
+                            repeat
+                                grecEarmarkingClaim.Reset();
+                                grecEarmarkingClaim.SetRange("G/L Account Earmarked", GLAccount."No.");
+                                grecEarmarkingClaim.SetRange(Active, true);
+                                if grecEarmarkingClaim.FindSet() then
+                                    repeat
+                                        grecEarmarkingClaim.Mark(true)
+                                    until grecEarmarkingClaim.Next() = 0;
+                            until GLAccount.Next() = 0;
+                        grecEarmarkingClaim.MarkedOnly(true);
+                        Page.RunModal(50061, grecEarmarkingClaim)
+                    end;
+                }
             }
         }
     }
@@ -239,6 +260,20 @@ page 50042 "G/L Budget by Account Category"
         gdecRemainingAmt -= gdecActualAmt;
         gdecRemainingAmt -= gdecBudgetedAmtUsed;
 
+        Clear(ActiveRemainingAmountEarmarked);
+        GLAccount.Reset();
+        GLAccount.SetRange("Budget Category", "Budget Category");
+        if GLAccount.FindSet() then
+            repeat
+                grecEarmarkingClaim.Reset();
+                grecEarmarkingClaim.SetRange("G/L Account Earmarked", GLAccount."No.");
+                grecEarmarkingClaim.SetRange(Active, true);
+                if grecEarmarkingClaim.FindSet() then begin
+                    grecEarmarkingClaim.CalcSums("Remaining Amount Earmarked");
+                    ActiveRemainingAmountEarmarked += grecEarmarkingClaim."Remaining Amount Earmarked";
+                end;
+            until GLAccount.Next() = 0;
+
     end;
 
     trigger OnAfterGetCurrRecord()
@@ -304,7 +339,19 @@ page 50042 "G/L Budget by Account Category"
 
         gdecRemainingAmt -= gdecActualAmt;
         gdecRemainingAmt -= gdecBudgetedAmtUsed;
-
+        Clear(ActiveRemainingAmountEarmarked);
+        GLAccount.Reset();
+        GLAccount.SetRange("Budget Category", "Budget Category");
+        if GLAccount.FindSet() then
+            repeat
+                grecEarmarkingClaim.Reset();
+                grecEarmarkingClaim.SetRange("G/L Account Earmarked", GLAccount."No.");
+                grecEarmarkingClaim.SetRange(Active, true);
+                if grecEarmarkingClaim.FindSet() then begin
+                    grecEarmarkingClaim.CalcSums("Remaining Amount Earmarked");
+                    ActiveRemainingAmountEarmarked += grecEarmarkingClaim."Remaining Amount Earmarked";
+                end;
+            until GLAccount.Next() = 0;
     end;
 
 
@@ -327,4 +374,7 @@ page 50042 "G/L Budget by Account Category"
         gdecActualAmt: Decimal;
         gdecBudgetedAmtUsed: Decimal;
         gdecRemainingAmt: Decimal;
+        ActiveRemainingAmountEarmarked: Decimal;
+        GLAccount: Record "G/L Account";
+        grecEarmarkingClaim: Record "Earmarking Claim Forms Table";
 }

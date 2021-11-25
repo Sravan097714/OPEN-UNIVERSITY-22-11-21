@@ -86,15 +86,21 @@ pageextension 50005 GLAccountCard extends "G/L Account Card"
             field("FA Acquisition"; "FA Acquisition")
             {
                 ApplicationArea = All;
+                Visible = false;
             }
             field("FA Acquisition 2"; "FA Acquisition 2")
             {
                 ApplicationArea = All;
+                Visible = false;
             }
-            field("Created By"; "Created By") { ApplicationArea = All; }
-            field("Date Created"; "Date Created") { ApplicationArea = All; }
+            field("Created By"; "Created By") { ApplicationArea = All; Visible = false; }
+            field("Date Created"; "Date Created") { ApplicationArea = All; Visible = false; }
             field("Budget Category"; "Budget Category") { ApplicationArea = all; }
             field(Income; Rec.Income) { }
+        }
+        modify(SubCategoryDescription)
+        {
+            Visible = false;
         }
 
     }

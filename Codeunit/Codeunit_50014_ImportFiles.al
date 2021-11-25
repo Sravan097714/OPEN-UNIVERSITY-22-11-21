@@ -107,6 +107,8 @@ codeunit 50014 "Import Files"
         RowNo: Integer;
         DocumentNo: Text[10];
         NumberSeriesLinesRec: Record "No. Series Line";
+        SD3: Code[20];
+        SD4: Code[20];
     //Coloums: Integer;
     begin
         ExcelBufferRec.DeleteAll();
@@ -153,8 +155,10 @@ codeunit 50014 "Import Files"
                 Evaluate(GenJournalLine."Account No.", GetValueAtIndex(RowNo, 6, ExcelBufferRec));
                 GenJournalLine.Validate(GenJournalLine."Account No.");
 
-                Evaluate(GenJournalLine.Description, GetValueAtIndex(RowNo, 7, ExcelBufferRec));
-                GenJournalLine.Validate(GenJournalLine.Description);
+                /*Evaluate(GenJournalLine.Description, GetValueAtIndex(RowNo, 7, ExcelBufferRec));
+                GenJournalLine.Validate(GenJournalLine.Description);*/
+                Evaluate(GenJournalLine."Description 2", GetValueAtIndex(RowNo, 7, ExcelBufferRec));
+                GenJournalLine.Validate(GenJournalLine."Description 2");
 
                 Evaluate(GenJournalLine."Currency Code", GetValueAtIndex(RowNo, 8, ExcelBufferRec));
                 GenJournalLine.Validate(GenJournalLine."Currency Code");
@@ -164,18 +168,22 @@ codeunit 50014 "Import Files"
                 Evaluate(GenJournalLine."Amount (LCY)", GetValueAtIndex(RowNo, 10, ExcelBufferRec));
                 GenJournalLine.Validate(GenJournalLine."Amount (LCY)");
 
-                Evaluate(GenJournalLine."Bal. Account Type", GetValueAtIndex(RowNo, 11, ExcelBufferRec));
+                /*Evaluate(GenJournalLine."Bal. Account Type", GetValueAtIndex(RowNo, 11, ExcelBufferRec));
                 GenJournalLine.Validate(GenJournalLine."Bal. Account Type");
 
                 Evaluate(GenJournalLine."Bal. Account No.", GetValueAtIndex(RowNo, 12, ExcelBufferRec));
-                GenJournalLine.Validate(GenJournalLine."Bal. Account No.");
+                GenJournalLine.Validate(GenJournalLine."Bal. Account No.");*/
 
-                Evaluate(GenJournalLine."Shortcut Dimension 1 Code", GetValueAtIndex(RowNo, 13, ExcelBufferRec));
+                Evaluate(GenJournalLine."Shortcut Dimension 1 Code", GetValueAtIndex(RowNo, 11, ExcelBufferRec));
                 GenJournalLine.Validate(GenJournalLine."Shortcut Dimension 1 Code");
 
-                Evaluate(GenJournalLine."Shortcut Dimension 2 Code", GetValueAtIndex(RowNo, 14, ExcelBufferRec));
+                Evaluate(GenJournalLine."Shortcut Dimension 2 Code", GetValueAtIndex(RowNo, 12, ExcelBufferRec));
                 GenJournalLine.Validate(GenJournalLine."Shortcut Dimension 2 Code");
 
+                Evaluate(SD3, GetValueAtIndex(RowNo, 13, ExcelBufferRec));
+                GenJournalLine.ValidateShortcutDimCode(3, SD3);
+                Evaluate(SD4, GetValueAtIndex(RowNo, 14, ExcelBufferRec));
+                GenJournalLine.ValidateShortcutDimCode(4, SD4);
                 GenJournalLine.Insert();
                 LineNo := LineNo + 10000;
                 DocumentNo := IncStr(DocumentNo);

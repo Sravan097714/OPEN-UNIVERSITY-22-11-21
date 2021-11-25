@@ -193,4 +193,51 @@ pageextension 50023 PurchInvoiceCardExt extends "Purchase Invoice"
             }
         }
     }
+    actions
+    {
+        addafter(MoveNegativeLines)
+        {
+            action("Get Earmarked Amount")
+            {
+                ApplicationArea = All;
+                Image = LedgerBook;
+                Promoted = true;
+                PromotedCategory = Process;
+
+                trigger OnAction()
+                var
+                    gpageEarmarkClaimForms: Page "Earmarking for Claim Forms";
+                    grecEarmarkingClaim: Record "Earmarking Claim Forms Table";
+                    grecPurchaseLine: Record "Purchase Line";
+                    gintLineNo: Integer;
+                begin
+                    Clear(gpageEarmarkClaimForms);
+                    grecEarmarkingClaim.Reset();
+                    grecEarmarkingClaim.SetRange(Active, true);
+                    if grecEarmarkingClaim.FindFirst() then;
+                    if Page.RunModal(50061, grecEarmarkingClaim) = Action::LookupOK then begin
+                        clear(gintLineNo);
+                        grecPurchaseLine.reset;
+                        grecPurchaseLine.SetRange("Document No.", "No.");
+                        if grecPurchaseLine.FindLast() then
+                            gintLineNo := grecPurchaseLine."Line No.";
+
+                        grecPurchaseLine.init;
+                        grecPurchaseLine."Line No." := gintLineNo + 10000;
+                        grecPurchaseLine."Document Type" := "Document Type";
+                        grecPurchaseLine."Document No." := "No.";
+                        grecPurchaseLine.Type := grecPurchaseLine.Type::"G/L Account";
+                        grecPurchaseLine.validate("No.", grecEarmarkingClaim."G/L Account Earmarked");
+                        grecPurchaseLine."G/L Account for Budget" := grecEarmarkingClaim."G/L Account Earmarked";
+                        grecPurchaseLine.Validate("Direct Unit Cost", grecEarmarkingClaim."Remaining Amount Earmarked");
+                        grecPurchaseLine."Earmark ID" := grecEarmarkingClaim."Earmark ID";
+                        grecPurchaseLine."Date Earmarked" := grecEarmarkingClaim."Date Earmarked";
+                        grecPurchaseLine.Insert;
+                        grecEarmarkingClaim.Active := false;
+                        grecEarmarkingClaim.Modify();
+                    end;
+                end;
+            }
+        }
+    }
 }

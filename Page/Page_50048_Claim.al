@@ -1265,10 +1265,12 @@ page 50048 "Claim Form"
                             grecPurchaseLine.Type := grecPurchaseLine.Type::"G/L Account";
                             grecPurchaseLine.validate("No.", grecEarmarkingClaim."G/L Account Earmarked");
                             grecPurchaseLine."G/L Account for Budget" := grecEarmarkingClaim."G/L Account Earmarked";
-                            grecPurchaseLine.Validate("Direct Unit Cost", grecEarmarkingClaim."Amount Earmarked");
+                            grecPurchaseLine.Validate("Direct Unit Cost", grecEarmarkingClaim."Remaining Amount Earmarked");
                             grecPurchaseLine."Earmark ID" := grecEarmarkingClaim."Earmark ID";
                             grecPurchaseLine."Date Earmarked" := grecEarmarkingClaim."Date Earmarked";
                             grecPurchaseLine.Insert;
+                            grecEarmarkingClaim.Active := false;
+                            grecEarmarkingClaim.Modify();
                         end;
                     end;
                 }

@@ -15,17 +15,33 @@ codeunit 50001 "Purchase Posting"
                     if PurchLine."G/L Account for Budget" = '' then
                         Error('Please insert G/L Account for Earmarking on line no. %1.', PurchLine."Line No.");
                 end; */
-
-                if grecPurchHeader.get(PurchLine."Document Type", PurchLine."Document No.") then begin
-                    if grecPurchHeader.Claim then begin
-                        grecEarmarkClaim.Reset();
-                        grecEarmarkClaim.SetRange("Earmark ID", PurchLine."Earmark ID");
-                        if grecEarmarkClaim.FindFirst() then begin
-                            grecEarmarkClaim.Active := false;
-                            grecEarmarkClaim.Modify;
+                if PurchLine.Quantity <> 0 then
+                    if grecPurchHeader.get(PurchLine."Document Type", PurchLine."Document No.") then begin
+                        if grecPurchHeader.Claim then begin
+                            grecEarmarkClaim.Reset();
+                            grecEarmarkClaim.SetRange("Earmark ID", PurchLine."Earmark ID");
+                            if grecEarmarkClaim.FindFirst() then begin
+                                if grecEarmarkClaim."Remaining Amount Earmarked" <> PurchLine.Amount then begin
+                                    if Confirm('The amount being posted on line no. %1 for G/L Account No. %2 is not the same as Remaining Amount Earmarked. Should system save the amount difference?', true, PurchLine."Line No.", PurchLine."No.") then begin
+                                        if PurchLine."Amount Including VAT" <> 0 then
+                                            grecEarmarkClaim."Remaining Amount Earmarked" -= PurchLine."Amount Including VAT"
+                                        else
+                                            grecEarmarkClaim."Remaining Amount Earmarked" -= PurchLine.Amount;
+                                        grecEarmarkClaim.Active := true;
+                                        grecEarmarkClaim.Modify;
+                                    end else begin
+                                        grecEarmarkClaim."Remaining Amount Earmarked" := 0;
+                                        grecEarmarkClaim.Active := false;
+                                        grecEarmarkClaim.Modify;
+                                    end;
+                                end else begin
+                                    grecEarmarkClaim."Remaining Amount Earmarked" := 0;
+                                    grecEarmarkClaim.Active := false;
+                                    grecEarmarkClaim.Modify;
+                                end;
+                            end;
                         end;
                     end;
-                end;
 
             until PurchLine.Next() = 0;
         end;

@@ -98,7 +98,6 @@ tableextension 50032 PurchLineExt extends "Purchase Line"
         field(50014; "Earmark ID"; Text[25]) { }
         field(50015; "Date Earmarked"; Date) { }
 
-
         modify("No.")
         {
             trigger OnAfterValidate()

@@ -24,6 +24,7 @@ page 50061 "Earmarking for Claim Forms"
                 field("Date Earmarked"; "Date Earmarked") { ApplicationArea = All; }
                 field("Earmarked By"; "Earmarked By") { ApplicationArea = All; }
                 field("Amount Earmarked"; "Amount Earmarked") { ApplicationArea = All; }
+                field("Remaining Amount Earmarked"; "Remaining Amount Earmarked") { ApplicationArea = All; }
                 field(Description; Description) { ApplicationArea = All; }
                 field(Active; Active) { ApplicationArea = All; }
             }
