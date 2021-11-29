@@ -1,8 +1,8 @@
-report 50039 "List Trans. prior cheque print"
+report 50108 "General Journal - Test Copy"
 {
     DefaultLayout = RDLC;
-    RDLCLayout = 'Report\Layout\GeneralJournalTest.rdl';
-    Caption = 'List of Transactions prior to cheque printing';
+    RDLCLayout = 'Report\Layout\GeneralJournalTestCpoy2.rdl';
+    Caption = 'General Journal - Test';
     PreviewMode = PrintLayout;
 
     dataset
@@ -10,78 +10,175 @@ report 50039 "List Trans. prior cheque print"
         dataitem("Gen. Journal Batch"; "Gen. Journal Batch")
         {
             DataItemTableView = SORTING("Journal Template Name", Name);
-            column(JnlTmplName_GenJnlBatch; "Journal Template Name") { }
-            column(Name_GenJnlBatch; Name) { }
-            column(CompanyName; COMPANYPROPERTY.DisplayName) { }
-            column(GeneralJnlTestCaption; GeneralJnlTestCap) { }
-            column(gintCount; gintCount) { }
-            column(Bal__Account_No_; BalanceAccountNo) { }
-            column(BankPostingGroupCaption; BankPostingGroupCaption) { }
-            column(BankPostingGroup; BankPostingGroup) { }
+            column(JnlTmplName_GenJnlBatch; "Journal Template Name")
+            {
+            }
+            column(Name_GenJnlBatch; Name)
+            {
+            }
+            column(CompanyName; COMPANYPROPERTY.DisplayName)
+            {
+            }
+            column(GeneralJnlTestCaption; GeneralJnlTestCap)
+            {
+            }
             dataitem("Integer"; "Integer")
             {
                 DataItemTableView = SORTING(Number) WHERE(Number = CONST(1));
                 PrintOnlyIfDetail = true;
-                column(JnlTemplateName_GenJnlBatch; "Gen. Journal Batch"."Journal Template Name") { }
-                column(JnlName_GenJnlBatch; "Gen. Journal Batch".Name) { }
-                column(GenJnlLineFilter; GenJnlLineFilter) { }
-                column(GenJnlLineFilterTableCaption; "Gen. Journal Line".TableCaption + ': ' + GenJnlLineFilter) { }
-                column(Number_Integer; Number) { }
-                column(PageNoCaption; PageNoCap) { }
-                column(JnlTmplNameCaption_GenJnlBatch; "Gen. Journal Batch".FieldCaption("Journal Template Name")) { }
-                column(JournalBatchCaption; JnlBatchNameCap) { }
-                column(PostingDateCaption; PostingDateCap) { }
-                column(DocumentTypeCaption; DocumentTypeCap) { }
-                column(DocNoCaption_GenJnlLine; "Gen. Journal Line".FieldCaption("Document No.")) { }
-                column(AccountTypeCaption; AccountTypeCap) { }
-                column(AccNoCaption_GenJnlLine; "Gen. Journal Line".FieldCaption("Account No.")) { }
-                column(AccNameCaption; AccNameCap) { }
-                column(DescCaption_GenJnlLine; "Gen. Journal Line".FieldCaption(Description)) { }
-                column(PostingTypeCaption; GenPostingTypeCap) { }
-                column(GenBusPostGroupCaption; GenBusPostingGroupCap) { }
-                column(GenProdPostGroupCaption; GenProdPostingGroupCap) { }
-                column(AmountCaption_GenJnlLine; "Gen. Journal Line".FieldCaption(Amount)) { }
-                column(BalAccNoCaption_GenJnlLine; "Gen. Journal Line".FieldCaption("Bal. Account No.")) { }
-                column(BalLCYCaption_GenJnlLine; "Gen. Journal Line".FieldCaption("Balance (LCY)")) { }
+                column(JnlTemplateName_GenJnlBatch; "Gen. Journal Batch"."Journal Template Name")
+                {
+                }
+                column(JnlName_GenJnlBatch; "Gen. Journal Batch".Name)
+                {
+                }
+                column(GenJnlLineFilter; GenJnlLineFilter)
+                {
+                }
+                column(GenJnlLineFilterTableCaption; "Gen. Journal Line".TableCaption + ': ' + GenJnlLineFilter)
+                {
+                }
+                column(Number_Integer; Number)
+                {
+                }
+                column(PageNoCaption; PageNoCap)
+                {
+                }
+                column(JnlTmplNameCaption_GenJnlBatch; "Gen. Journal Batch".FieldCaption("Journal Template Name"))
+                {
+                }
+                column(JournalBatchCaption; JnlBatchNameCap)
+                {
+                }
+                column(PostingDateCaption; PostingDateCap)
+                {
+                }
+                column(DocumentTypeCaption; DocumentTypeCap)
+                {
+                }
+                column(DocNoCaption_GenJnlLine; "Gen. Journal Line".FieldCaption("Document No."))
+                {
+                }
+                column(AccountTypeCaption; AccountTypeCap)
+                {
+                }
+                column(AccNoCaption_GenJnlLine; "Gen. Journal Line".FieldCaption("Account No."))
+                {
+                }
+                column(AccNameCaption; AccNameCap)
+                {
+                }
+                column(DescCaption_GenJnlLine; "Gen. Journal Line".FieldCaption(Description))
+                {
+                }
+                column(PostingTypeCaption; GenPostingTypeCap)
+                {
+                }
+                column(GenBusPostGroupCaption; GenBusPostingGroupCap)
+                {
+                }
+                column(GenProdPostGroupCaption; GenProdPostingGroupCap)
+                {
+                }
+                column(AmountCaption_GenJnlLine; "Gen. Journal Line".FieldCaption(Amount))
+                {
+                }
+                column(BalAccNoCaption_GenJnlLine; "Gen. Journal Line".FieldCaption("Bal. Account No."))
+                {
+                }
+                column(BalLCYCaption_GenJnlLine; "Gen. Journal Line".FieldCaption("Balance (LCY)"))
+                {
+                }
+                column(Descrpition2_GenJnlLine; "Gen. Journal Line".FieldCaption("Description 2"))
+                {
+                }
                 dataitem("Gen. Journal Line"; "Gen. Journal Line")
                 {
                     DataItemLink = "Journal Template Name" = FIELD("Journal Template Name"), "Journal Batch Name" = FIELD(Name);
                     DataItemLinkReference = "Gen. Journal Batch";
-                    DataItemTableView = SORTING("Document No.");
+                    DataItemTableView = SORTING("Journal Template Name", "Journal Batch Name", "Line No.");
                     RequestFilterFields = "Posting Date";
-                    column(PostingDate_GenJnlLine; Format("Posting Date")) { }
-                    column(DescriptionCaption; DescriptionCaption) { }
-                    column(DocType_GenJnlLine; "Document Type") { }
-                    column(DocNo_GenJnlLine; "Document No.") { }
-                    column(ExtDocNo_GenJnlLine; "External Document No.") { }
-                    column(AccountType_GenJnlLine; "Account Type") { }
-                    column(AccountNo_GenJnlLine; "Account No.") { }
-                    column(Payee; "Payee Name") { }
-                    column(AccName; AccName) { }
-                    column(Description_GenJnlLine; Description) { }
-                    column(descriptionrecText; descriptionrecText) { }
-                    column(GenPostType_GenJnlLine; "Gen. Posting Type") { }
-                    column(GenBusPosGroup_GenJnlLine; "Gen. Bus. Posting Group") { }
-                    column(GenProdPostGroup_GenJnlLine; "Gen. Prod. Posting Group") { }
-                    column(Amount_GenJnlLine; Amount) { }
-                    column(CurrencyCode_GenJnlLine; "Currency Code") { }
-                    column(BalAccNo_GenJnlLine; "Bal. Account No.") { }
-                    column(BalanceLCY_GenJnlLine; "Balance (LCY)") { }
-                    column(AmountLCY; AmountLCY) { }
-                    column(BalanceLCY; BalanceLCY) { }
-                    column(AmountLCY_GenJnlLine; "Amount (LCY)") { }
-                    column(JnlTmplName_GenJnlLine; "Journal Template Name") { }
-                    column(JnlBatchName_GenJnlLine; "Journal Batch Name") { }
-                    column(LineNo_GenJnlLine; "Line No.") { }
-                    column(TotalLCYCaption; AmountLCYCap) { }
-                    column(vendbankname; vendbankname) { }
-                    column(vendbankaccnum; vendbankaccnum) { }
+                    column(PostingDate_GenJnlLine; Format("Posting Date"))
+                    {
+                    }
+                    column(DocType_GenJnlLine; "Document Type")
+                    {
+                    }
+                    column(DocNo_GenJnlLine; "Document No.")
+                    {
+                    }
+                    column(ExtDocNo_GenJnlLine; "External Document No.")
+                    {
+                    }
+                    column(AccountType_GenJnlLine; "Account Type")
+                    {
+                    }
+                    column(AccountNo_GenJnlLine; "Account No.")
+                    {
+                    }
+                    column(AccName; AccName)
+                    {
+                    }
+                    column(Description_GenJnlLine; Description)
+                    {
+                    }
+                    column(Description2_GenJnlLine; "Description 2")
+                    {
+                    }
+                    column(GenPostType_GenJnlLine; "Gen. Posting Type")
+                    {
+                    }
+                    column(GenBusPosGroup_GenJnlLine; "Gen. Bus. Posting Group")
+                    {
+                    }
+                    column(GenProdPostGroup_GenJnlLine; "Gen. Prod. Posting Group")
+                    {
+                    }
+                    column(Amount_GenJnlLine; Amount)
+                    {
+                    }
+                    column(CurrencyCode_GenJnlLine; "Currency Code")
+                    {
+                    }
+                    column(BalAccNo_GenJnlLine; "Bal. Account No.")
+                    {
+                    }
+                    column(BalanceLCY_GenJnlLine; "Balance (LCY)")
+                    {
+                    }
+                    column(AmountLCY; AmountLCY)
+                    {
+                    }
+                    column(BalanceLCY; BalanceLCY)
+                    {
+                    }
+                    column(AmountLCY_GenJnlLine; "Amount (LCY)")
+                    {
+                    }
+                    column(JnlTmplName_GenJnlLine; "Journal Template Name")
+                    {
+                    }
+                    column(JnlBatchName_GenJnlLine; "Journal Batch Name")
+                    {
+                    }
+                    column(LineNo_GenJnlLine; "Line No.")
+                    {
+                    }
+                    column(TotalLCYCaption; AmountLCYCap)
+                    {
+                    }
                     dataitem(DimensionLoop; "Integer")
                     {
                         DataItemTableView = SORTING(Number) WHERE(Number = FILTER(1 ..));
-                        column(DimText; DimText) { }
-                        column(Number_DimensionLoop; Number) { }
-                        column(DimensionsCaption; DimensionsCap) { }
+                        column(DimText; DimText)
+                        {
+                        }
+                        column(Number_DimensionLoop; Number)
+                        {
+                        }
+                        column(DimensionsCaption; DimensionsCap)
+                        {
+                        }
 
                         trigger OnAfterGetRecord()
                         begin
@@ -203,49 +300,14 @@ report 50039 "List Trans. prior cheque print"
                             SetRange(Number, 1, ErrorCounter);
                         end;
                     }
-                    dataitem("Vendor Ledger Entry"; "Vendor Ledger Entry")
-                    {
-                        DataItemLink = "Applies-to ID" = field("Document No.");
-                        column(External_Document_No_; "External Document No.") { }
-
-
-                        dataitem("Purch. Inv. Line"; "Purch. Inv. Line")
-                        {
-                            DataItemLink = "Document No." = field("Document No.");
-                            column(Document_No_; "Document No.") { }
-                            column(Description; Description) { }
-                            column(G_L_Account_for_Budget; "G/L Account for Budget") { }
-                            column(gtextGLDesc; gtextGLDesc) { }
-
-                            trigger OnAfterGetRecord()
-                            begin
-                                if grecGLAccount.Get("G/L Account for Budget") then
-                                    gtextGLDesc := grecGLAccount.Name;
-                            end;
-                        }
-                        /* trigger OnAfterGetRecord()
-                        begin
-                            clear(vendbankaccnum);
-                            clear(vendbankname);
-                            Vend.Reset();
-                            Vend.SetRange("No.", "Vendor No.");
-                            if vend.FindFirst then begin
-                                vendbankname := Vend."Bank Name";
-                                vendbankaccnum := Vend."Bank Accout No.";
-                            end;
-
-
-                        end; */
-                    }
 
                     trigger OnAfterGetRecord()
                     var
                         PaymentTerms: Record "Payment Terms";
                         UserSetupManagement: Codeunit "User Setup Management";
                     begin
-
                         OnBeforeGenJournalLineOnAfterGetRecord("Gen. Journal Line", "Gen. Journal Batch", GenJnlTemplate);
-                        Clear(descriptionrecText);
+
                         if "Currency Code" = '' then
                             "Amount (LCY)" := Amount;
 
@@ -253,10 +315,7 @@ report 50039 "List Trans. prior cheque print"
 
                         AccName := '';
                         BalAccName := '';
-                        if "Account Type" = "Account Type"::"G/L Account" then
-                            DescriptionCaption := 'Desription'
-                        Else
-                            DescriptionCaption := 'Payee';
+
                         if not EmptyLine then begin
                             MakeRecurringTexts("Gen. Journal Line");
 
@@ -298,7 +357,6 @@ report 50039 "List Trans. prior cheque print"
                                             TestJobFields("Gen. Journal Line");
 
                                             OnAfterGetRecordGenJournalLineOnAfterCheckAccTypeGLAccAccNo("Gen. Journal Line");
-                                            descriptionrecText := "Gen. Journal Line".Description;
                                         end;
                                     "Account Type"::Customer, "Account Type"::Vendor:
                                         begin
@@ -359,8 +417,6 @@ report 50039 "List Trans. prior cheque print"
                                                     FieldCaption("Sales/Purch. (LCY)"), FieldCaption(Amount)));
                                             if "Job No." <> '' then
                                                 AddError(StrSubstNo(Text009, FieldCaption("Job No.")));
-
-                                            descriptionrecText := "Gen. Journal Line"."Payee Name";
                                         end;
                                     "Account Type"::"Bank Account":
                                         begin
@@ -590,24 +646,13 @@ report 50039 "List Trans. prior cheque print"
                             end;
 
                             CheckDimensions("Gen. Journal Line");
-                            gintCount += 1;
-                            OnAfterCheckGenJnlLine("Gen. Journal Line", ErrorCounter, ErrorText);
 
+                            OnAfterCheckGenJnlLine("Gen. Journal Line", ErrorCounter, ErrorText);
                         end;
 
                         CheckBalance;
                         AmountLCY += "Amount (LCY)";
                         BalanceLCY += "Balance (LCY)";
-
-
-                        clear(vendbankaccnum);
-                        clear(vendbankname);
-                        Vend.Reset();
-                        Vend.SetRange("No.", "Account No.");
-                        if Vend.FindFirst then begin
-                            vendbankaccnum := Vend."Bank Accout No.";
-                            vendbankname := Vend."Bank Name";
-                        end;
                     end;
 
                     trigger OnPreDataItem()
@@ -715,17 +760,6 @@ report 50039 "List Trans. prior cheque print"
                 "Gen. Journal Line".CopyFilter("Journal Batch Name", Name);
                 "Gen. Journal Line".CopyFilter("Journal Template Name", "Journal Template Name");
             end;
-
-            trigger OnAfterGetRecord()
-            var
-                BankAccount: Record "Bank Account";
-            begin
-                if BankAccount.get("Bal. Account No.") then begin
-                    BalanceAccountNo := BankAccount."No." + '   ' + BankAccount."Bank Account No.";
-                    BankPostingGroup := BankAccount."Bank Acc. Posting Group";
-                end else
-                    BalanceAccountNo := "Bal. Account No.";
-            end;
         }
     }
 
@@ -749,18 +783,17 @@ report 50039 "List Trans. prior cheque print"
                 }
             }
         }
+
+        actions
+        {
+        }
     }
 
-    trigger OnPreReport()
-    begin
-        gintCount := 0;
-    end;
+    labels
+    {
+    }
 
     var
-
-        grecGLAccount: Record "G/L Account";
-        gtextGLDesc: Text;
-        gintCount: Integer;
         Text000: Label '%1 cannot be filtered when you post recurring journals.';
         Text001: Label '%1 or %2 must be specified.';
         Text002: Label '%1 must be specified.';
@@ -892,7 +925,7 @@ report 50039 "List Trans. prior cheque print"
         Text071: Label '%1 %2 does not exist.';
         Text072: Label '%1 must not be %2 for %3 %4.';
         Text073: Label '%1 %2 already exists.';
-        GeneralJnlTestCap: Label 'List of Transactions prior to cheque printing';
+        GeneralJnlTestCap: Label 'General Journal - Test';
         PageNoCap: Label 'Page';
         JnlBatchNameCap: Label 'Journal Batch';
         PostingDateCap: Label 'Posting Date';
@@ -902,7 +935,7 @@ report 50039 "List Trans. prior cheque print"
         GenPostingTypeCap: Label 'Gen. Posting Type';
         GenBusPostingGroupCap: Label 'Gen. Bus. Posting Group';
         GenProdPostingGroupCap: Label 'Gen. Prod. Posting Group';
-        AmountLCYCap: Label 'Total';
+        AmountLCYCap: Label 'Total (LCY)';
         DimensionsCap: Label 'Dimensions';
         WarningCap: Label 'Warning!';
         ReconciliationCap: Label 'Reconciliation';
@@ -911,14 +944,6 @@ report 50039 "List Trans. prior cheque print"
         NetChangeinJnlCap: Label 'Net Change in Jnl.';
         BalafterPostingCap: Label 'Balance after Posting';
         DimensionAllocationsCap: Label 'Allocation Dimensions';
-
-        descriptionrecText: Text;
-        vendbankaccnum: Text;
-        vendbankname: Text;
-        BalanceAccountNo: Code[100];
-        DescriptionCaption: Text;
-        BankPostingGroupCaption: Label 'Bank Account Posting Group';
-        BankPostingGroup: Code[20];
 
     local procedure CheckRecurringLine(GenJnlLine2: Record "Gen. Journal Line")
     begin

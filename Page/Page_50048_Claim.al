@@ -1269,8 +1269,6 @@ page 50048 "Claim Form"
                             grecPurchaseLine."Earmark ID" := grecEarmarkingClaim."Earmark ID";
                             grecPurchaseLine."Date Earmarked" := grecEarmarkingClaim."Date Earmarked";
                             grecPurchaseLine.Insert;
-                            grecEarmarkingClaim.Active := false;
-                            grecEarmarkingClaim.Modify();
                         end;
                     end;
                 }

@@ -1,8 +1,8 @@
-report 50041 "Outstanding Earmarking"
+report 50041 "Earmarking on Purchase Orders"
 {
     UsageCategory = ReportsAndAnalysis;
     ApplicationArea = All;
-    Caption = 'Outstanding Earmarking by Earmarked Date';
+    Caption = 'Earmarking on Purchase Orders';
     DefaultLayout = RDLC;
     RDLCLayout = 'Report\Layout\OutstandingEarmarking.rdl';
 
@@ -10,7 +10,7 @@ report 50041 "Outstanding Earmarking"
     {
         dataitem("Purchase Header"; "Purchase Header")
         {
-            DataItemTableView = sorting("No.") where("Document Type" = filter('Order' | 'Invoice' | 'Credit Memo'), "Earmark ID" = filter(<> ''));
+            DataItemTableView = sorting("No.") where("Document Type" = filter('Order' | 'Invoice' | 'Credit Memo')/*, "Earmark ID" = filter(<> '')*/);
             RequestFilterFields = "Order Date", "No.", "Earmark ID";
             column(gtextDateFilter; gtextDateFilter) { }
             column(CompanyName; grecCompanyInfo.Name) { }

@@ -578,6 +578,14 @@ page 50055 "Tutors Card"
                 field("SWIFT Code"; "SWIFT Code") { ApplicationArea = All; }
                 field("SORT Code"; "SORT Code") { ApplicationArea = All; }
                 field("Bank Code"; "Bank Code") { ApplicationArea = All; }
+                field("BSB No"; "BSB No") { ApplicationArea = All; }
+                field("BANK SORT CODE"; "BANK SORT CODE") { ApplicationArea = All; }
+                field(BIC; BIC) { ApplicationArea = All; }
+                field("IFSC CODE"; "IFSC CODE") { ApplicationArea = All; }
+                field("MICR CODE"; "MICR CODE") { ApplicationArea = All; }
+                field("BANK IDENTIFIER CODE"; "BANK IDENTIFIER CODE") { ApplicationArea = All; }
+                field("BRANCH CODE"; "BRANCH CODE") { ApplicationArea = All; }
+                field("ROUTING Number"; "ROUTING Number") { ApplicationArea = All; }
             }
             /* group(Receiving)
             {

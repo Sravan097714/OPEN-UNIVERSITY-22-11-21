@@ -168,7 +168,7 @@ page 50022 "Payments"
                                 begin
                                     Clear(gpageVendorList);
                                     grecVendor.Reset();
-                                    grecVendor.Setfilter("Vendor Category", '%1', 'Tutor');
+                                    //grecVendor.Setfilter("Vendor Category", '%1', 'Tutor');
                                     if grecVendor.FindFirst() then begin
                                         gpageVendorList.SetRecord(grecVendor);
                                         gpageVendorList.SetTableView(grecVendor);
