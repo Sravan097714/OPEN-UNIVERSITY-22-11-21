@@ -24,10 +24,12 @@ report 50090 "Import Resit Fee OU Portal"
     trigger OnPreReport()
     begin
         gintCounter := 0;
+        /*
         grecResitFromOUPortal.Reset();
         grecResitFromOUPortal.SetRange(Resit, true);
         if grecResitFromOUPortal.FindFirst() then
             grecResitFromOUPortal.DeleteAll();
+        */
         ExcelBuf.LOCKTABLE;
         ExcelBuf.OpenBook(ServerFileName, SheetName);
         ExcelBuf.ReadSheet;

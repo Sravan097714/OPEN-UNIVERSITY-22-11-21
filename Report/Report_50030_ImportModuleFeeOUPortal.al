@@ -24,7 +24,7 @@ report 50030 "Import Module Fee OU Portal"
     trigger OnPreReport()
     begin
         gintCounter := 0;
-        grecModuleFromOUPortal.DeleteAll();
+        //grecModuleFromOUPortal.DeleteAll();
         ExcelBuf.LOCKTABLE;
         ExcelBuf.OpenBook(ServerFileName, SheetName);
         ExcelBuf.ReadSheet;

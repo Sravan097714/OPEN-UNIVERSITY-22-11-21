@@ -4,6 +4,7 @@ page 50018 "Module Fee from OU Portal"
     //ApplicationArea = All;
     SourceTable = "Module Fee From OU Portal";
     //UsageCategory = Administration;
+    SourceTableView = where("NAV Doc No." = filter(''));
     Editable = false;
 
     layout
@@ -114,7 +115,7 @@ page 50018 "Module Fee from OU Portal"
                 Promoted = true;
                 PromotedIsBig = true;
                 PromotedCategory = Process;
-
+                Visible = false;
                 trigger OnAction()
                 begin
                     ValidateData();
@@ -130,8 +131,13 @@ page 50018 "Module Fee from OU Portal"
                 PromotedCategory = Process;
 
                 trigger OnAction()
+                var
+                    ModuleFee: Record "Module Fee From OU Portal";
+                    ProcessOuPortal: Codeunit "OU Portal Files Scheduler";
                 begin
-                    CreateSalesInvoice();
+                    //CreateSalesInvoice();
+                    CurrPage.SetSelectionFilter(ModuleFee);
+                    ProcessOuPortal.ModuleFee(ModuleFee);
                 end;
             }
 

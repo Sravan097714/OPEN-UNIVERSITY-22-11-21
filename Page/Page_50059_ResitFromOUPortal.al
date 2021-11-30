@@ -4,7 +4,7 @@ page 50059 "Resit Fee From OU Portal"
     //ApplicationArea = All;
     //UsageCategory = Lists;
     SourceTable = "Exemption/Resit Fee OU Portal";
-    SourceTableView = where(Resit = filter(true));
+    SourceTableView = where(Resit = filter(true), "NAV Doc No." = filter(''));
     Editable = false;
 
     layout
@@ -67,7 +67,7 @@ page 50059 "Resit Fee From OU Portal"
                 Promoted = true;
                 PromotedIsBig = true;
                 PromotedCategory = Process;
-
+                Visible = false;
                 trigger OnAction()
                 begin
                     ValidateData();
@@ -83,8 +83,13 @@ page 50059 "Resit Fee From OU Portal"
                 PromotedCategory = Process;
 
                 trigger OnAction()
+                var
+                    ResitFee: Record "Exemption/Resit Fee OU Portal";
+                    ProcessOuPortal: Codeunit "OU Portal Files Scheduler";
                 begin
-                    CreateSalesInvoice();
+                    //CreateSalesInvoice();
+                    CurrPage.SetSelectionFilter(ResitFee);
+                    ProcessOuPortal.ExemptionResitFee(false, ResitFee);
                 end;
             }
 

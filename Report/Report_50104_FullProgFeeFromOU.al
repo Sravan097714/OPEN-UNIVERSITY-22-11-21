@@ -1,4 +1,4 @@
-report 50092 "Import Application Submission"
+report 50104 "Full Prog. Fee From OU Protal"
 {
     ProcessingOnly = true;
     //UsageCategory = Administration;
@@ -24,7 +24,7 @@ report 50092 "Import Application Submission"
     trigger OnPreReport()
     begin
         gintCounter := 0;
-        //grecOUPortalAppSubmission.DeleteAll();
+        //FullProgFee.DeleteAll();
         ExcelBuf.LOCKTABLE;
         ExcelBuf.OpenBook(ServerFileName, SheetName);
         ExcelBuf.ReadSheet;
@@ -35,7 +35,7 @@ report 50092 "Import Application Submission"
 
         ExcelBuf.DELETEALL;
 
-        MESSAGE('%1 lines have been uploaded in the system for Application Submission.', gintCounter);
+        MESSAGE('%1 lines have been uploaded in the system for Full Program Fee.', gintCounter);
     end;
 
 
@@ -63,26 +63,27 @@ report 50092 "Import Application Submission"
 
     PROCEDURE InsertData(RowNo: Integer);
     BEGIN
-        grecOUPortalAppSubmission2.Reset();
-        if grecOUPortalAppSubmission2.FindLast then
-            EntryNo := grecOUPortalAppSubmission2."Entry No." + 1
+        FullProgFee2.Reset();
+        if FullProgFee2.FindLast then
+            EntryNo := FullProgFee2."Line No." + 1
         else
             EntryNo := 1;
 
-        grecOUPortalAppSubmission.INIT;
-        Evaluate(grecOUPortalAppSubmission.User_ID, GetValueAtCell(RowNo, 2));
-        Evaluate(grecOUPortalAppSubmission.Submission, GetValueAtCell(RowNo, 3));
-        Evaluate(grecOUPortalAppSubmission.RDAP, GetValueAtCell(RowNo, 4));
-        Evaluate(grecOUPortalAppSubmission.RDBL, GetValueAtCell(RowNo, 5));
-        Evaluate(grecOUPortalAppSubmission.NIC, GetValueAtCell(RowNo, 6));
-        Evaluate(grecOUPortalAppSubmission."First Name", GetValueAtCell(RowNo, 7));
-        Evaluate(grecOUPortalAppSubmission."Last Name", GetValueAtCell(RowNo, 8));
-        Evaluate(grecOUPortalAppSubmission."Maiden Name", GetValueAtCell(RowNo, 9));
+        FullProgFee.INIT;
+        FullProgFee."Line No." := EntryNo;
+        Evaluate(FullProgFee.RDAP, GetValueAtCell(RowNo, 2));
+        Evaluate(FullProgFee.RDBL, GetValueAtCell(RowNo, 3));
+        Evaluate(FullProgFee.NIC, GetValueAtCell(RowNo, 4));
+        Evaluate(FullProgFee."Learner ID", GetValueAtCell(RowNo, 5));
+
+        Evaluate(FullProgFee."First Name", GetValueAtCell(RowNo, 6));
+        Evaluate(FullProgFee."Last Name", GetValueAtCell(RowNo, 7));
+        Evaluate(FullProgFee."Maiden Name", GetValueAtCell(RowNo, 8));
 
         //Shortcut Dimension
-        //EVALUATE(grecOUPortalAppSubmission."Shortcut Dimension 1 Code", GetValueAtCell(RowNo, 12));
+        //EVALUATE(FullProgFee."Shortcut Dimension 1 Code", GetValueAtCell(RowNo, 12));
 
-        if GetValueAtCell(RowNo, 10) <> '' then begin
+        if GetValueAtCell(RowNo, 9) <> '' then begin
             grecGenLedgSetup.get;
             Evaluate(gdateDim2, GetValueAtCell(RowNo, 10));
 
@@ -92,26 +93,48 @@ report 50092 "Import Application Submission"
             if grecDimValue.Findfirst then begin
                 repeat
                     if gdateDim2 <= grecDimValue."Ending Date" then
-                        grecOUPortalAppSubmission.Intake := grecDimValue.Code;
-                until (grecDimValue.Next = 0) or (grecOUPortalAppSubmission.Intake <> '');
+                        FullProgFee.Intake := grecDimValue.Code;
+                until (grecDimValue.Next = 0) or (FullProgFee.Intake <> '');
             end;
         End;
 
-        Evaluate(grecOUPortalAppSubmission."Login Email", GetValueAtCell(RowNo, 12));
-        Evaluate(grecOUPortalAppSubmission."Contact Email", GetValueAtCell(RowNo, 13));
-        Evaluate(grecOUPortalAppSubmission.Phone, GetValueAtCell(RowNo, 14));
-        Evaluate(grecOUPortalAppSubmission.Mobile, GetValueAtCell(RowNo, 15));
-        Evaluate(grecOUPortalAppSubmission.Address, GetValueAtCell(RowNo, 16));
-        Evaluate(grecOUPortalAppSubmission.Country, GetValueAtCell(RowNo, 17));
-        Evaluate(grecOUPortalAppSubmission."Programme 1", GetValueAtCell(RowNo, 18));
-        Evaluate(grecOUPortalAppSubmission."Programme 2", GetValueAtCell(RowNo, 19));
-        Evaluate(grecOUPortalAppSubmission."Programme 3", GetValueAtCell(RowNo, 20));
-        Evaluate(grecOUPortalAppSubmission."Programme 4", GetValueAtCell(RowNo, 21));
-        Evaluate(grecOUPortalAppSubmission.Status, GetValueAtCell(RowNo, 22));
+        Evaluate(FullProgFee."Login Email", GetValueAtCell(RowNo, 11));
+        Evaluate(FullProgFee."Contact Email", GetValueAtCell(RowNo, 12));
 
-        grecOUPortalAppSubmission."Imported By" := UserId;
-        grecOUPortalAppSubmission."Imported On" := CurrentDateTime;
-        grecOUPortalAppSubmission.INSERT(TRUE);
+        Evaluate(FullProgFee."Prog. Name", GetValueAtCell(RowNo, 13));
+        Evaluate(FullProgFee."Prog. Code", GetValueAtCell(RowNo, 14));
+
+        Evaluate(FullProgFee."Phone No.", GetValueAtCell(RowNo, 15));
+        Evaluate(FullProgFee."Mobile No.", GetValueAtCell(RowNo, 16));
+        Evaluate(FullProgFee.Address, GetValueAtCell(RowNo, 17));
+        Evaluate(FullProgFee.Country, GetValueAtCell(RowNo, 18));
+        Evaluate(FullProgFee.Status, GetValueAtCell(RowNo, 19));
+        Evaluate(FullProgFee.Currency, GetValueAtCell(RowNo, 20));
+
+        if GetValueAtCell(RowNo, 21) <> '' then
+            Evaluate(FullProgFee.FullFees, GetValueAtCell(RowNo, 21));
+
+        if GetValueAtCell(RowNo, 22) <> '' then
+            Evaluate(FullProgFee.Discount, GetValueAtCell(RowNo, 22));
+
+        if GetValueAtCell(RowNo, 23) <> '' then
+            Evaluate(FullProgFee."Discount Amount", GetValueAtCell(RowNo, 23));
+
+        if GetValueAtCell(RowNo, 24) <> '' then
+            Evaluate(FullProgFee."Payment Amount", GetValueAtCell(RowNo, 24));
+
+        Evaluate(FullProgFee."Payment Mode", GetValueAtCell(RowNo, 25));
+
+        if GetValueAtCell(RowNo, 26) <> '' then
+            Evaluate(FullProgFee."MyT Money Ref", GetValueAtCell(RowNo, 26));
+
+        if GetValueAtCell(RowNo, 27) <> '' then
+            Evaluate(FullProgFee."Payment Date", GetValueAtCell(RowNo, 27));
+
+        FullProgFee."Imported By" := UserId;
+        FullProgFee."Imported DateTime" := CurrentDateTime;
+
+        FullProgFee.INSERT(TRUE);
         gintCounter += 1;
     END;
 
@@ -127,8 +150,8 @@ report 50092 "Import Application Submission"
         Text006: Label 'Import Excel File';
         ExcelExtensionTok: Label '.xlsx';
         X: Integer;
-        grecOUPortalAppSubmission: Record "OU Portal App Submission";
-        grecOUPortalAppSubmission2: Record "OU Portal App Submission";
+        FullProgFee: Record "Full Prog. Fee From OU Protal";
+        FullProgFee2: Record "Full Prog. Fee From OU Protal";
         EntryNo: Integer;
         grecSalesHeader: Record "Sales Header";
         grecSalesLine: Record "Sales Line";

@@ -96,6 +96,14 @@ page 50042 "G/L Budget by Account Category"
                         CurrPage.Update(true);
                     end;
                 }
+                field(Remarks; Remarks)
+                {
+                    ApplicationArea = all;
+                }
+                field(Remarks2; Remarks2)
+                {
+                    ApplicationArea = all;
+                }
             }
             repeater(GroupName)
             {
@@ -116,6 +124,9 @@ page 50042 "G/L Budget by Account Category"
                 field("Revised Amount for Year (5)"; "Revised Amount for Year (5)") { ApplicationArea = All; }
                 field("Revised Amount for Year (6)"; "Revised Amount for Year (6)") { ApplicationArea = All; }
                 field("Final Budgeted Amount for Year"; "Final Budgeted Amount for Year") { ApplicationArea = All; }
+                field("Plan Budget for Curr. Year+ 1"; "Plan Budget for Curr. Year+ 1") { ApplicationArea = All; }
+                field("Plan Budget for Curr. Year+ 2"; "Plan Budget for Curr. Year+ 1") { ApplicationArea = All; }
+                field("Plan Budget for Curr. Year+ 3"; "Plan Budget for Curr. Year+ 1") { ApplicationArea = All; }
                 field("Actual Amount used for Year"; gdecActualAmt)
                 {
                     ApplicationArea = All;
@@ -399,4 +410,7 @@ page 50042 "G/L Budget by Account Category"
         ActiveRemainingAmountEarmarked: Decimal;
         GLAccount: Record "G/L Account";
         grecEarmarkingClaim: Record "Earmarking Claim Forms Table";
+        Remarks: Text[150];
+        Remarks2: Text[150];
+
 }

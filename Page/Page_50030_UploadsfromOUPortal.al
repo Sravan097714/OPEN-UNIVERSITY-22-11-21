@@ -91,6 +91,19 @@ page 50030 "Uploads from OU Portal"
                     Page.Run(50059);
                 end;
             }
+            action("Upload Full Pgm Fees")
+            {
+                ApplicationArea = All;
+                Promoted = true;
+                PromotedIsBig = true;
+                Image = ImportExcel;
+                PromotedCategory = Process;
+
+                trigger OnAction()
+                begin
+                    Page.Run(50062);
+                end;
+            }
         }
 
 

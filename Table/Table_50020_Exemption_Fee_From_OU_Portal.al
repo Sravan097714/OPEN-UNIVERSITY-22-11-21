@@ -4,7 +4,7 @@ table 50020 "Exemption/Resit Fee OU Portal"
 
     fields
     {
-        field(1; "Line No."; Integer) { }
+        field(1; "Line No."; Integer) { AutoIncrement = true; }
         field(2; "User ID"; Code[20]) { }
         field(3; RDAP; Text[50]) { }
         field(4; "Student ID"; Code[20]) { }
@@ -32,6 +32,10 @@ table 50020 "Exemption/Resit Fee OU Portal"
         field(22; Exemption; Boolean) { }
         field(23; Resit; Boolean) { }
         field(24; "Date Time Processed"; DateTime) { }
+        field(25; "Currency Code"; Code[10]) { }
+        field(26; "Amount"; Decimal) { }
+        field(30; "NAV Doc No."; Code[20]) { }
+
     }
 
     keys

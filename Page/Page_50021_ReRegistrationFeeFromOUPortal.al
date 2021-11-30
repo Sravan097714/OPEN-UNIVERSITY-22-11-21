@@ -6,6 +6,7 @@ page 50021 "ReReg. Fee From OU Portal"
     SourceTable = "ReRegistration Fee OU Portal";
     Caption = 'ReRegistration Fee From OU Portal';
     Editable = false;
+    SourceTableView = where("NAV Doc No." = filter(''));
 
     layout
     {
@@ -80,7 +81,7 @@ page 50021 "ReReg. Fee From OU Portal"
                 Promoted = true;
                 PromotedIsBig = true;
                 PromotedCategory = Process;
-
+                Visible = true;
                 trigger OnAction()
                 begin
                     ValidateData();
@@ -96,8 +97,13 @@ page 50021 "ReReg. Fee From OU Portal"
                 PromotedCategory = Process;
 
                 trigger OnAction()
+                var
+                    ReRegistrationFee: Record "ReRegistration Fee OU Portal";
+                    ProcessOuPortal: Codeunit "OU Portal Files Scheduler";
                 begin
-                    CreateSalesInvoice();
+                    //CreateSalesInvoice();
+                    CurrPage.SetSelectionFilter(ReRegistrationFee);
+                    ProcessOuPortal.ReRegistrationFee(ReRegistrationFee);
                 end;
             }
 

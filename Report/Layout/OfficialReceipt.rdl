@@ -2858,7 +2858,7 @@ Cstr(Fields!CompArr10_.Value) + Chr(177) + Cstr(Fields!Title1_.Value) + Chr(177)
         <Height>11.6681cm</Height>
         <Style />
       </Body>
-      <Width>18.08739cm</Width>
+      <Width>17.93624cm</Width>
       <Page>
         <PageHeader>
           <Height>8.17824cm</Height>
@@ -3785,9 +3785,7 @@ Cstr(Fields!CompArr10_.Value) + Chr(177) + Cstr(Fields!Title1_.Value) + Chr(177)
         <BottomMargin>1cm</BottomMargin>
         <ColumnSpacing>1.27cm</ColumnSpacing>
         <Style>
-          <Border>
-            <Style>Solid</Style>
-          </Border>
+          <Border />
         </Style>
       </Page>
     </ReportSection>

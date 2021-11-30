@@ -25,7 +25,7 @@ report 50034 "Imp Registration Fee OU Portal"
     trigger OnPreReport()
     begin
         gintCounter := 0;
-        grecReRegistrationFromOUPortal.DeleteAll();
+        //grecReRegistrationFromOUPortal.DeleteAll();
         ExcelBuf.LOCKTABLE;
         ExcelBuf.OpenBook(ServerFileName, SheetName);
         ExcelBuf.ReadSheet;

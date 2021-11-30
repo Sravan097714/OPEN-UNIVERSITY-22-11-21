@@ -4,7 +4,7 @@ page 50058 "Exemption Fee From OU Portal"
     //ApplicationArea = All;
     //UsageCategory = Lists;
     SourceTable = "Exemption/Resit Fee OU Portal";
-    SourceTableView = where(Exemption = filter(true));
+    SourceTableView = where(Exemption = filter(true), "NAV Doc No." = filter(''));
     Editable = false;
 
     layout
@@ -68,6 +68,7 @@ page 50058 "Exemption Fee From OU Portal"
                 Promoted = true;
                 PromotedIsBig = true;
                 PromotedCategory = Process;
+                Visible = false;
 
                 trigger OnAction()
                 begin
@@ -84,8 +85,13 @@ page 50058 "Exemption Fee From OU Portal"
                 PromotedCategory = Process;
 
                 trigger OnAction()
+                var
+                    ExemptionFee: Record "Exemption/Resit Fee OU Portal";
+                    ProcessOuPortal: Codeunit "OU Portal Files Scheduler";
                 begin
-                    CreateSalesInvoice();
+                    //CreateSalesInvoice();
+                    CurrPage.SetSelectionFilter(ExemptionFee);
+                    ProcessOuPortal.ExemptionResitFee(true, ExemptionFee);
                 end;
             }
 

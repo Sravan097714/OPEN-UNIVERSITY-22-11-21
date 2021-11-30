@@ -91,5 +91,50 @@ tableextension 50012 SalesReceivablesSetupExt extends "Sales & Receivables Setup
             TableRelation = "G/L Account";
         }
         field(50019; "Exemption Amount"; Decimal) { }
+        field(50020; "Cust. PG Mod. Fee Ins"; code[20])
+        {
+            Caption = 'Customer Posting Group With Installment';
+            TableRelation = "Customer Posting Group";
+        }
+        field(50021; "Cust. PG Mod. Fee Without Ins"; code[20])
+        {
+            Caption = 'Customer Posting Group Without Installment';
+            TableRelation = "Customer Posting Group";
+        }
+        field(50022; "Cust. PG Rereg. Fee Ins"; code[20])
+        {
+            Caption = 'Customer Posting Group With Installment';
+            TableRelation = "Customer Posting Group";
+        }
+        field(50023; "Cust. PG Rereg.Fee Without Ins"; code[20])
+        {
+            Caption = 'Customer Posting Group Without Installment';
+            TableRelation = "Customer Posting Group";
+        }
+        field(50025; "Cust. PG Exe. Fee"; code[20])
+        {
+            Caption = 'Customer Posting Group Without Installment';
+            TableRelation = "Customer Posting Group";
+        }
+        field(50027; "Cust. PG Resit.Fee"; code[20])
+        {
+            Caption = 'Customer Posting Group';
+            TableRelation = "Customer Posting Group";
+        }
+        field(50028; "G/L for Appl Submission Fee"; Code[20])
+        {
+            TableRelation = "G/L Account";
+        }
+        field(50029; "Appl Submission Amount"; Decimal) { Caption = 'Application Submission Amount'; }
+        field(50030; "G/L for Full Pgm Fee"; Code[20])
+        {
+            Caption = 'G/L for Full Program Fee';
+            TableRelation = "G/L Account";
+        }
+        field(50031; "Cust. PG Full Pgm. Fee"; code[20])
+        {
+            Caption = 'Customer Posting Group';
+            TableRelation = "Customer Posting Group";
+        }
     }
 }

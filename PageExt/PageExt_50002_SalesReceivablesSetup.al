@@ -58,10 +58,8 @@ pageextension 50002 SalesReceivablesSetup extends "Sales & Receivables Setup"
                 {
                     ApplicationArea = All;
                 }
-                field("Customer Posting Group"; "Customer Posting Group")
-                {
-                    ApplicationArea = All;
-                }
+                field("Cust. PG Mod. Fee Ins"; Rec."Cust. PG Mod. Fee Ins") { ApplicationArea = all; }
+                field("Cust. PG Mod. Fee Without Ins"; Rec."Cust. PG Mod. Fee Without Ins") { ApplicationArea = all; }
             }
 
             group("Re-registration Fee OU Portal")
@@ -70,6 +68,8 @@ pageextension 50002 SalesReceivablesSetup extends "Sales & Receivables Setup"
                 {
                     ApplicationArea = All;
                 }
+                field("Cust. PG Rereg. Fee Ins"; Rec."Cust. PG Rereg. Fee Ins") { ApplicationArea = all; }
+                field("Cust. PG Rereg.Fee Without Ins"; Rec."Cust. PG Rereg.Fee Without Ins") { ApplicationArea = all; }
             }
 
             group("Exemption Fee OU Portal")
@@ -82,6 +82,21 @@ pageextension 50002 SalesReceivablesSetup extends "Sales & Receivables Setup"
                 {
                     ApplicationArea = All;
                 }
+                field("Cust. PG Exe. Fee Ins"; Rec."Cust. PG Exe. Fee") { ApplicationArea = all; }
+            }
+            group("Resit Fee From OU Portal")
+            {
+                field("Cust. PG Resit.Fee"; Rec."Cust. PG Resit.Fee") { ApplicationArea = all; }
+            }
+            group("Application Submission From OU Portal")
+            {
+                field("G/L for Appl Submission Fee"; Rec."G/L for Appl Submission Fee") { ApplicationArea = all; }
+                field("Appl Submission Amount"; Rec."Appl Submission Amount") { ApplicationArea = all; }
+            }
+            group("Full Program Fee From OU Portal")
+            {
+                field("G/L for Full Pgm Fee"; Rec."G/L for Full Pgm Fee") { ApplicationArea = all; }
+                field("Cust. PG Full Pgm. Fee"; Rec."Cust. PG Full Pgm. Fee") { ApplicationArea = all; }
             }
         }
         addlast("Number Series")

@@ -150,7 +150,16 @@ tableextension 50034 GenJnlLine extends "Gen. Journal Line"
             Caption = 'Supplier No.';
             TableRelation = Vendor."No.";
         }
-
+        modify(Amount)
+        {
+            trigger OnAfterValidate()
+            begin
+                if xRec.Amount <> Rec.Amount then begin
+                    Clear("Amount Tendered");
+                    Clear("Amount To Remit");
+                end;
+            end;
+        }
     }
 
     trigger OnBeforeInsert()

@@ -4,7 +4,7 @@ table 50011 "ReRegistration Fee OU Portal"
 
     fields
     {
-        field(1; "Line No."; Integer) { }
+        field(1; "Line No."; Integer) { AutoIncrement = true; Editable = false; }
 
         field(2; PTN; Text[50]) { }
         field(3; RDAP; Text[50]) { }
@@ -46,6 +46,7 @@ table 50011 "ReRegistration Fee OU Portal"
 
         field(60; "Gov Grant"; Boolean) { }
         field(61; Instalment; Boolean) { }
+        field(65; "NAV Doc No."; Code[20]) { }
     }
 
     keys

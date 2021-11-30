@@ -110,7 +110,7 @@ report 50069 "Sales Test Report"
                     column(SalesInvoiceOrderNo; "Sales Header"."No.") { }
                     column(ContactName_SellToContact; "Sales Header"."Sell-to Contact") { }
                     column(ContactTitle_SellToContact; "Sales Header"."Contact Title") { }
-                    column(CurrencyFactor; "Sales Header"."Currency Factor") { }
+                    column(CurrencyFactor; ExchangeRate) { }
                     dataitem(DimensionLoop1; Integer)
                     {
                         DataItemLinkReference = "Sales Header";
@@ -582,10 +582,12 @@ report 50069 "Sales Test Report"
                         CustAddr[4] := Country.Name
                     else
                         CustAddr[4] := '';
+                    /* Commented as per request
                     if Customer."VAT Registration No." <> '' then
                         CustAddr[5] := 'Vat Registration No. : ' + Customer."VAT Registration No.";
                     if Customer.BRN <> '' then
                         CustAddr[6] := 'BRN : ' + BRN;
+                    */
 
                 END;
                 COMPRESSARRAY(CustAddr);
@@ -637,7 +639,8 @@ report 50069 "Sales Test Report"
                     HeaderTxt := 'TEST CREDIT INVOICE';
                 if not BankAccGRec.Get("Bank Code") then
                     Clear(BankAccGRec);
-
+                if "Currency Factor" <> 0 then
+                    ExchangeRate := 1 / "Currency Factor";
             end;
 
 
@@ -820,6 +823,8 @@ report 50069 "Sales Test Report"
         gtextItemCode2: Text;
         DimensionName2: Text;
         TotalAmount: Decimal;
+
+        ExchangeRate: Decimal;
 
     procedure FindPostedShipmentDate(): Date;
     var

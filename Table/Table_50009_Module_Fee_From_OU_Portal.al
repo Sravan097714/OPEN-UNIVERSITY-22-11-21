@@ -4,7 +4,7 @@ table 50009 "Module Fee From OU Portal"
 
     fields
     {
-        field(1; "Line No."; Integer) { }
+        field(1; "Line No."; Integer) { AutoIncrement = true; Editable = false; }
         field(2; "Posting Date"; Date) { }
         field(3; "Learner ID"; Code[20]) { }
         field(4; "No. 1"; Code[20]) { }
@@ -79,6 +79,7 @@ table 50009 "Module Fee From OU Portal"
         field(63; "Portal Payment Mode"; Code[20]) { }
         field(64; "MyT Money Ref"; Text[20]) { }
         field(65; "Payment Date"; Date) { }
+        field(66; "NAV Doc No."; Code[20]) { }
     }
 
     keys

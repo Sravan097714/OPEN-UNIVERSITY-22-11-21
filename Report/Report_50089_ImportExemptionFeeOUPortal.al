@@ -24,10 +24,12 @@ report 50089 "Import Exemption Fee OU Portal"
     trigger OnPreReport()
     begin
         gintCounter := 0;
+        /*
         grecExemptionFromOUPortal.Reset();
         grecExemptionFromOUPortal.SetRange(Exemption, true);
         if grecExemptionFromOUPortal.FindFirst() then
             grecExemptionFromOUPortal.DeleteAll();
+        */
         ExcelBuf.LOCKTABLE;
         ExcelBuf.OpenBook(ServerFileName, SheetName);
         ExcelBuf.ReadSheet;

@@ -33,6 +33,8 @@ table 50019 "OU Portal App Submission"
         field(22; "Programme 4"; Text[250]) { }
         field(23; "Imported By"; Text[50]) { }
         field(24; "Imported On"; DateTime) { }
+        field(25; Error; Text[250]) { }
+        field(30; "NAV Doc No."; Code[20]) { }
     }
 
 
