@@ -16,7 +16,7 @@ report 50060 "TDS Return Finance"
             column(Name_2; "Name 2") { }
             column(CompanyName; CompanyInfo.Name) { }
             column(CompanyBRN; CompanyInfo.BRN) { }
-            column(CompanyPhone; CompanyInfo."Phone No.") { }
+            column(CompanyPhone; CompanyInfo."Telephone Number") { }
             column(CompanyMobile; CompanyInfo."Mobile Number") { }
             column(NameofDeclarant; CompanyInfo."Name Of Declarant") { }
             column(VATEmail; CompanyInfo."E-mail Payer") { }

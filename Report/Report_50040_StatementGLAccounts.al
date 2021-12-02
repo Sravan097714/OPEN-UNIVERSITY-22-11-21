@@ -118,6 +118,9 @@ report 50040 "Statement of GL Accounts"
                     column(Description_GLEntry; Description)
                     {
                     }
+                    column(PV_Number; "PV Number")
+                    {
+                    }
                     column(GLBalance; GLBalance)
                     {
                         AutoFormatType = 1;

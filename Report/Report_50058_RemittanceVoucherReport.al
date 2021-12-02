@@ -124,7 +124,10 @@ report 50058 "Remittance Voucher Report"
                     PurchInvLineLRec.Reset();
                     PurchInvLineLRec.SetRange("Document No.", VendLedEntry."Document No.");
                     if PurchInvLineLRec.FindFirst() then
-                        DescriptionVar := PurchInvLineLRec."Description 2";
+                        if VendLedEntry."External Document No." <> '' then
+                            DescriptionVar := PurchInvLineLRec."Description 2" + ' - ' + VendLedEntry."External Document No."
+                        else
+                            DescriptionVar := PurchInvLineLRec."Description 2";
                 end;
 
             end;

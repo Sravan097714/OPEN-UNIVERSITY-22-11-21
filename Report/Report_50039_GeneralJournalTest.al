@@ -37,6 +37,7 @@ report 50039 "List Trans. prior cheque print"
                 column(AccNoCaption_GenJnlLine; "Gen. Journal Line".FieldCaption("Account No.")) { }
                 column(AccNameCaption; AccNameCap) { }
                 column(DescCaption_GenJnlLine; "Gen. Journal Line".FieldCaption(Description)) { }
+                column(ExternalDoc_GenJnlLine; "Gen. Journal Line".FieldCaption("External Document No.")) { }
                 column(PostingTypeCaption; GenPostingTypeCap) { }
                 column(GenBusPostGroupCaption; GenBusPostingGroupCap) { }
                 column(GenProdPostGroupCaption; GenProdPostingGroupCap) { }

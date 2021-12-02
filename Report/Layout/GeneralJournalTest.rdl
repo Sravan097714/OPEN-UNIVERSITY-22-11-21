@@ -300,25 +300,25 @@
                                     <Width>56.87477pt</Width>
                                   </TablixColumn>
                                   <TablixColumn>
-                                    <Width>75.29957pt</Width>
+                                    <Width>63.24443pt</Width>
                                   </TablixColumn>
                                   <TablixColumn>
-                                    <Width>15.53509pt</Width>
+                                    <Width>62.14533pt</Width>
                                   </TablixColumn>
                                   <TablixColumn>
                                     <Width>114.7256pt</Width>
                                   </TablixColumn>
                                   <TablixColumn>
-                                    <Width>63.60101pt</Width>
+                                    <Width>51.54587pt</Width>
                                   </TablixColumn>
                                   <TablixColumn>
                                     <Width>57.48634pt</Width>
                                   </TablixColumn>
                                   <TablixColumn>
-                                    <Width>81.06613pt</Width>
+                                    <Width>65.31613pt</Width>
                                   </TablixColumn>
                                   <TablixColumn>
-                                    <Width>70.86614pt</Width>
+                                    <Width>64.11617pt</Width>
                                   </TablixColumn>
                                 </TablixColumns>
                                 <TablixRows>
@@ -721,7 +721,6 @@
                                             </Style>
                                           </Textbox>
                                           <ColSpan>2</ColSpan>
-                                          <rd:Selected>true</rd:Selected>
                                         </CellContents>
                                       </TablixCell>
                                       <TablixCell />
@@ -890,6 +889,9 @@
                                             </Paragraphs>
                                             <ZIndex>71</ZIndex>
                                             <Style>
+                                              <Border>
+                                                <Style>None</Style>
+                                              </Border>
                                               <VerticalAlign>Bottom</VerticalAlign>
                                               <PaddingLeft>2pt</PaddingLeft>
                                               <PaddingRight>2pt</PaddingRight>
@@ -901,15 +903,14 @@
                                       </TablixCell>
                                       <TablixCell>
                                         <CellContents>
-                                          <Textbox Name="Textbox33">
+                                          <Textbox Name="ExternalDoc_GenJnlLine">
                                             <CanGrow>true</CanGrow>
-                                            <CanShrink>true</CanShrink>
                                             <KeepTogether>true</KeepTogether>
                                             <Paragraphs>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value />
+                                                    <Value>=Fields!ExternalDoc_GenJnlLine.Value</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI Semibold</FontFamily>
                                                       <FontSize>7pt</FontSize>
@@ -919,8 +920,14 @@
                                                 <Style />
                                               </Paragraph>
                                             </Paragraphs>
-                                            <rd:DefaultName>Textbox33</rd:DefaultName>
+                                            <rd:DefaultName>ExternalDoc_GenJnlLine</rd:DefaultName>
+                                            <Visibility>
+                                              <Hidden>=IIf(Fields!AccountType_GenJnlLine.Value &lt;&gt; "G/L Account",True,False)</Hidden>
+                                            </Visibility>
                                             <Style>
+                                              <Border>
+                                                <Style>None</Style>
+                                              </Border>
                                               <VerticalAlign>Bottom</VerticalAlign>
                                               <PaddingLeft>2pt</PaddingLeft>
                                               <PaddingRight>2pt</PaddingRight>
@@ -1716,15 +1723,14 @@
                                       </TablixCell>
                                       <TablixCell>
                                         <CellContents>
-                                          <Textbox Name="Textbox36">
+                                          <Textbox Name="ExtDocNo_GenJnlLine">
                                             <CanGrow>true</CanGrow>
-                                            <CanShrink>true</CanShrink>
                                             <KeepTogether>true</KeepTogether>
                                             <Paragraphs>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value />
+                                                    <Value>=Fields!ExtDocNo_GenJnlLine.Value</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>7pt</FontSize>
@@ -1736,8 +1742,14 @@
                                                 </Style>
                                               </Paragraph>
                                             </Paragraphs>
-                                            <rd:DefaultName>Textbox36</rd:DefaultName>
+                                            <rd:DefaultName>ExtDocNo_GenJnlLine</rd:DefaultName>
+                                            <Visibility>
+                                              <Hidden>=IIf(Fields!AccountType_GenJnlLine.Value &lt;&gt; "G/L Account",True,False)</Hidden>
+                                            </Visibility>
                                             <Style>
+                                              <Border>
+                                                <Style>None</Style>
+                                              </Border>
                                               <VerticalAlign>Middle</VerticalAlign>
                                               <PaddingLeft>2pt</PaddingLeft>
                                               <PaddingRight>2pt</PaddingRight>
@@ -1974,15 +1986,14 @@
                                       </TablixCell>
                                       <TablixCell>
                                         <CellContents>
-                                          <Textbox Name="Textbox70">
+                                          <Textbox Name="ExtDocNo_GenJnlLine1">
                                             <CanGrow>true</CanGrow>
-                                            <CanShrink>true</CanShrink>
                                             <KeepTogether>true</KeepTogether>
                                             <Paragraphs>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value />
+                                                    <Value>=Fields!ExtDocNo_GenJnlLine.Value</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>7pt</FontSize>
@@ -1994,8 +2005,14 @@
                                                 </Style>
                                               </Paragraph>
                                             </Paragraphs>
-                                            <rd:DefaultName>Textbox36</rd:DefaultName>
+                                            <rd:DefaultName>ExtDocNo_GenJnlLine1</rd:DefaultName>
+                                            <Visibility>
+                                              <Hidden>=IIf(Fields!AccountType_GenJnlLine.Value &lt;&gt; "G/L Account",True,False)</Hidden>
+                                            </Visibility>
                                             <Style>
+                                              <Border>
+                                                <Style>None</Style>
+                                              </Border>
                                               <VerticalAlign>Middle</VerticalAlign>
                                               <PaddingLeft>2pt</PaddingLeft>
                                               <PaddingRight>2pt</PaddingRight>
@@ -2003,6 +2020,7 @@
                                               <PaddingBottom>2pt</PaddingBottom>
                                             </Style>
                                           </Textbox>
+                                          <rd:Selected>true</rd:Selected>
                                         </CellContents>
                                       </TablixCell>
                                       <TablixCell>
@@ -4485,7 +4503,7 @@
                               </Filters>
                               <Top>0.07937cm</Top>
                               <Height>8.72332cm</Height>
-                              <Width>535.45465pt</Width>
+                              <Width>535.45464pt</Width>
                               <ZIndex>1</ZIndex>
                               <Visibility>
                                 <Hidden>=IIF(Fields!LineNo_GenJnlLine.Value&lt;&gt;0,False,True)</Hidden>
@@ -4997,6 +5015,9 @@ End Function</Code>
         </Field>
         <Field Name="DescCaption_GenJnlLine">
           <DataField>DescCaption_GenJnlLine</DataField>
+        </Field>
+        <Field Name="ExternalDoc_GenJnlLine">
+          <DataField>ExternalDoc_GenJnlLine</DataField>
         </Field>
         <Field Name="PostingTypeCaption">
           <DataField>PostingTypeCaption</DataField>

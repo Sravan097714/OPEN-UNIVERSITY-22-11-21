@@ -14,8 +14,8 @@ report 50061 "Statement Emoluments Finance"
             column(gdateStartDate; format(gdateStartDate)) { }
             column(gdateEndDate; format(gdateEndDate)) { }
 
-            column(CompanyName; grecCompanyInfo.Name) { }
-            column(CompanyBRN; grecCompanyInfo.BRN) { }
+            column(CompanyName; grecCompanyInfo."Payer Name") { }
+            column(CompanyBRN; grecCompanyInfo."Employer Registration No.") { }
 
             column(gtextNID; gtextNID) { }
             column(gtextVendorName; gtextVendorName) { }
@@ -28,6 +28,8 @@ report 50061 "Statement Emoluments Finance"
 
             trigger OnPreDataItem()
             begin
+                if gcodeVendor <> '' then
+                    SetRange("Vendor No.", gcodeVendor);
                 SetRange("Posting Date", gdateStartDate, gdateEndDate);
             end;
 

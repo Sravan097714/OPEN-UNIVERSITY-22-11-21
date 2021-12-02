@@ -233,8 +233,6 @@ pageextension 50023 PurchInvoiceCardExt extends "Purchase Invoice"
                         grecPurchaseLine."Earmark ID" := grecEarmarkingClaim."Earmark ID";
                         grecPurchaseLine."Date Earmarked" := grecEarmarkingClaim."Date Earmarked";
                         grecPurchaseLine.Insert;
-                        grecEarmarkingClaim.Active := false;
-                        grecEarmarkingClaim.Modify();
                     end;
                 end;
             }
