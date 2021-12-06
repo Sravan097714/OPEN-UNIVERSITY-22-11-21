@@ -166,7 +166,7 @@ report 50082 "Create Reminders - Normal"
         OnBeforeOnPreReport;
 
         CustLedgEntry.Copy(CustLedgEntry2);
-        CustLedgEntry.SetRange("Global Dimension 1 Code", '');
+        //CustLedgEntry.SetRange("Global Dimension 1 Code", '');
         if CustLedgEntryLineFeeOnFilters.GetFilters <> '' then
             CustLedgEntryLineFeeOn.CopyFilters(CustLedgEntryLineFeeOnFilters);
     end;

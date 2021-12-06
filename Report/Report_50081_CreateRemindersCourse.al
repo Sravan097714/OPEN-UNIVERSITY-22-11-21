@@ -166,7 +166,7 @@ report 50081 "Create Reminders - Course"
         OnBeforeOnPreReport;
 
         CustLedgEntry.Copy(CustLedgEntry2);
-        CustLedgEntry.SetFilter("Global Dimension 1 Code", '<>%1', '');
+        //CustLedgEntry.SetFilter("Global Dimension 1 Code", '<>%1', '');
         if CustLedgEntryLineFeeOnFilters.GetFilters <> '' then
             CustLedgEntryLineFeeOn.CopyFilters(CustLedgEntryLineFeeOnFilters);
     end;
