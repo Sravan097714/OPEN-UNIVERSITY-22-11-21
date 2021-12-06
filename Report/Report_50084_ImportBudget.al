@@ -141,7 +141,7 @@ report 50084 "Import Budget"
                     end;
             end;
             gintCounter += 1;
-            grecGLBudgetAccCategory.Modify();
+            grecGLBudgetAccCategory2.Modify();
         end else begin
             grecGLBudgetAccCategory.Init();
             grecGLBudgetAccCategory."Budget Name" := GetValueAtCell(RowNo, 1);

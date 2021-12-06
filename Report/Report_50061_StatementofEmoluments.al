@@ -10,7 +10,7 @@ report 50061 "Statement Emoluments Finance"
     {
         dataitem("Vendor Ledger Entry"; "Vendor Ledger Entry")
         {
-            DataItemTableView = sorting("Vendor No.", "Posting Date", "Currency Code") where("Document Type" = filter(Payment));
+            DataItemTableView = sorting("Vendor No.", "Posting Date", "Currency Code") where("Document Type" = filter(Invoice));
             column(gdateStartDate; format(gdateStartDate)) { }
             column(gdateEndDate; format(gdateEndDate)) { }
 
@@ -34,12 +34,14 @@ report 50061 "Statement Emoluments Finance"
             end;
 
             trigger OnAfterGetRecord()
+            var
+                PurchasePaybleSetup: Record "Purchases & Payables Setup";
             begin
                 if grecVendor2.get("Vendor No.") then begin
                     if grecVendor2."Vendor Category" <> 'TUTOR' then
                         CurrReport.Skip();
                 end;
-
+                PurchasePaybleSetup.Get();
                 if gtextVendor <> "Vendor No." then begin
                     clear(gtextNID);
                     clear(gtextVendorName);
@@ -54,51 +56,35 @@ report 50061 "Statement Emoluments Finance"
                     Clear(gdecPAYEAmt);
                     grecVendLedgerEntry.Reset();
                     grecVendLedgerEntry.SetCurrentKey("Entry No.");
-                    grecVendLedgerEntry.SetRange("Document Type", grecVendLedgerEntry."Document Type"::Payment);
+                    grecVendLedgerEntry.SetRange("Document Type", grecVendLedgerEntry."Document Type"::Invoice);
                     grecVendLedgerEntry.SetRange("Posting Date", gdateStartDate, gdateEndDate);
                     grecVendLedgerEntry.SetRange("Vendor No.", "Vendor No.");
                     if grecVendLedgerEntry.FindSet then begin
                         repeat
-                            grecVendLedgerEntry.CalcFields("Original Amt. (LCY)");
-                            gdecEmolument += grecVendLedgerEntry."Original Amt. (LCY)";
-
-                            /* grecGLEntry.Reset();
-                            grecGLEntry.SetCurrentKey("Entry No.");
-                            grecGLEntry.SetRange("Bal. Account Type", grecGLEntry."Bal. Account Type"::"Bank Account");
-                            grecGLEntry.SetRange("Document No.", grecVendLedgerEntry."Document No.");
-                            grecGLEntry.SetRange("Payment Journal No.", grecVendLedgerEntry."Payment Journal No.");
-                            grecGLEntry.SetRange(VAT, true);
-                            if grecGLEntry.FindSet then begin
+                            grecPurchInvLine.Reset();
+                            grecPurchInvLine.SetRange("Document No.", grecVendLedgerEntry."Document No.");
+                            grecPurchInvLine.SetFilter(Amount, '>%1', 0);
+                            if (gdateStartDate <> 0D) and (gdateEndDate <> 0D) then
+                                grecPurchInvLine.SetRange("Posting Date", gdateStartDate, gdateEndDate);
+                            if grecPurchInvLine.FindSet() then
                                 repeat
-                                    gdecPAYEAmt += grecGLEntry.Amount;
-                                until grecGLEntry.Next = 0;
-                            end; */
+                                    if grecPurchInvLine.VAT then
+                                        gdecEmolument += grecPurchInvLine."Line Amount Excluding VAT"
+                                    else
+                                        gdecEmolument += Abs(Round(grecPurchInvLine."Line Amount", 1, '='));
+                                until grecPurchInvLine.Next() = 0;
 
-                            grecDetailedVendLedgerEntry.Reset();
-                            grecDetailedVendLedgerEntry.SetRange("Document No.", grecVendLedgerEntry."Document No.");
-                            grecDetailedVendLedgerEntry.SetRange("Entry Type", grecDetailedVendLedgerEntry."Entry Type"::Application);
-                            grecDetailedVendLedgerEntry.SetRange("Initial Document Type", grecDetailedVendLedgerEntry."Initial Document Type"::Payment);
-                            if grecDetailedVendLedgerEntry.FindFirst() then begin
-                                grecDetailedVendLedgerEntry2.Reset();
-                                grecDetailedVendLedgerEntry2.SetRange("Applied Vend. Ledger Entry No.", grecDetailedVendLedgerEntry."Applied Vend. Ledger Entry No.");
-                                grecDetailedVendLedgerEntry2.SetRange("Initial Document Type", grecDetailedVendLedgerEntry."Initial Document Type"::Invoice);
-                                if grecDetailedVendLedgerEntry2.FindFirst() then begin
-                                    repeat
-                                        grecVendLedgerEntry2.Reset();
-                                        grecVendLedgerEntry2.SetRange("Entry No.", grecDetailedVendLedgerEntry2."Vendor Ledger Entry No.");
-                                        if grecVendLedgerEntry2.FindFirst then begin
-                                            repeat
-                                                grecPurchInvLine.Reset();
-                                                grecPurchInvLine.SetRange("Document No.", grecVendLedgerEntry2."Document No.");
-                                                grecPurchInvLine.SetRange(PAYE, true);
-                                                if grecPurchInvLine.FindFirst() then
-                                                    gdecPAYEAmt += grecPurchInvLine."Line Amount";
-                                            until grecVendLedgerEntry2.Next = 0;
-                                        end;
-                                    until grecDetailedVendLedgerEntry2.Next = 0;
-                                end;
+                            grecPurchInvLine.Reset();
+                            grecPurchInvLine.SetRange("Document No.", grecVendLedgerEntry."Document No.");
+                            grecPurchInvLine.SetRange(PAYE, true);
+                            grecPurchInvLine.SetRange(Type, grecPurchInvLine.Type::"G/L Account");
+                            grecPurchInvLine.SetRange("No.", PurchasePaybleSetup."PAYE Claims");
+                            if (gdateStartDate <> 0D) and (gdateEndDate <> 0D) then
+                                grecPurchInvLine.SetRange("Posting Date", gdateStartDate, gdateEndDate);
+                            if grecPurchInvLine.FindSet() then begin
+                                grecPurchInvLine.CalcSums(grecPurchInvLine."Line Amount");
+                                gdecPAYEAmt += Abs(Round(grecPurchInvLine."Line Amount", 1, '='));
                             end;
-
                         until grecVendLedgerEntry.Next = 0;
                     end;
                     gtextVendor := "Vendor No.";

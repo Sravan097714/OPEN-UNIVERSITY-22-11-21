@@ -60,6 +60,7 @@ codeunit 50015 "OU Portal Files Scheduler"
         if ModuleFee.FindSet() then
             repeat
                 ModuleFee2 := ModuleFee;
+                ModuleFee2.Error := '';
                 if not ProcessModuleFee.Run(ModuleFee2) then begin
                     ModuleFee2.Error := copystr(GetLastErrorText(), 1, MaxStrLen(ModuleFee2.Error));
                     ModuleFee2.Modify();
@@ -72,14 +73,20 @@ codeunit 50015 "OU Portal Files Scheduler"
     procedure ReRegistrationFee(var ReRegistrationFee: Record "ReRegistration Fee OU Portal")
     var
         ReRegistrationFee2: Record "ReRegistration Fee OU Portal";
+        ReRegistrationFee3: Record "ReRegistration Fee OU Portal";
         ProcessReRegistrationFee: Codeunit "Process ReRegistration Fee";
     begin
         ReRegistrationFee.SetCurrentKey(PTN);
         ReRegistrationFee.SetRange("NAV Doc No.", '');
         if ReRegistrationFee.FindSet() then
             repeat
+                if ReRegistrationFee."Student ID" <> '' then begin
+                    ReRegistrationFee3.Reset();
+                    ReRegistrationFee3.SetRange(PTN, ReRegistrationFee.PTN);
+                    ReRegistrationFee3.ModifyAll(Error, '');
+                    Commit();
+                end;
                 ReRegistrationFee2 := ReRegistrationFee;
-                ReRegistrationFee2.Error := '';
                 if not ProcessReRegistrationFee.Run(ReRegistrationFee2) then begin
                     ReRegistrationFee2.Error := copystr(GetLastErrorText(), 1, MaxStrLen(ReRegistrationFee2.Error));
                     ReRegistrationFee2.Modify();

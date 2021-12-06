@@ -7,18 +7,13 @@ codeunit 50018 "Process ReRegistration Fee"
         Selection: Integer;
     begin
         ReRegistrationFee := Rec;
-        Window.Open('Processing Line ##1###############');
-
-        if ReRegistrationFee."Student ID" <> '' then begin
-            ReRegistrationFee2.Reset();
-            ReRegistrationFee2.SetRange(PTN, ReRegistrationFee.PTN);
-            ReRegistrationFee2.ModifyAll(Error, '');
-        end;
+        if GuiAllowed then
+            Window.Open('Processing Line ##1###############');
 
         if ValidateReRegistrationFee(ReRegistrationFee) then
             CreateSalesInvoice(ReRegistrationFee);
-
-        Window.Close();
+        if GuiAllowed then
+            Window.Close();
         Rec := ReRegistrationFee;
     end;
 
@@ -31,6 +26,8 @@ codeunit 50018 "Process ReRegistration Fee"
         GenLedgSetup: Record "General Ledger Setup";
         DimValue: Record "Dimension Value";
     begin
+        if GuiAllowed then
+            Window.Update(1, ReRegistrationFeePar."Line No.");
 
         SalesReceivableSetup.Get();
         if not Customer.get(ReRegistrationFeePar."Student ID") then begin
@@ -53,6 +50,20 @@ codeunit 50018 "Process ReRegistration Fee"
             Customer2.Insert();
             Commit();
         end;
+
+        ReRegistrationFeePar3.reset;
+        ReRegistrationFeePar3.SetRange(PTN, ReRegistrationFeePar.PTN);
+        ReRegistrationFeePar3.SetFilter(Error, '<>%1', '');
+        if ReRegistrationFeePar3.FindFirst() then
+            Error('One or more line with the same PTN Number has an error.');
+
+        ReRegistrationFeePar3.reset;
+        ReRegistrationFeePar3.SetRange(PTN, ReRegistrationFeePar.PTN);
+        ReRegistrationFeePar3.SetFilter("No.", '<>%1', '');
+        //ReRegistrationFeePar3.SetFilter(Error, '<>%1', '');
+        if ReRegistrationFeePar3.Count = 0 then
+            Error('There are no module code on one or more line.');
+
         if ReRegistrationFeePar."No." <> '' then
             Item.Get(ReRegistrationFeePar."No.");
 
@@ -63,29 +74,6 @@ codeunit 50018 "Process ReRegistration Fee"
 
         if ReRegistrationFeePar."Shortcut Dimension 2 Code" <> '' then
             DimValue.Get(GenLedgSetup."Global Dimension 2 Code", ReRegistrationFeePar."Shortcut Dimension 2 Code");
-
-        ReRegistrationFeePar3.reset;
-        ReRegistrationFeePar3.SetRange(PTN, ReRegistrationFeePar.PTN);
-        ReRegistrationFeePar3.SetFilter(Error, '<>%1', '');
-        if ReRegistrationFeePar3.FindFirst() then
-            Error('One or more line with the same PTN Number has an error.');
-
-
-        ReRegistrationFeePar3.reset;
-        ReRegistrationFeePar3.SetRange(PTN, ReRegistrationFeePar.PTN);
-        ReRegistrationFeePar3.SetFilter("No.", '<>%1', '');
-        //ReRegistrationFeePar3.SetFilter(Error, '<>%1', '');
-        if ReRegistrationFeePar3.Count = 0 then
-            Error('There are no module code on one or more line.');
-
-        ReRegistrationFeePar3.reset;
-        ReRegistrationFeePar3.SetRange(PTN, ReRegistrationFeePar.PTN);
-        ReRegistrationFeePar3.SetFilter("No.", '<>%1', '');
-        if ReRegistrationFeePar3.FindSet() then
-            repeat
-                Item.Get(ReRegistrationFeePar3."No.");
-            until ReRegistrationFeePar3.Next() = 0;
-
 
         exit(true);
     end;
@@ -104,6 +92,8 @@ codeunit 50018 "Process ReRegistration Fee"
 
         if ReRegistrationFeePar.Error <> '' then
             exit;
+        if GuiAllowed then
+            Window.Update(1, ReRegistrationFeePar."Line No.");
 
         SalesHeader2.Reset();
         SalesHeader2.SetRange(PTN, ReRegistrationFeePar.PTN);
@@ -147,7 +137,7 @@ codeunit 50018 "Process ReRegistration Fee"
         end;
 
         if ReRegistrationFeePar."No." <> '' then
-            CreateSalesInvoiceLine(SalesHeader."No.", ReRegistrationFeePar."No.", ReRegistrationFeePar."Common Module Code", ReRegistrationFeePar."Module Description", ReRegistrationFeePar."Module Amount", ReRegistrationFeePar."Shortcut Dimension 1 Code", ReRegistrationFeePar.Instalment, ReRegistrationFeePar."Module Fee Ins", ReRegistrationFeePar."Penalty Fee");
+            CreateSalesInvoiceLine(SalesHeader2."No.", ReRegistrationFeePar."No.", ReRegistrationFeePar."Common Module Code", ReRegistrationFeePar."Module Description", ReRegistrationFeePar."Module Amount", ReRegistrationFeePar."Shortcut Dimension 1 Code", ReRegistrationFeePar.Instalment, ReRegistrationFeePar."Module Fee Ins", ReRegistrationFeePar."Penalty Fee");
 
         if SalesHeader2."No." <> '' then
             ReRegistrationFeePar."NAV Doc No." := SalesHeader2."No.";
@@ -231,5 +221,4 @@ codeunit 50018 "Process ReRegistration Fee"
         grecSalesLine: Record "Sales Line";
         grecSalesLine2: Record "Sales Line";
         Window: Dialog;
-
 }
