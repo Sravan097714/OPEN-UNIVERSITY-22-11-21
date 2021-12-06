@@ -9,6 +9,12 @@ codeunit 50018 "Process ReRegistration Fee"
         ReRegistrationFee := Rec;
         Window.Open('Processing Line ##1###############');
 
+        if ReRegistrationFee."Student ID" <> '' then begin
+            ReRegistrationFee2.Reset();
+            ReRegistrationFee2.SetRange(PTN, ReRegistrationFee.PTN);
+            ReRegistrationFee2.ModifyAll(Error, '');
+        end;
+
         if ValidateReRegistrationFee(ReRegistrationFee) then
             CreateSalesInvoice(ReRegistrationFee);
 
@@ -19,14 +25,34 @@ codeunit 50018 "Process ReRegistration Fee"
     local procedure ValidateReRegistrationFee(var ReRegistrationFeePar: Record "ReRegistration Fee OU Portal"): Boolean
     var
         Customer: Record Customer;
+        Customer2: Record Customer;
         Item: Record Item;
         ReRegistrationFeePar3: Record "ReRegistration Fee OU Portal";
         GenLedgSetup: Record "General Ledger Setup";
         DimValue: Record "Dimension Value";
     begin
 
-        Customer.get(ReRegistrationFeePar."Student ID");
-
+        SalesReceivableSetup.Get();
+        if not Customer.get(ReRegistrationFeePar."Student ID") then begin
+            Customer2.Init();
+            Customer2."No." := ReRegistrationFeePar."Student ID";
+            Customer2.Name := ReRegistrationFeePar."First Name" + ' ' + ReRegistrationFeePar."Last Name";
+            Customer2."First Name" := ReRegistrationFeePar."First Name";
+            Customer2."Last Name" := ReRegistrationFeePar."Last Name";
+            Customer2."Maiden Name" := ReRegistrationFeePar."Maiden Name";
+            /*
+            Customer2.Address := ReRegistrationFeePar.Address;
+            Customer2."Phone No." := ReRegistrationFeePar."Phone No.";
+            Customer2."Mobile Phone No." := ReRegistrationFeePar."Mobile No.";
+            Customer2."Country/Region Code" := ReRegistrationFeePar.Country;
+            */
+            Customer2."VAT Bus. Posting Group" := SalesReceivableSetup."VAT Bus. Posting Group";
+            Customer2."Gen. Bus. Posting Group" := SalesReceivableSetup."Gen. Bus. Posting Group";
+            Customer2."Customer Posting Group" := SalesReceivableSetup."Customer Posting Group";
+            //Customer2."Customer Category" := Customer2."Customer Category";
+            Customer2.Insert();
+            Commit();
+        end;
         if ReRegistrationFeePar."No." <> '' then
             Item.Get(ReRegistrationFeePar."No.");
 
@@ -41,21 +67,25 @@ codeunit 50018 "Process ReRegistration Fee"
         ReRegistrationFeePar3.reset;
         ReRegistrationFeePar3.SetRange(PTN, ReRegistrationFeePar.PTN);
         ReRegistrationFeePar3.SetFilter(Error, '<>%1', '');
-        if ReRegistrationFeePar3.FindFirst() then begin
-            ReRegistrationFeePar.Error := 'One or more line with the same PTN Number has an error.';
-            ReRegistrationFeePar.Modify();
-            exit(false);
-        end;
+        if ReRegistrationFeePar3.FindFirst() then
+            Error('One or more line with the same PTN Number has an error.');
+
 
         ReRegistrationFeePar3.reset;
         ReRegistrationFeePar3.SetRange(PTN, ReRegistrationFeePar.PTN);
         ReRegistrationFeePar3.SetFilter("No.", '<>%1', '');
         //ReRegistrationFeePar3.SetFilter(Error, '<>%1', '');
-        if ReRegistrationFeePar3.Count = 0 then begin
-            ReRegistrationFeePar.Error := 'There are no module code on this line.';
-            ReRegistrationFeePar.Modify();
-            exit(false);
-        end;
+        if ReRegistrationFeePar3.Count = 0 then
+            Error('There are no module code on one or more line.');
+
+        ReRegistrationFeePar3.reset;
+        ReRegistrationFeePar3.SetRange(PTN, ReRegistrationFeePar.PTN);
+        ReRegistrationFeePar3.SetFilter("No.", '<>%1', '');
+        if ReRegistrationFeePar3.FindSet() then
+            repeat
+                Item.Get(ReRegistrationFeePar3."No.");
+            until ReRegistrationFeePar3.Next() = 0;
+
 
         exit(true);
     end;
@@ -197,7 +227,9 @@ codeunit 50018 "Process ReRegistration Fee"
     var
         SalesReceivableSetup: Record "Sales & Receivables Setup";
         ReRegistrationFee: Record "ReRegistration Fee OU Portal";
+        ReRegistrationFee2: Record "ReRegistration Fee OU Portal";
         grecSalesLine: Record "Sales Line";
         grecSalesLine2: Record "Sales Line";
         Window: Dialog;
+
 }

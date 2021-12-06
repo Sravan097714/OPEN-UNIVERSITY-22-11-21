@@ -65,6 +65,21 @@ table 50016 "G/L Budget by Account Category"
         field(16; "Budget Name"; Text[250]) { }
         field(17; "Date From"; Date) { }
         field(18; "Date To"; Date) { }
+        field(19; "Plan Budget for Curr. Year 1"; Decimal)
+        {
+            Caption = 'Planned Budget for Current Year + 1';
+            DataClassification = ToBeClassified;
+        }
+        field(20; "Plan Budget for Curr. Year 2"; Decimal)
+        {
+            Caption = 'Planned Budget for Current Year + 2';
+            DataClassification = ToBeClassified;
+        }
+        field(21; "Plan Budget for Curr. Year 3"; Decimal)
+        {
+            Caption = 'Planned Budget for Current Year + 3';
+            DataClassification = ToBeClassified;
+        }
     }
 
     keys

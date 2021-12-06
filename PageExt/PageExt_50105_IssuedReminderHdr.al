@@ -8,7 +8,9 @@ pageextension 50104 IssuedReminderExt extends "Issued Reminder"
             field("Reminder Ref"; "Reminder Ref")
             {
                 ApplicationArea = All;
+                Caption = 'Our Ref';
             }
+            field("Your Reference"; "Your Reference") { ApplicationArea = all; }
             field("Customer Posting Group"; "Customer Posting Group")
             {
                 ApplicationArea = all;
@@ -34,6 +36,7 @@ pageextension 50104 IssuedReminderExt extends "Issued Reminder"
 
     actions
     {
+        /*
         modify("&Print")
         {
             trigger OnBeforeAction()
@@ -42,5 +45,6 @@ pageextension 50104 IssuedReminderExt extends "Issued Reminder"
                     error('');
             end;
         }
+        */
     }
 }

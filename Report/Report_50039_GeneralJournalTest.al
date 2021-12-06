@@ -361,7 +361,7 @@ report 50039 "List Trans. prior cheque print"
                                             if "Job No." <> '' then
                                                 AddError(StrSubstNo(Text009, FieldCaption("Job No.")));
 
-                                            descriptionrecText := "Gen. Journal Line"."Payee Name";
+                                            descriptionrecText := "Gen. Journal Line".Description;
                                         end;
                                     "Account Type"::"Bank Account":
                                         begin

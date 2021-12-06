@@ -124,9 +124,9 @@ page 50042 "G/L Budget by Account Category"
                 field("Revised Amount for Year (5)"; "Revised Amount for Year (5)") { ApplicationArea = All; }
                 field("Revised Amount for Year (6)"; "Revised Amount for Year (6)") { ApplicationArea = All; }
                 field("Final Budgeted Amount for Year"; "Final Budgeted Amount for Year") { ApplicationArea = All; }
-                field("Plan Budget for Curr. Year+ 1"; "Plan Budget for Curr. Year+ 1") { ApplicationArea = All; }
-                field("Plan Budget for Curr. Year+ 2"; "Plan Budget for Curr. Year+ 1") { ApplicationArea = All; }
-                field("Plan Budget for Curr. Year+ 3"; "Plan Budget for Curr. Year+ 1") { ApplicationArea = All; }
+                field("Plan Budget for Curr. Year+ 1"; "Plan Budget for Curr. Year 1") { ApplicationArea = All; }
+                field("Plan Budget for Curr. Year+ 2"; "Plan Budget for Curr. Year 2") { ApplicationArea = All; }
+                field("Plan Budget for Curr. Year+ 3"; "Plan Budget for Curr. Year 3") { ApplicationArea = All; }
                 field("Actual Amount used for Year"; gdecActualAmt)
                 {
                     ApplicationArea = All;
@@ -186,7 +186,7 @@ page 50042 "G/L Budget by Account Category"
                 var
                     grepExportBudget: Report "Export Budget";
                 begin
-                    grepExportBudget.SetBudgetName(gtextBudgetName, genumBudgetToUse);
+                    grepExportBudget.SetBudgetName(gtextBudgetName, genumBudgetToUse, gdateDateFrom, gdateDateTo);
                     grepExportBudget.Run();
                 end;
             }
@@ -231,6 +231,7 @@ page 50042 "G/L Budget by Account Category"
     trigger OnAfterGetRecord()
     begin
         SetRange("Budget Name", gtextBudgetName);
+        SetFilter("Budget Category", '<>%1', '');
         Clear(gdecActualAmt);
         Clear(gdecBudgetedAmtUsed);
         Clear(gdecRemainingAmt);

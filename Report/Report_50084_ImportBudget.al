@@ -64,84 +64,161 @@ report 50084 "Import Budget"
 
 
     PROCEDURE InsertData(RowNo: Integer);
+    var
+        grecGLBudgetAccCategory2: Record "G/L Budget by Account Category";
     BEGIN
         clear(grecGLBudgetAccCategory);
+        grecGLBudgetAccCategory2.Reset();
+        grecGLBudgetAccCategory2.SetRange("Budget Name", GetValueAtCell(RowNo, 1));
+        grecGLBudgetAccCategory2.SetRange("Budget Category", GetValueAtCell(RowNo, 2));
+        if grecGLBudgetAccCategory2.FindFirst() then begin
+            evaluate(grecGLBudgetAccCategory2."Date From", GetValueAtCell(RowNo, 4));
+            evaluate(grecGLBudgetAccCategory2."Date To", GetValueAtCell(RowNo, 5));
+            case GetValueAtCell(RowNo, 6) of
 
-        grecGLBudgetAccCategory.Init();
-        grecGLBudgetAccCategory."Budget Name" := GetValueAtCell(RowNo, 1);
-        grecGLBudgetAccCategory."Budget Category" := GetValueAtCell(RowNo, 2);
-        grecGLBudgetAccCategory.Description := GetValueAtCell(RowNo, 3);
-        evaluate(grecGLBudgetAccCategory."Date From", GetValueAtCell(RowNo, 4));
-        evaluate(grecGLBudgetAccCategory."Date To", GetValueAtCell(RowNo, 5));
+                'Original Budgeted Amount for the Year':
+                    begin
+                        if GetValueAtCell(RowNo, 7) = '' then
+                            Evaluate(grecGLBudgetAccCategory2."Original Budgeted Amt for Year", '0')
+                        else
+                            Evaluate(grecGLBudgetAccCategory2."Original Budgeted Amt for Year", GetValueAtCell(RowNo, 7));
+                    end;
 
-        case GetValueAtCell(RowNo, 6) of
+                'Revised Amount for the Year (1)':
+                    begin
+                        if GetValueAtCell(RowNo, 7) = '' then
+                            Evaluate(grecGLBudgetAccCategory2."Revised Amount for Year (1)", '0')
+                        else
+                            Evaluate(grecGLBudgetAccCategory2."Revised Amount for Year (1)", GetValueAtCell(RowNo, 7));
+                    end;
 
-            'Original Budgeted Amount for the Year':
-                begin
-                    if GetValueAtCell(RowNo, 7) = '' then
-                        Evaluate(grecGLBudgetAccCategory."Original Budgeted Amt for Year", '0')
-                    else
-                        Evaluate(grecGLBudgetAccCategory."Original Budgeted Amt for Year", GetValueAtCell(RowNo, 7));
-                end;
+                'Revised Amount for the Year (2)':
+                    begin
+                        if GetValueAtCell(RowNo, 7) = '' then
+                            Evaluate(grecGLBudgetAccCategory2."Revised Amount for Year (2)", '0')
+                        else
+                            Evaluate(grecGLBudgetAccCategory2."Revised Amount for Year (2)", GetValueAtCell(RowNo, 7));
+                    end;
 
-            'Revised Amount for the Year (1)':
-                begin
-                    if GetValueAtCell(RowNo, 7) = '' then
-                        Evaluate(grecGLBudgetAccCategory."Revised Amount for Year (1)", '0')
-                    else
-                        Evaluate(grecGLBudgetAccCategory."Revised Amount for Year (1)", GetValueAtCell(RowNo, 7));
-                end;
+                'Revised Amount for the Year (3)':
+                    begin
+                        if GetValueAtCell(RowNo, 7) = '' then
+                            Evaluate(grecGLBudgetAccCategory2."Revised Amount for Year (3)", '0')
+                        else
+                            Evaluate(grecGLBudgetAccCategory2."Revised Amount for Year (3)", GetValueAtCell(RowNo, 7));
+                    end;
 
-            'Revised Amount for the Year (2)':
-                begin
-                    if GetValueAtCell(RowNo, 7) = '' then
-                        Evaluate(grecGLBudgetAccCategory."Revised Amount for Year (2)", '0')
-                    else
-                        Evaluate(grecGLBudgetAccCategory."Revised Amount for Year (2)", GetValueAtCell(RowNo, 7));
-                end;
+                'Revised Amount for the Year (4)':
+                    begin
+                        if GetValueAtCell(RowNo, 7) = '' then
+                            Evaluate(grecGLBudgetAccCategory2."Revised Amount for Year (4)", '0')
+                        else
+                            Evaluate(grecGLBudgetAccCategory2."Revised Amount for Year (4)", GetValueAtCell(RowNo, 7));
+                    end;
 
-            'Revised Amount for the Year (3)':
-                begin
-                    if GetValueAtCell(RowNo, 7) = '' then
-                        Evaluate(grecGLBudgetAccCategory."Revised Amount for Year (3)", '0')
-                    else
-                        Evaluate(grecGLBudgetAccCategory."Revised Amount for Year (3)", GetValueAtCell(RowNo, 7));
-                end;
+                'Revised Amount for the Year (5)':
+                    begin
+                        if GetValueAtCell(RowNo, 7) = '' then
+                            Evaluate(grecGLBudgetAccCategory2."Revised Amount for Year (5)", '0')
+                        else
+                            Evaluate(grecGLBudgetAccCategory2."Revised Amount for Year (5)", GetValueAtCell(RowNo, 7));
+                    end;
 
-            'Revised Amount for the Year (4)':
-                begin
-                    if GetValueAtCell(RowNo, 7) = '' then
-                        Evaluate(grecGLBudgetAccCategory."Revised Amount for Year (4)", '0')
-                    else
-                        Evaluate(grecGLBudgetAccCategory."Revised Amount for Year (4)", GetValueAtCell(RowNo, 7));
-                end;
+                'Revised Amount for the Year (6)':
+                    begin
+                        if GetValueAtCell(RowNo, 7) = '' then
+                            Evaluate(grecGLBudgetAccCategory2."Revised Amount for Year (6)", '0')
+                        else
+                            Evaluate(grecGLBudgetAccCategory2."Revised Amount for Year (6)", GetValueAtCell(RowNo, 7));
+                    end;
 
-            'Revised Amount for the Year (5)':
-                begin
-                    if GetValueAtCell(RowNo, 7) = '' then
-                        Evaluate(grecGLBudgetAccCategory."Revised Amount for Year (5)", '0')
-                    else
-                        Evaluate(grecGLBudgetAccCategory."Revised Amount for Year (5)", GetValueAtCell(RowNo, 7));
-                end;
+                'Final Budgeted Amount for the Year':
+                    begin
+                        if GetValueAtCell(RowNo, 7) = '' then
+                            Evaluate(grecGLBudgetAccCategory2."Final Budgeted Amount for Year", '0')
+                        else
+                            Evaluate(grecGLBudgetAccCategory2."Final Budgeted Amount for Year", GetValueAtCell(RowNo, 7));
+                    end;
+            end;
+            gintCounter += 1;
+            grecGLBudgetAccCategory.Modify();
+        end else begin
+            grecGLBudgetAccCategory.Init();
+            grecGLBudgetAccCategory."Budget Name" := GetValueAtCell(RowNo, 1);
+            grecGLBudgetAccCategory."Budget Category" := GetValueAtCell(RowNo, 2);
+            grecGLBudgetAccCategory.Description := GetValueAtCell(RowNo, 3);
+            evaluate(grecGLBudgetAccCategory."Date From", GetValueAtCell(RowNo, 4));
+            evaluate(grecGLBudgetAccCategory."Date To", GetValueAtCell(RowNo, 5));
 
-            'Revised Amount for the Year (6)':
-                begin
-                    if GetValueAtCell(RowNo, 7) = '' then
-                        Evaluate(grecGLBudgetAccCategory."Revised Amount for Year (6)", '0')
-                    else
-                        Evaluate(grecGLBudgetAccCategory."Revised Amount for Year (6)", GetValueAtCell(RowNo, 7));
-                end;
+            case GetValueAtCell(RowNo, 6) of
 
-            'Final Budgeted Amount for the Year':
-                begin
-                    if GetValueAtCell(RowNo, 7) = '' then
-                        Evaluate(grecGLBudgetAccCategory."Final Budgeted Amount for Year", '0')
-                    else
-                        Evaluate(grecGLBudgetAccCategory."Final Budgeted Amount for Year", GetValueAtCell(RowNo, 7));
-                end;
+                'Original Budgeted Amount for the Year':
+                    begin
+                        if GetValueAtCell(RowNo, 7) = '' then
+                            Evaluate(grecGLBudgetAccCategory."Original Budgeted Amt for Year", '0')
+                        else
+                            Evaluate(grecGLBudgetAccCategory."Original Budgeted Amt for Year", GetValueAtCell(RowNo, 7));
+                    end;
+
+                'Revised Amount for the Year (1)':
+                    begin
+                        if GetValueAtCell(RowNo, 7) = '' then
+                            Evaluate(grecGLBudgetAccCategory."Revised Amount for Year (1)", '0')
+                        else
+                            Evaluate(grecGLBudgetAccCategory."Revised Amount for Year (1)", GetValueAtCell(RowNo, 7));
+                    end;
+
+                'Revised Amount for the Year (2)':
+                    begin
+                        if GetValueAtCell(RowNo, 7) = '' then
+                            Evaluate(grecGLBudgetAccCategory."Revised Amount for Year (2)", '0')
+                        else
+                            Evaluate(grecGLBudgetAccCategory."Revised Amount for Year (2)", GetValueAtCell(RowNo, 7));
+                    end;
+
+                'Revised Amount for the Year (3)':
+                    begin
+                        if GetValueAtCell(RowNo, 7) = '' then
+                            Evaluate(grecGLBudgetAccCategory."Revised Amount for Year (3)", '0')
+                        else
+                            Evaluate(grecGLBudgetAccCategory."Revised Amount for Year (3)", GetValueAtCell(RowNo, 7));
+                    end;
+
+                'Revised Amount for the Year (4)':
+                    begin
+                        if GetValueAtCell(RowNo, 7) = '' then
+                            Evaluate(grecGLBudgetAccCategory."Revised Amount for Year (4)", '0')
+                        else
+                            Evaluate(grecGLBudgetAccCategory."Revised Amount for Year (4)", GetValueAtCell(RowNo, 7));
+                    end;
+
+                'Revised Amount for the Year (5)':
+                    begin
+                        if GetValueAtCell(RowNo, 7) = '' then
+                            Evaluate(grecGLBudgetAccCategory."Revised Amount for Year (5)", '0')
+                        else
+                            Evaluate(grecGLBudgetAccCategory."Revised Amount for Year (5)", GetValueAtCell(RowNo, 7));
+                    end;
+
+                'Revised Amount for the Year (6)':
+                    begin
+                        if GetValueAtCell(RowNo, 7) = '' then
+                            Evaluate(grecGLBudgetAccCategory."Revised Amount for Year (6)", '0')
+                        else
+                            Evaluate(grecGLBudgetAccCategory."Revised Amount for Year (6)", GetValueAtCell(RowNo, 7));
+                    end;
+
+                'Final Budgeted Amount for the Year':
+                    begin
+                        if GetValueAtCell(RowNo, 7) = '' then
+                            Evaluate(grecGLBudgetAccCategory."Final Budgeted Amount for Year", '0')
+                        else
+                            Evaluate(grecGLBudgetAccCategory."Final Budgeted Amount for Year", GetValueAtCell(RowNo, 7));
+                    end;
+            end;
+            gintCounter += 1;
+            grecGLBudgetAccCategory.Insert;
         end;
-        gintCounter += 1;
-        grecGLBudgetAccCategory.Insert;
     END;
 
 

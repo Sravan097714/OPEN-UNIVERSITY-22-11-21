@@ -50,7 +50,7 @@ codeunit 50015 "OU Portal Files Scheduler"
         ExemptionResitFeeGVar: Record "Exemption/Resit Fee OU Portal";
         FullPgmFeeGVar: Record "Full Prog. Fee From OU Protal";
 
-    procedure ModuleFee(ModuleFee: Record "Module Fee From OU Portal")
+    procedure ModuleFee(var ModuleFee: Record "Module Fee From OU Portal")
     var
         ModuleFee2: Record "Module Fee From OU Portal";
         ProcessModuleFee: Codeunit "Process Module Fee";
@@ -60,16 +60,16 @@ codeunit 50015 "OU Portal Files Scheduler"
         if ModuleFee.FindSet() then
             repeat
                 ModuleFee2 := ModuleFee;
-                ModuleFee2.Error := '';
                 if not ProcessModuleFee.Run(ModuleFee2) then begin
                     ModuleFee2.Error := copystr(GetLastErrorText(), 1, MaxStrLen(ModuleFee2.Error));
                     ModuleFee2.Modify();
+                    Commit();
                 end;
 
             until ModuleFee.Next() = 0;
     end;
 
-    procedure ReRegistrationFee(ReRegistrationFee: Record "ReRegistration Fee OU Portal")
+    procedure ReRegistrationFee(var ReRegistrationFee: Record "ReRegistration Fee OU Portal")
     var
         ReRegistrationFee2: Record "ReRegistration Fee OU Portal";
         ProcessReRegistrationFee: Codeunit "Process ReRegistration Fee";
@@ -83,11 +83,12 @@ codeunit 50015 "OU Portal Files Scheduler"
                 if not ProcessReRegistrationFee.Run(ReRegistrationFee2) then begin
                     ReRegistrationFee2.Error := copystr(GetLastErrorText(), 1, MaxStrLen(ReRegistrationFee2.Error));
                     ReRegistrationFee2.Modify();
+                    Commit();
                 end;
             until ReRegistrationFee.Next() = 0;
     end;
 
-    procedure ExemptionResitFee(IsExemption: Boolean; ExemptionResitFee: Record "Exemption/Resit Fee OU Portal")
+    procedure ExemptionResitFee(IsExemption: Boolean; var ExemptionResitFee: Record "Exemption/Resit Fee OU Portal")
     var
         ExemptionResitFee2: Record "Exemption/Resit Fee OU Portal";
         ProcessExemptionResitFee: Codeunit "Process ExemptionResit Fee";
@@ -96,7 +97,7 @@ codeunit 50015 "OU Portal Files Scheduler"
         if IsExemption then
             ExemptionResitFee.SetRange(Exemption, true)
         else
-            ExemptionResitFee.SetRange(Resit, false);
+            ExemptionResitFee.SetRange(Resit, true);
         ExemptionResitFee.SetRange("NAV Doc No.", '');
         if ExemptionResitFee.FindSet() then
             repeat
@@ -105,11 +106,12 @@ codeunit 50015 "OU Portal Files Scheduler"
                 if not ProcessExemptionResitFee.Run(ExemptionResitFee2) then begin
                     ExemptionResitFee2.Error := copystr(GetLastErrorText(), 1, MaxStrLen(ExemptionResitFee2.Error));
                     ExemptionResitFee2.Modify();
+                    Commit();
                 end;
-            until ExemptionResitFee2.Next() = 0;
+            until ExemptionResitFee.Next() = 0;
     end;
 
-    procedure FullPgmFee(FullPgmFee: Record "Full Prog. Fee From OU Protal")
+    procedure FullPgmFee(var FullPgmFee: Record "Full Prog. Fee From OU Protal")
     var
         FullPgmFee2: Record "Full Prog. Fee From OU Protal";
         ProcessFullPgmFee: Codeunit "Process Full Program Fee";
@@ -123,6 +125,7 @@ codeunit 50015 "OU Portal Files Scheduler"
                 if not ProcessFullPgmFee.Run(FullPgmFee2) then begin
                     FullPgmFee2.Error := copystr(GetLastErrorText(), 1, MaxStrLen(FullPgmFee2.Error));
                     FullPgmFee2.Modify();
+                    Commit();
                 end;
             until FullPgmFee.Next() = 0;
     end;

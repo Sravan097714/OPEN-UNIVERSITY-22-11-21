@@ -23,7 +23,7 @@ report 50069 "Sales Test Report"
             column(SignatureName; grecSalesReceivableSetup."Sales Invoice Signature Name") { }
             column(HeaderTxt; HeaderTxt) { }
             column(BankAccGRec_Name; BankAccGRec.Name) { }
-            column(BankAccGRec_Address; BankAccGRec.Address) { }
+            column(BankAccGRec_Address; BankAddress) { }
             column(BankAccGRec_IBAN; BankAccGRec.IBAN) { }
             column(BankAccGRec_SWIFTCode; BankAccGRec."SWIFT Code") { }
             column(BankAccGRec_BankAccNo; BankAccGRec."Bank Account No.") { }
@@ -639,8 +639,13 @@ report 50069 "Sales Test Report"
                     HeaderTxt := 'TEST CREDIT INVOICE';
                 if not BankAccGRec.Get("Bank Code") then
                     Clear(BankAccGRec);
+                Clear(BankAddress);
+                if BankAccGRec."Address 2" <> '' then
+                    BankAddress := BankAccGRec.Address + ',' + BankAccGRec."Address 2"
+                else
+                    BankAddress := BankAccGRec.Address;
                 if "Currency Factor" <> 0 then
-                    ExchangeRate := 1 / "Currency Factor";
+                    ExchangeRate := Round(1 / "Currency Factor", 0.01, '=');
             end;
 
 
@@ -825,6 +830,7 @@ report 50069 "Sales Test Report"
         TotalAmount: Decimal;
 
         ExchangeRate: Decimal;
+        BankAddress: Text;
 
     procedure FindPostedShipmentDate(): Date;
     var

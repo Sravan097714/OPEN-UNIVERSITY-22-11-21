@@ -9,7 +9,7 @@ pageextension 50106 IssuedReminderListExt extends "Issued Reminder List"
             field("Posting Date"; "Posting Date") { ApplicationArea = All; }
             field("Due Date"; "Due Date") { ApplicationArea = All; }
             field("Posting Description"; "Posting Description") { ApplicationArea = All; }
-            field("Customer Posting Group"; "Customer Posting Group") { ApplicationArea = All; }
+            field("Customer Posting Group"; "Customer Posting Group") { ApplicationArea = All; Visible = false; }
             field("Created By"; "Created By") { ApplicationArea = All; }
             field("Created On"; "Created On") { ApplicationArea = All; }
         }
@@ -25,8 +25,10 @@ pageextension 50106 IssuedReminderListExt extends "Issued Reminder List"
         {
             trigger OnBeforeAction()
             begin
+                /*
                 if "Shortcut Dimension 1 Code" = '' then
                     error('');
+                */
             end;
         }
     }

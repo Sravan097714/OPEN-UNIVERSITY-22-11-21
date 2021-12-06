@@ -64,8 +64,7 @@ codeunit 50020 "Process ExemptionResit Fee"
         SalesHeader.validate("Sell-to Customer No.", ExemptResitFeePar."Student ID");
         SalesHeader.Validate("Posting Date", ExemptResitFeePar."Date Processed");
         SalesHeader.Insert(true);
-        if SalesReceivableSetup."Posted Inv Nos. for OU Portal" <> '' then
-            SalesHeader.Validate("Posting No. Series", SalesReceivableSetup."Posted Inv Nos. for OU Portal");
+
         SalesHeader.Validate("Shortcut Dimension 1 Code", ExemptResitFeePar."Shortcut Dimension 1 Code");
         SalesHeader.Validate("Shortcut Dimension 2 Code", ExemptResitFeePar."Shortcut Dimension 2 Code");
         SalesHeader."First Name" := ExemptResitFeePar."First Name";
@@ -142,8 +141,7 @@ codeunit 50020 "Process ExemptionResit Fee"
         SalesHeader.validate("Sell-to Customer No.", ExemptResitFeePar."Student ID");
         SalesHeader.Validate("Posting Date", ExemptResitFeePar."Date Processed");
         SalesHeader.Insert(true);
-        if SalesReceivableSetup."Posted Inv Nos. for OU Portal" <> '' then
-            SalesHeader.Validate("Posting No. Series", SalesReceivableSetup."Posted Inv Nos. for OU Portal");
+
         SalesHeader.Validate("Shortcut Dimension 1 Code", ExemptResitFeePar."Shortcut Dimension 1 Code");
         SalesHeader.Validate("Shortcut Dimension 2 Code", ExemptResitFeePar."Shortcut Dimension 2 Code");
         SalesHeader."First Name" := ExemptResitFeePar."First Name";

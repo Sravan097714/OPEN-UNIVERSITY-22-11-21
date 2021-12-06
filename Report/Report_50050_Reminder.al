@@ -3,7 +3,7 @@ report 50050 "Reminder 2"
     UsageCategory = ReportsAndAnalysis;
     ApplicationArea = All;
     DefaultLayout = RDLC;
-    Caption = 'Reminders for Other Invoices';
+    Caption = 'Reminders for Course Fees';
     RDLCLayout = 'Report\Layout\Reminder.rdl';
 
     dataset

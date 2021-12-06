@@ -487,6 +487,47 @@ codeunit 50000 Miscellaneous
         BankAccountLedgerEntry."Amount to Remit" := GenJournalLine."Amount To Remit"
     end;
 
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Batch Posting Print Mgt.", 'OnBeforeGLRegPostingReportPrint', '', true, true)]
+    local procedure "Batch Posting Print Mgt._OnBeforeGLRegPostingReportPrint"
+    (
+        var ReportID: Integer;
+        ReqWindow: Boolean;
+        SystemPrinter: Boolean;
+        var GLRegister: Record "G/L Register";
+        var Handled: Boolean
+    )
+    begin
+        if ReportID <> 50008 then
+            exit;
+        REPORT.Run(ReportID, false, true, GLRegister);
+        Handled := true;
+    end;
+
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Reminder-Issue", 'OnBeforeIssueReminder', '', true, true)]
+    local procedure "Reminder-Issue_OnBeforeIssueReminder"
+    (
+        var ReminderHeader: Record "Reminder Header";
+        var ReplacePostingDate: Boolean;
+        var PostingDate: Date;
+        var IsHandled: Boolean
+    )
+    begin
+        ReminderHeader.TestField("Deadline for Payment");
+    end;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Reminder-Issue", 'OnBeforeIssuedReminderHeaderInsert', '', true, true)]
+    local procedure "Reminder-Issue_OnBeforeIssuedReminderHeaderInsert"
+    (
+        var IssuedReminderHeader: Record "Issued Reminder Header";
+        ReminderHeader: Record "Reminder Header"
+    )
+    begin
+        IssuedReminderHeader."Created By" := UserId;
+        IssuedReminderHeader."Created On" := CurrentDateTime;
+    end;
+
+
     var
         gtextPONumber: Text;
 

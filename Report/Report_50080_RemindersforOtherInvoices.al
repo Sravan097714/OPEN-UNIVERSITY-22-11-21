@@ -1,10 +1,10 @@
-report 50080 "Reminders for Course Fees"
+report 50080 "Reminders for Other Invoices"
 {
     UsageCategory = ReportsAndAnalysis;
     ApplicationArea = All;
     DefaultLayout = RDLC;
-    Caption = 'Reminders for Course Fees';
-    RDLCLayout = 'Report\Layout\ReminderforCourseFees.rdl';
+    Caption = 'Reminders for Other Invoices';
+    RDLCLayout = 'Report\Layout\ReminderforOtherInvoices.rdl';
 
     dataset
     {
@@ -26,6 +26,7 @@ report 50080 "Reminders for Course Fees"
             column(Signature; grecSalesReceivableSetup."Sign for Reminders") { }
 
             column(Remaining_Amount; "Remaining Amount") { }
+            column(Your_Reference; "Your Reference") { }
 
             dataitem("Issued Reminder Line"; "Issued Reminder Line")
             {

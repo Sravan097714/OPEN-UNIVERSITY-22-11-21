@@ -14,6 +14,7 @@ pageextension 50102 ReminderListExt extends "Reminder List"
             }
             field("Created By"; "Created By") { ApplicationArea = All; }
             field("Created On"; "Created On") { ApplicationArea = All; }
+            field("Due Date"; "Due Date") { ApplicationArea = all; }
         }
 
         modify("Shortcut Dimension 1 Code")
@@ -31,14 +32,17 @@ pageextension 50102 ReminderListExt extends "Reminder List"
     }
     actions
     {
+        /*
         modify(CreateReminders)
         {
+            
             trigger OnBeforeAction()
             begin
-                REPORT.RunModal(REPORT::"Create Reminders - Normal");
+                REPORT.RunModal(REPORT::"Reminder 2");
                 Error('');
             end;
-        }
+            
+        }*/
     }
     trigger OnOpenPage()
     begin

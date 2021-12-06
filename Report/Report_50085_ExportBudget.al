@@ -14,8 +14,10 @@ report 50085 "Export Budget"
                 ExcelBuf.AddColumn("Budget Name", FALSE, '', FALSE, FALSE, FALSE, '@', ExcelBuf."Cell Type"::Text);
                 ExcelBuf.AddColumn("Budget Category", FALSE, '', FALSE, FALSE, FALSE, '@', ExcelBuf."Cell Type"::Text);
                 ExcelBuf.AddColumn(Description, FALSE, '', FALSE, FALSE, FALSE, '@', ExcelBuf."Cell Type"::Number);
-                ExcelBuf.AddColumn(FORMAT("Date From", 10, '<Year4><Month,2><Day,2>'), FALSE, '', FALSE, FALSE, FALSE, '', ExcelBuf."Cell Type"::Text);
-                ExcelBuf.AddColumn(FORMAT("Date To", 10, '<Year4><Month,2><Day,2>'), FALSE, '', FALSE, FALSE, FALSE, '', ExcelBuf."Cell Type"::Text);
+                //ExcelBuf.AddColumn(FORMAT(FromDate, 10, '<Year4><Month,2><Day,2>'), FALSE, '', FALSE, FALSE, FALSE, '', ExcelBuf."Cell Type"::Text);
+                //ExcelBuf.AddColumn(FORMAT(ToDate, 10, '<Year4><Month,2><Day,2>'), FALSE, '', FALSE, FALSE, FALSE, '', ExcelBuf."Cell Type"::Text);
+                ExcelBuf.AddColumn(FromDate, FALSE, '', FALSE, FALSE, FALSE, '', ExcelBuf."Cell Type"::Text);
+                ExcelBuf.AddColumn(ToDate, FALSE, '', FALSE, FALSE, FALSE, '', ExcelBuf."Cell Type"::Text);
                 ExcelBuf.AddColumn(genumBudgetToUse, FALSE, '', FALSE, FALSE, FALSE, '', ExcelBuf."Cell Type"::Text);
 
                 case genumBudgetToUse of
@@ -49,6 +51,7 @@ report 50085 "Export Budget"
             trigger OnPreDataItem()
             begin
                 SetRange("Budget Name", gtextBudgetName);
+                MakeExcelDataHeader();
             end;
         }
 
@@ -64,6 +67,8 @@ report 50085 "Export Budget"
         ExcelBuf: Record "Excel Buffer" temporary;
         genumBudgetToUse: Enum "Budget Account Category";
         gdecAmount: Decimal;
+        FromDate: Date;
+        ToDate: Date;
 
 
     local procedure MakeExcelDataHeader()
@@ -85,10 +90,12 @@ report 50085 "Export Budget"
         ExcelBuf.CreateBookAndOpenExcel('', 'Budget Export', '', COMPANYNAME, USERID);
     end;
 
-    procedure SetBudgetName(ptextBudgetName: Text; penumBudgetToUse: Enum "Budget Account Category")
+    procedure SetBudgetName(ptextBudgetName: Text; penumBudgetToUse: Enum "Budget Account Category"; FromDateP: Date; TodateP: Date)
     begin
         gtextBudgetName := ptextBudgetName;
         genumBudgetToUse := penumBudgetToUse;
+        FromDate := FromDateP;
+        ToDate := TodateP;
     end;
 }
 

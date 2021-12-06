@@ -5,6 +5,7 @@ codeunit 50016 "Process Module Fee"
     trigger OnRun();
     begin
         ModuleFeeGRec := Rec;
+        ModuleFeeGRec.Error := '';
         Window.Open('Processing Line ##1###############');
         if ValidatedModuleFee(ModuleFeeGRec) then
             CreateSalesInvoice(ModuleFeeGRec);
@@ -74,10 +75,9 @@ codeunit 50016 "Process Module Fee"
             (ModuleFeePar."No. 4" = '') AND
             (ModuleFeePar."No. 5" = '') AND
             (ModuleFeePar."No. 6" = '')
-        then begin
-            ModuleFeePar.Error := 'There are no module code on this line.';
-            exit(false);
-        end;
+        then
+            Error('There are no module code on this line.');
+
 
         exit(true);
     end;
@@ -101,8 +101,7 @@ codeunit 50016 "Process Module Fee"
         SalesHeader.validate("Sell-to Customer No.", ModuleFeePar."Learner ID");
         SalesHeader.Validate("Posting Date", ModuleFeePar."Posting Date");
         SalesHeader.Insert(true);
-        if SalesReceivableSetup."Posted Inv Nos. for OU Portal" <> '' then
-            SalesHeader.Validate("Posting No. Series", SalesReceivableSetup."Posted Inv Nos. for OU Portal");
+
         SalesHeader.Validate("Shortcut Dimension 1 Code", ModuleFeePar."Shortcut Dimension 1 Code");
         SalesHeader.Validate("Shortcut Dimension 2 Code", ModuleFeePar."Shortcut Dimension 2 Code");
         SalesHeader."First Name" := ModuleFeePar."First Name";
