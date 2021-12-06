@@ -281,7 +281,7 @@ page 50040 "Issued Reminder Course Fees"
                         exit; */
                     CurrPage.SetSelectionFilter(IssuedReminderHeader);
                     //IssuedReminderHeader.PrintRecords(true, false, false);
-                    Report.Run(50080, true, true, IssuedReminderHeader);
+                    Report.Run(50050, true, true, IssuedReminderHeader);
 
                 end;
             }

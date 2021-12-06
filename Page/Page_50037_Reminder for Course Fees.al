@@ -281,8 +281,12 @@ page 50037 "Reminder for Course Fees"
                     ToolTip = 'Create reminders for one or more customers with overdue payments.';
 
                     trigger OnAction()
+                    var
+                        Customer: Record Customer;
                     begin
-                        REPORT.RunModal(REPORT::"Create Reminders - Course");
+                        Customer.Reset();
+                        Customer.SetRange("No.", Rec."Customer No.");
+                        REPORT.RunModal(REPORT::"Create Reminders - Course", true, false, Customer);
                     end;
                 }
                 action(SuggestReminderLines)

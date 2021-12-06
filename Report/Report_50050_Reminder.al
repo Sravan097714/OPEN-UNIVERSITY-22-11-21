@@ -25,6 +25,7 @@ report 50050 "Reminder 2"
 
             dataitem("Issued Reminder Line"; "Issued Reminder Line")
             {
+                DataItemLink = "Reminder No." = field("No.");
                 column(PayableRs; "Original Amount") { }
                 column(PaidRs; "Original Amount" - "Remaining Amount") { }
                 column(AmountDueRs; "Remaining Amount") { }

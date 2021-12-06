@@ -15,7 +15,7 @@ tableextension 50046 IssuedReminderHdrExt extends "Issued Reminder Header"
         {
             Editable = false;
         }
-        field(50004; "Course Reminder"; Boolean) { }
+        field(50005; "Course Reminder"; Boolean) { }
     }
 
     trigger OnInsert()

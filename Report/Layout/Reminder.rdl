@@ -856,6 +856,7 @@
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -2979,9 +2980,6 @@
                 </TablixMember>
                 <TablixMember>
                   <Group Name="Details" />
-                  <Visibility>
-                    <Hidden>=IIF(Fields!PayableRs.Value=0 &amp; Fields!PaidRs.Value=0 &amp; Fields!AmountDueRs.Value=0 &amp; LEN(Fields!Remark.Value)=0,FALSE,TRUE)</Hidden>
-                  </Visibility>
                 </TablixMember>
                 <TablixMember>
                   <KeepWithGroup>Before</KeepWithGroup>

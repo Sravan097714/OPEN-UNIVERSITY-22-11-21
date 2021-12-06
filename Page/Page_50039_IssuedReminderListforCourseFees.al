@@ -171,7 +171,7 @@ page 50039 "Issued R. List Course Fees"
                         exit;
                     CurrPage.SetSelectionFilter(IssuedReminderHeader);
                     //IssuedReminderHeader.PrintRecords(true, false, false);
-                    Report.Run(50080, true, false, IssuedReminderHeader);
+                    Report.Run(50050, true, false, IssuedReminderHeader);
                 end;
             }
             action("Send by &Email")

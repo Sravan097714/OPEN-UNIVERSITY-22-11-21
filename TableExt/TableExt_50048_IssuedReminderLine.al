@@ -6,10 +6,18 @@ tableextension 50048 IssuedReminderLineExt extends "Issued Reminder Line"
     {
         field(50001; "Global Dimension 1"; Code[20])
         {
+            CaptionClass = '1,2,1';
+            Caption = 'Shortcut Dimension 1 Code';
+            TableRelation = "Dimension Value".Code WHERE("Global Dimension No." = CONST(1),
+                                                          Blocked = CONST(false));
             Editable = false;
         }
         field(50002; "Global Dimension 2"; Code[20])
         {
+            CaptionClass = '1,2,2';
+            Caption = 'Shortcut Dimension 2 Code';
+            TableRelation = "Dimension Value".Code WHERE("Global Dimension No." = CONST(2),
+                                                          Blocked = CONST(false));
             Editable = false;
         }
     }
