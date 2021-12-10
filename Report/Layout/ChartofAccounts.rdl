@@ -11,130 +11,6 @@
       <rd:DataSourceID>f2c80508-ca12-4ce2-a8ec-856bca057d31</rd:DataSourceID>
     </DataSource>
   </DataSources>
-  <DataSets>
-    <DataSet Name="DataSet_Result">
-      <Query>
-        <DataSourceName>DataSource</DataSourceName>
-        <CommandText />
-      </Query>
-      <Fields>
-        <Field Name="COMPANYNAME">
-          <DataField>COMPANYNAME</DataField>
-        </Field>
-        <Field Name="G_L_Account__TABLECAPTION__________GLFilter">
-          <DataField>G_L_Account__TABLECAPTION__________GLFilter</DataField>
-        </Field>
-        <Field Name="GLFilter">
-          <DataField>GLFilter</DataField>
-        </Field>
-        <Field Name="Chart_of_AccountsCaption">
-          <DataField>Chart_of_AccountsCaption</DataField>
-        </Field>
-        <Field Name="CurrReport_PAGENOCaption">
-          <DataField>CurrReport_PAGENOCaption</DataField>
-        </Field>
-        <Field Name="G_L_Account___No__Caption">
-          <DataField>G_L_Account___No__Caption</DataField>
-        </Field>
-        <Field Name="PADSTR_____G_L_Account__Indentation___2___G_L_Account__NameCaption">
-          <DataField>PADSTR_____G_L_Account__Indentation___2___G_L_Account__NameCaption</DataField>
-        </Field>
-        <Field Name="G_L_Account___Income_Balance_Caption">
-          <DataField>G_L_Account___Income_Balance_Caption</DataField>
-        </Field>
-        <Field Name="G_L_Account___Account_Type_Caption">
-          <DataField>G_L_Account___Account_Type_Caption</DataField>
-        </Field>
-        <Field Name="G_L_Account__TotalingCaption">
-          <DataField>G_L_Account__TotalingCaption</DataField>
-        </Field>
-        <Field Name="G_L_Account___Gen__Posting_Type_Caption">
-          <DataField>G_L_Account___Gen__Posting_Type_Caption</DataField>
-        </Field>
-        <Field Name="G_L_Account___Gen__Bus__Posting_Group_Caption">
-          <DataField>G_L_Account___Gen__Bus__Posting_Group_Caption</DataField>
-        </Field>
-        <Field Name="G_L_Account___Gen__Prod__Posting_Group_Caption">
-          <DataField>G_L_Account___Gen__Prod__Posting_Group_Caption</DataField>
-        </Field>
-        <Field Name="G_L_Account___Direct_Posting_Caption">
-          <DataField>G_L_Account___Direct_Posting_Caption</DataField>
-        </Field>
-        <Field Name="G_L_Account___Consol__Translation_Method_Caption">
-          <DataField>G_L_Account___Consol__Translation_Method_Caption</DataField>
-        </Field>
-        <Field Name="Balance_Caption">
-          <DataField>Balance_Caption</DataField>
-        </Field>
-        <Field Name="Budget_Category_Caption">
-          <DataField>Budget_Category_Caption</DataField>
-        </Field>
-        <Field Name="G_L_Account___No__">
-          <DataField>G_L_Account___No__</DataField>
-        </Field>
-        <Field Name="PADSTR_____G_L_Account__Indentation___2___G_L_Account__Name">
-          <DataField>PADSTR_____G_L_Account__Indentation___2___G_L_Account__Name</DataField>
-        </Field>
-        <Field Name="G_L_Account___Income_Balance_">
-          <DataField>G_L_Account___Income_Balance_</DataField>
-        </Field>
-        <Field Name="G_L_Account___Account_Type_">
-          <DataField>G_L_Account___Account_Type_</DataField>
-        </Field>
-        <Field Name="G_L_Account__Totaling">
-          <DataField>G_L_Account__Totaling</DataField>
-        </Field>
-        <Field Name="G_L_Account___Gen__Posting_Type_">
-          <DataField>G_L_Account___Gen__Posting_Type_</DataField>
-        </Field>
-        <Field Name="G_L_Account___Gen__Bus__Posting_Group_">
-          <DataField>G_L_Account___Gen__Bus__Posting_Group_</DataField>
-        </Field>
-        <Field Name="G_L_Account___Gen__Prod__Posting_Group_">
-          <DataField>G_L_Account___Gen__Prod__Posting_Group_</DataField>
-        </Field>
-        <Field Name="G_L_Account___Direct_Posting_">
-          <DataField>G_L_Account___Direct_Posting_</DataField>
-        </Field>
-        <Field Name="G_L_Account___Consol__Translation_Method_">
-          <DataField>G_L_Account___Consol__Translation_Method_</DataField>
-        </Field>
-        <Field Name="G_L_Account___No__of_Blank_Lines_">
-          <DataField>G_L_Account___No__of_Blank_Lines_</DataField>
-        </Field>
-        <Field Name="PageGroupNo">
-          <DataField>PageGroupNo</DataField>
-        </Field>
-        <Field Name="DirectPostingTxt">
-          <DataField>DirectPostingTxt</DataField>
-        </Field>
-        <Field Name="CheckAccType">
-          <DataField>CheckAccType</DataField>
-        </Field>
-        <Field Name="AccountType">
-          <DataField>AccountType</DataField>
-        </Field>
-        <Field Name="ConsTransMethod">
-          <DataField>ConsTransMethod</DataField>
-        </Field>
-        <Field Name="IncomeBalance">
-          <DataField>IncomeBalance</DataField>
-        </Field>
-        <Field Name="GenPostingType">
-          <DataField>GenPostingType</DataField>
-        </Field>
-        <Field Name="Balance">
-          <DataField>Balance</DataField>
-        </Field>
-        <Field Name="BalanceFormat">
-          <DataField>BalanceFormat</DataField>
-        </Field>
-        <Field Name="Budget_Category">
-          <DataField>Budget_Category</DataField>
-        </Field>
-      </Fields>
-    </DataSet>
-  </DataSets>
   <ReportSections>
     <ReportSection>
       <Body>
@@ -3280,12 +3156,6 @@
       </Page>
     </ReportSection>
   </ReportSections>
-  <ReportParametersLayout>
-    <GridLayoutDefinition>
-      <NumberOfColumns>4</NumberOfColumns>
-      <NumberOfRows>2</NumberOfRows>
-    </GridLayoutDefinition>
-  </ReportParametersLayout>
   <Code>Public Function BlankZero(ByVal Value As Decimal)
     if Value = 0 then
         Return ""
@@ -3335,4 +3205,128 @@ End Function</Code>
   <ConsumeContainerWhitespace>true</ConsumeContainerWhitespace>
   <rd:ReportUnitType>Cm</rd:ReportUnitType>
   <rd:ReportID>e0db3e27-e08f-4cf7-936a-1e341bb517be</rd:ReportID>
+  <DataSets>
+    <DataSet Name="DataSet_Result">
+      <Fields>
+        <Field Name="COMPANYNAME">
+          <DataField>COMPANYNAME</DataField>
+        </Field>
+        <Field Name="G_L_Account__TABLECAPTION__________GLFilter">
+          <DataField>G_L_Account__TABLECAPTION__________GLFilter</DataField>
+        </Field>
+        <Field Name="GLFilter">
+          <DataField>GLFilter</DataField>
+        </Field>
+        <Field Name="Chart_of_AccountsCaption">
+          <DataField>Chart_of_AccountsCaption</DataField>
+        </Field>
+        <Field Name="CurrReport_PAGENOCaption">
+          <DataField>CurrReport_PAGENOCaption</DataField>
+        </Field>
+        <Field Name="G_L_Account___No__Caption">
+          <DataField>G_L_Account___No__Caption</DataField>
+        </Field>
+        <Field Name="PADSTR_____G_L_Account__Indentation___2___G_L_Account__NameCaption">
+          <DataField>PADSTR_____G_L_Account__Indentation___2___G_L_Account__NameCaption</DataField>
+        </Field>
+        <Field Name="G_L_Account___Income_Balance_Caption">
+          <DataField>G_L_Account___Income_Balance_Caption</DataField>
+        </Field>
+        <Field Name="G_L_Account___Account_Type_Caption">
+          <DataField>G_L_Account___Account_Type_Caption</DataField>
+        </Field>
+        <Field Name="G_L_Account__TotalingCaption">
+          <DataField>G_L_Account__TotalingCaption</DataField>
+        </Field>
+        <Field Name="G_L_Account___Gen__Posting_Type_Caption">
+          <DataField>G_L_Account___Gen__Posting_Type_Caption</DataField>
+        </Field>
+        <Field Name="G_L_Account___Gen__Bus__Posting_Group_Caption">
+          <DataField>G_L_Account___Gen__Bus__Posting_Group_Caption</DataField>
+        </Field>
+        <Field Name="G_L_Account___Gen__Prod__Posting_Group_Caption">
+          <DataField>G_L_Account___Gen__Prod__Posting_Group_Caption</DataField>
+        </Field>
+        <Field Name="G_L_Account___Direct_Posting_Caption">
+          <DataField>G_L_Account___Direct_Posting_Caption</DataField>
+        </Field>
+        <Field Name="G_L_Account___Consol__Translation_Method_Caption">
+          <DataField>G_L_Account___Consol__Translation_Method_Caption</DataField>
+        </Field>
+        <Field Name="Balance_Caption">
+          <DataField>Balance_Caption</DataField>
+        </Field>
+        <Field Name="Budget_Category_Caption">
+          <DataField>Budget_Category_Caption</DataField>
+        </Field>
+        <Field Name="G_L_Account___No__">
+          <DataField>G_L_Account___No__</DataField>
+        </Field>
+        <Field Name="PADSTR_____G_L_Account__Indentation___2___G_L_Account__Name">
+          <DataField>PADSTR_____G_L_Account__Indentation___2___G_L_Account__Name</DataField>
+        </Field>
+        <Field Name="G_L_Account___Income_Balance_">
+          <DataField>G_L_Account___Income_Balance_</DataField>
+        </Field>
+        <Field Name="G_L_Account___Account_Type_">
+          <DataField>G_L_Account___Account_Type_</DataField>
+        </Field>
+        <Field Name="G_L_Account__Totaling">
+          <DataField>G_L_Account__Totaling</DataField>
+        </Field>
+        <Field Name="G_L_Account___Gen__Posting_Type_">
+          <DataField>G_L_Account___Gen__Posting_Type_</DataField>
+        </Field>
+        <Field Name="G_L_Account___Gen__Bus__Posting_Group_">
+          <DataField>G_L_Account___Gen__Bus__Posting_Group_</DataField>
+        </Field>
+        <Field Name="G_L_Account___Gen__Prod__Posting_Group_">
+          <DataField>G_L_Account___Gen__Prod__Posting_Group_</DataField>
+        </Field>
+        <Field Name="G_L_Account___Direct_Posting_">
+          <DataField>G_L_Account___Direct_Posting_</DataField>
+        </Field>
+        <Field Name="G_L_Account___Consol__Translation_Method_">
+          <DataField>G_L_Account___Consol__Translation_Method_</DataField>
+        </Field>
+        <Field Name="G_L_Account___No__of_Blank_Lines_">
+          <DataField>G_L_Account___No__of_Blank_Lines_</DataField>
+        </Field>
+        <Field Name="PageGroupNo">
+          <DataField>PageGroupNo</DataField>
+        </Field>
+        <Field Name="DirectPostingTxt">
+          <DataField>DirectPostingTxt</DataField>
+        </Field>
+        <Field Name="CheckAccType">
+          <DataField>CheckAccType</DataField>
+        </Field>
+        <Field Name="AccountType">
+          <DataField>AccountType</DataField>
+        </Field>
+        <Field Name="ConsTransMethod">
+          <DataField>ConsTransMethod</DataField>
+        </Field>
+        <Field Name="IncomeBalance">
+          <DataField>IncomeBalance</DataField>
+        </Field>
+        <Field Name="GenPostingType">
+          <DataField>GenPostingType</DataField>
+        </Field>
+        <Field Name="Balance">
+          <DataField>Balance</DataField>
+        </Field>
+        <Field Name="BalanceFormat">
+          <DataField>BalanceFormat</DataField>
+        </Field>
+        <Field Name="Budget_Category">
+          <DataField>Budget_Category</DataField>
+        </Field>
+      </Fields>
+      <Query>
+        <DataSourceName>DataSource</DataSourceName>
+        <CommandText />
+      </Query>
+    </DataSet>
+  </DataSets>
 </Report>

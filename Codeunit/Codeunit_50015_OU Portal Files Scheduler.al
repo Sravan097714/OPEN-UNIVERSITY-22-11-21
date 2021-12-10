@@ -78,15 +78,11 @@ codeunit 50015 "OU Portal Files Scheduler"
     begin
         ReRegistrationFee.SetCurrentKey(PTN);
         ReRegistrationFee.SetRange("NAV Doc No.", '');
+        ReRegistrationFee.SetFilter("Student ID", '<>%1', '');
         if ReRegistrationFee.FindSet() then
             repeat
-                if ReRegistrationFee."Student ID" <> '' then begin
-                    ReRegistrationFee3.Reset();
-                    ReRegistrationFee3.SetRange(PTN, ReRegistrationFee.PTN);
-                    ReRegistrationFee3.ModifyAll(Error, '');
-                    Commit();
-                end;
                 ReRegistrationFee2 := ReRegistrationFee;
+                ReRegistrationFee2.Error := '';
                 if not ProcessReRegistrationFee.Run(ReRegistrationFee2) then begin
                     ReRegistrationFee2.Error := copystr(GetLastErrorText(), 1, MaxStrLen(ReRegistrationFee2.Error));
                     ReRegistrationFee2.Modify();

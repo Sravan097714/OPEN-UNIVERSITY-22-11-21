@@ -48,8 +48,6 @@ tableextension 50012 SalesReceivablesSetupExt extends "Sales & Receivables Setup
         }
         field(50007; "No. Series for OU Portal"; Code[20])
         {
-
-            Caption = 'No. Series for Application Registration OU Portal';
             TableRelation = "No. Series";
         }
         field(50008; "Sales Invoice Signature Name"; Text[50]) { }
@@ -135,6 +133,12 @@ tableextension 50012 SalesReceivablesSetupExt extends "Sales & Receivables Setup
         {
             Caption = 'Customer Posting Group';
             TableRelation = "Customer Posting Group";
+        }
+        field(500032; "No. Series for AppReg."; Code[20])
+        {
+
+            Caption = 'No. Series for Application Registration OU Portal';
+            TableRelation = "No. Series";
         }
     }
 }

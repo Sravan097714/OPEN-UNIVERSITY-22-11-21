@@ -12,6 +12,7 @@ codeunit 50018 "Process ReRegistration Fee"
 
         if ValidateReRegistrationFee(ReRegistrationFee) then
             CreateSalesInvoice(ReRegistrationFee);
+
         if GuiAllowed then
             Window.Close();
         Rec := ReRegistrationFee;
@@ -22,15 +23,15 @@ codeunit 50018 "Process ReRegistration Fee"
         Customer: Record Customer;
         Customer2: Record Customer;
         Item: Record Item;
-        ReRegistrationFeePar3: Record "ReRegistration Fee OU Portal";
         GenLedgSetup: Record "General Ledger Setup";
         DimValue: Record "Dimension Value";
+        SalesHeaderLRec: Record "Sales Header";
     begin
         if GuiAllowed then
             Window.Update(1, ReRegistrationFeePar."Line No.");
 
         SalesReceivableSetup.Get();
-        if not Customer.get(ReRegistrationFeePar."Student ID") then begin
+        if (not Customer.get(ReRegistrationFeePar."Student ID")) and (ReRegistrationFeePar."Student ID" <> '') then begin
             Customer2.Init();
             Customer2."No." := ReRegistrationFeePar."Student ID";
             Customer2.Name := ReRegistrationFeePar."First Name" + ' ' + ReRegistrationFeePar."Last Name";
@@ -53,19 +54,18 @@ codeunit 50018 "Process ReRegistration Fee"
 
         ReRegistrationFeePar3.reset;
         ReRegistrationFeePar3.SetRange(PTN, ReRegistrationFeePar.PTN);
-        ReRegistrationFeePar3.SetFilter(Error, '<>%1', '');
-        if ReRegistrationFeePar3.FindFirst() then
-            Error('One or more line with the same PTN Number has an error.');
-
-        ReRegistrationFeePar3.reset;
-        ReRegistrationFeePar3.SetRange(PTN, ReRegistrationFeePar.PTN);
         ReRegistrationFeePar3.SetFilter("No.", '<>%1', '');
-        //ReRegistrationFeePar3.SetFilter(Error, '<>%1', '');
-        if ReRegistrationFeePar3.Count = 0 then
-            Error('There are no module code on one or more line.');
+        if ReRegistrationFeePar3.FindSet() then
+            repeat
+                Item.Get(ReRegistrationFeePar3."No.");
+            until ReRegistrationFeePar3.Next() = 0
+        else
+            Error('There are no module code on one line.');
 
-        if ReRegistrationFeePar."No." <> '' then
-            Item.Get(ReRegistrationFeePar."No.");
+        SalesHeaderLRec.Reset();
+        SalesHeaderLRec.SetRange(PTN, ReRegistrationFeePar.PTN);
+        if SalesHeaderLRec.FindFirst() then
+            Error('Sales Invoice already exsits for same PTN No. The Sales Invoice No. is %1', SalesHeaderLRec."No.");
 
         GenLedgSetup.Get();
 
@@ -85,7 +85,6 @@ codeunit 50018 "Process ReRegistration Fee"
         grecCustPostingGrp: Record "Customer Posting Group";
         NoSeriesMgt: Codeunit NoSeriesManagement;
         SalesHeader: Record "Sales Header";
-        SalesHeader2: Record "Sales Header";
     begin
         SalesReceivableSetup.Get();
         SalesReceivableSetup.TestField("No. Series for OU Portal");
@@ -95,52 +94,53 @@ codeunit 50018 "Process ReRegistration Fee"
         if GuiAllowed then
             Window.Update(1, ReRegistrationFeePar."Line No.");
 
-        SalesHeader2.Reset();
-        SalesHeader2.SetRange(PTN, ReRegistrationFeePar.PTN);
-        if not SalesHeader2.FindFirst() then begin
-            SalesHeader.Init;
-            SalesHeader."No." := NoSeriesMgt.GetNextNo(SalesReceivableSetup."No. Series for OU Portal", Today, TRUE);
-            SalesHeader.Validate("Document Type", SalesHeader."Document Type"::Invoice);
-            SalesHeader.validate("Sell-to Customer No.", ReRegistrationFeePar."Student ID");
-            SalesHeader.Validate("Posting Date", ReRegistrationFeePar."Date Processed");
-            SalesHeader.Insert(true);
-            if SalesReceivableSetup."Posted Inv Nos. for OU Portal" <> '' then
-                SalesHeader.Validate("Posting No. Series", SalesReceivableSetup."Posted Inv Nos. for OU Portal");
-            SalesHeader.Validate("Shortcut Dimension 1 Code", ReRegistrationFeePar."Shortcut Dimension 1 Code");
-            SalesHeader.Validate("Shortcut Dimension 2 Code", ReRegistrationFeePar."Shortcut Dimension 2 Code");
-            SalesHeader."First Name" := ReRegistrationFeePar."First Name";
-            SalesHeader."Last Name" := ReRegistrationFeePar."Last Name";
-            SalesHeader."Maiden Name" := ReRegistrationFeePar."Maiden Name";
-            SalesHeader.RDAP := ReRegistrationFeePar.RDAP;
-            SalesHeader.PTN := ReRegistrationFeePar.PTN;
-            SalesHeader."Payment Semester" := ReRegistrationFeePar."Payment Semester";
-            SalesHeader."From OU Portal" := true;
+        SalesHeader.Init;
+        SalesHeader."No." := NoSeriesMgt.GetNextNo(SalesReceivableSetup."No. Series for OU Portal", Today, TRUE);
+        SalesHeader.Validate("Document Type", SalesHeader."Document Type"::Invoice);
+        SalesHeader.validate("Sell-to Customer No.", ReRegistrationFeePar."Student ID");
+        SalesHeader.Validate("Posting Date", ReRegistrationFeePar."Date Processed");
+        SalesHeader.Insert(true);
 
-            if (ReRegistrationFeePar.Currency <> '') and (ReRegistrationFeePar.Currency <> 'Rs') then
-                SalesHeader."Currency Code" := 'USD';
+        SalesHeader.Validate("Shortcut Dimension 1 Code", ReRegistrationFeePar."Shortcut Dimension 1 Code");
+        SalesHeader.Validate("Shortcut Dimension 2 Code", ReRegistrationFeePar."Shortcut Dimension 2 Code");
+        SalesHeader."First Name" := ReRegistrationFeePar."First Name";
+        SalesHeader."Last Name" := ReRegistrationFeePar."Last Name";
+        SalesHeader."Maiden Name" := ReRegistrationFeePar."Maiden Name";
+        SalesHeader.RDAP := ReRegistrationFeePar.RDAP;
+        SalesHeader.PTN := ReRegistrationFeePar.PTN;
+        SalesHeader."Payment Semester" := ReRegistrationFeePar."Payment Semester";
+        SalesHeader."From OU Portal" := true;
 
-            SalesHeader."Gov Grant" := ReRegistrationFeePar."Gov Grant";
-            SalesHeader.Instalment := ReRegistrationFeePar.Instalment;
-            SalesHeader."Payment Amount" := ReRegistrationFeePar."Net Total";
-            SalesHeader."Portal Payment Mode" := ReRegistrationFeePar."Payment Type";
-            SalesHeader."MyT Money Ref" := ReRegistrationFeePar."MyT Money Ref";
-            SalesHeader."MyT Merchant Trade No." := ReRegistrationFeePar."MyT Money Ref Staff";
-            SalesHeader."Payment Date" := ReRegistrationFeePar."Date Paid On";
+        if (ReRegistrationFeePar.Currency <> '') and (ReRegistrationFeePar.Currency <> 'Rs') then
+            SalesHeader."Currency Code" := 'USD';
 
-            if ReRegistrationFeePar.Instalment then
-                SalesHeader.Validate("Customer Posting Group", SalesReceivableSetup."Cust. PG Rereg. Fee Ins")
-            else
-                SalesHeader.Validate("Customer Posting Group", SalesReceivableSetup."Cust. PG Rereg.Fee Without Ins");
+        SalesHeader."Gov Grant" := ReRegistrationFeePar."Gov Grant";
+        SalesHeader.Instalment := ReRegistrationFeePar.Instalment;
+        SalesHeader."Payment Amount" := ReRegistrationFeePar."Net Total";
+        SalesHeader."Portal Payment Mode" := ReRegistrationFeePar."Payment Type";
+        SalesHeader."MyT Money Ref" := ReRegistrationFeePar."MyT Money Ref";
+        SalesHeader."MyT Merchant Trade No." := ReRegistrationFeePar."MyT Money Ref Staff";
+        SalesHeader."Payment Date" := ReRegistrationFeePar."Date Paid On";
 
-            SalesHeader.Modify();
-            ReRegistrationFeePar."NAV Doc No." := SalesHeader."No.";
-        end;
+        if ReRegistrationFeePar.Instalment then
+            SalesHeader.Validate("Customer Posting Group", SalesReceivableSetup."Cust. PG Rereg. Fee Ins")
+        else
+            SalesHeader.Validate("Customer Posting Group", SalesReceivableSetup."Cust. PG Rereg.Fee Without Ins");
 
-        if ReRegistrationFeePar."No." <> '' then
-            CreateSalesInvoiceLine(SalesHeader2."No.", ReRegistrationFeePar."No.", ReRegistrationFeePar."Common Module Code", ReRegistrationFeePar."Module Description", ReRegistrationFeePar."Module Amount", ReRegistrationFeePar."Shortcut Dimension 1 Code", ReRegistrationFeePar.Instalment, ReRegistrationFeePar."Module Fee Ins", ReRegistrationFeePar."Penalty Fee");
+        SalesHeader.Modify();
+        ReRegistrationFeePar."NAV Doc No." := SalesHeader."No.";
 
-        if SalesHeader2."No." <> '' then
-            ReRegistrationFeePar."NAV Doc No." := SalesHeader2."No.";
+        ReRegistrationFeePar3.reset;
+        ReRegistrationFeePar3.SetRange(PTN, ReRegistrationFeePar.PTN);
+        ReRegistrationFeePar3.SetFilter("No.", '<>%1', '');
+        if ReRegistrationFeePar3.FindSet() then
+            repeat
+                CreateSalesInvoiceLine(SalesHeader."No.", ReRegistrationFeePar3."No.", ReRegistrationFeePar3."Common Module Code", ReRegistrationFeePar3."Module Description", ReRegistrationFeePar3."Module Amount", ReRegistrationFeePar3."Shortcut Dimension 1 Code", ReRegistrationFeePar3.Instalment, ReRegistrationFeePar3."Module Fee Ins", ReRegistrationFeePar3."Penalty Fee");
+                ReRegistrationFeePar3."NAV Doc No." := SalesHeader."No.";
+                ReRegistrationFeePar3.Modify();
+            until ReRegistrationFeePar3.Next() = 0;
+
+        ReRegistrationFeePar."NAV Doc No." := SalesHeader."No.";
         ReRegistrationFeePar.Modify();
     end;
 
@@ -217,7 +217,7 @@ codeunit 50018 "Process ReRegistration Fee"
     var
         SalesReceivableSetup: Record "Sales & Receivables Setup";
         ReRegistrationFee: Record "ReRegistration Fee OU Portal";
-        ReRegistrationFee2: Record "ReRegistration Fee OU Portal";
+        ReRegistrationFeePar3: Record "ReRegistration Fee OU Portal";
         grecSalesLine: Record "Sales Line";
         grecSalesLine2: Record "Sales Line";
         Window: Dialog;

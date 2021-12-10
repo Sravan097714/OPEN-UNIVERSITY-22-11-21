@@ -1,7 +1,7 @@
 report 50045 "Students Pay By Standing Order"
 {
-    UsageCategory = ReportsAndAnalysis;
-    ApplicationArea = All;
+    //UsageCategory = ReportsAndAnalysis;
+    //ApplicationArea = All;
     Caption = 'List of Students paying by Standing Order';
     DefaultLayout = RDLC;
     RDLCLayout = 'Report\Layout\StudentspayingbyStandingOrder.rdl';

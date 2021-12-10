@@ -27,6 +27,7 @@ table 50018 "Bank Standing Orders"
                         Address := grecCustomer.Address;
                         City := grecCustomer.City;
                         Country := grecCustomer."Country/Region Code";
+                        "National Identity No." := grecCustomer.NIC;
                     end;
                 end;
             end;
@@ -74,8 +75,8 @@ table 50018 "Bank Standing Orders"
         {
             Caption = 'Student Current / Savings Account No.';
         }
-        field(16; "From Month"; Text[15]) { }
-        field(17; "To Month"; Text[15]) { }
+        field(16; "From Month"; Date) { }
+        field(17; "To Month"; Date) { }
 
         field(18; "Account to Credit"; Text[20]) { }
 
@@ -113,6 +114,20 @@ table 50018 "Bank Standing Orders"
         {
             DataClassification = ToBeClassified;
         }
+        field(30; "Bank Code"; Code[20])
+        {
+            TableRelation = "Bank Details"."Bank Code";
+            DataClassification = ToBeClassified;
+            trigger OnValidate()
+            var
+                BankDetails: Record "Bank Details";
+            begin
+                if BankDetails.Get("Bank Code") then begin
+                    "Name of Bank 2" := BankDetails."Bank Name";
+                    "Account to Credit" := BankDetails."Bank Account No.";
+                end;
+            end;
+        }
 
     }
 
@@ -134,8 +149,8 @@ table 50018 "Bank Standing Orders"
     trigger OnInsert()
     begin
         grecSalesReceivableSetup.Get;
-        "Name of Bank 2" := 'State Bank of Mauritius Ltd';
-        "Account to Credit" := '61025100004526';
+        //"Name of Bank 2" := 'State Bank of Mauritius Ltd';
+        //"Account to Credit" := '61025100004526';
         "Bank Standing Order No." := NoSeriesMgt.GetNextNo(grecSalesReceivableSetup."Bank Standing Order Nos.", Today, TRUE);
         "Created By" := UserId;
         Date := Today;

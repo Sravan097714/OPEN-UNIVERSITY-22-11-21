@@ -90,11 +90,9 @@ codeunit 50021 "Process Full Program Fee"
         grecSalesLine.Validate(Type, grecSalesLine.Type::"G/L Account");
         grecSalesLine.Validate("No.", SalesReceivableSetup."G/L for Full Pgm Fee");
 
-        grecSalesLine.Validate("Unit Price", FullPgmFeeLPar.FullFees);
+        grecSalesLine.Validate("Unit Price", FullPgmFeeLPar."Payment Amount");
 
         grecSalesLine.Validate(Quantity, 1);
-
-        grecSalesLine.Validate(grecSalesLine."Line Discount Amount", FullPgmFeeLPar."Discount Amount");
 
         grecSalesLine2.reset;
         grecSalesLine2.SetRange("Document No.", pcodeDocNo);

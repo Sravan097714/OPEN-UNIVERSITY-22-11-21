@@ -86,7 +86,7 @@ report 50031 "Import App Fee from OU Portal"
         NoSeries.RESET;
         NoSeries.SETRANGE("Series Code", grecSalesReceivableSetup."No. Series for OU Portal");
         IF NoSeries.FINDLAST THEN
-            grecGenJnlLine."Document No." := NoSeriesMgt.GetNextNo(grecSalesReceivableSetup."No. Series for OU Portal", Today, false);
+            grecGenJnlLine."Document No." := NoSeriesMgt.GetNextNo(grecSalesReceivableSetup."No. Series for AppReg.", Today, false);
 
         EVALUATE(grecGenJnlLine."Posting Date", GetValueAtCell(RowNo, 23));
         grecGenJnlLine."Account Type" := grecGenJnlLine."Account Type"::"G/L Account";

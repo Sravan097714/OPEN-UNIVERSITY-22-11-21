@@ -134,6 +134,7 @@ page 50065 "Archived Bank Standing Order"
                     GridLayout = Rows;
                     group("            ")
                     {
+                        field("Bank Code"; "Bank Code") { ApplicationArea = All; }
                         field("Name of Bank 2"; "Name of Bank 2") { ApplicationArea = All; }
                         field("Account to Credit"; "Account to Credit") { ApplicationArea = All; }
                     }

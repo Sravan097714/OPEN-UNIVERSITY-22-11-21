@@ -5,6 +5,7 @@ page 50045 "Bank Standing Order"
     //UsageCategory = Tasks;
     SourceTable = "Bank Standing Orders";
 
+
     layout
     {
         area(Content)
@@ -131,6 +132,7 @@ page 50045 "Bank Standing Order"
                     GridLayout = Rows;
                     group("            ")
                     {
+                        field("Bank Code"; "Bank Code") { ApplicationArea = All; }
                         field("Name of Bank 2"; "Name of Bank 2") { ApplicationArea = All; }
                         field("Account to Credit"; "Account to Credit") { ApplicationArea = All; }
                     }
@@ -144,6 +146,29 @@ page 50045 "Bank Standing Order"
     {
         area(Processing)
         {
+            action("Archive Bank Standing Order")
+            {
+                ApplicationArea = All;
+                Promoted = true;
+                PromotedCategory = Process;
+                PromotedIsBig = true;
+                Image = BankContact;
+
+                trigger OnAction()
+                var
+                    Bankstandingorderrec: Record "Bank Standing Orders";
+                    ArchivedBankStandingOrderrec: Record "Archived Bank Standing Orders";
+                begin
+                    if NOT Confirm('Do you want to archive the Bank Standing Order %1?', false, rec."Bank Standing Order No.", '?') then exit;
+                    ArchivedBankStandingOrderrec.Init();
+                    ArchivedBankStandingOrderrec.TransferFields(Rec);
+                    ArchivedBankStandingOrderrec."Archieved By" := UserId;
+                    ArchivedBankStandingOrderrec."Archieved DateTime" := CurrentDateTime;
+                    ArchivedBankStandingOrderrec.Insert();
+                    Rec.Archived := true;
+                    Rec.Modify();
+                end;
+            }
             action("Print Learner Copy")
             {
                 ApplicationArea = All;

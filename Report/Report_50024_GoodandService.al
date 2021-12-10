@@ -186,8 +186,14 @@ report 50024 "Goods and Services"
                                                 PurchInvLine.Reset();
                                                 PurchInvLine.SetRange("Document No.", VLE."Document No.");
                                                 PurchInvLine.SetFilter(Type, '<>%1', PurchInvLine.Type::" ");
-                                                if PurchInvLine.FindSet() then
-                                                    VarDesc := PurchInvLine."Description 2";
+                                                if PurchInvLine.FindSet() then begin
+                                                    if PurchInvLine."Description 2" <> '' then
+                                                        VarDesc := PurchInvLine."Description 2"
+                                                    else
+                                                        VarDesc := PurchInvLine.Description;
+                                                end;
+
+
                                                 //VarDesc := DELCHR(PurchInvHdr."Posting Description");
                                                 //VarDesc := PurchInvHdr."Posting Description";
                                                 IF PurchInvHdr."Currency Code" <> '' THEN BEGIN
@@ -232,8 +238,12 @@ report 50024 "Goods and Services"
                                                 PurchCrMemoLine.Reset();
                                                 PurchCrMemoLine.SetRange("Document No.", VLE."Document No.");
                                                 PurchCrMemoLine.SetFilter(Type, '<>%1', PurchCrMemoLine.Type::" ");
-                                                if PurchCrMemoLine.FindSet() then
-                                                    VarDesc := PurchCrMemoLine."Description 2";
+                                                if PurchCrMemoLine.FindSet() then begin
+                                                    if PurchCrMemoLine."Description 2" <> '' then
+                                                        VarDesc := PurchCrMemoLine."Description 2"
+                                                    else
+                                                        VarDesc := PurchCrMemoLine.Description;
+                                                end;
                                                 //VarDesc := DELCHR(PurchCrMemoHdr."Posting Description");
                                                 IF PurchCrMemoHdr."Currency Code" <> '' THEN BEGIN
                                                     //VarAmtExclVAT := (PurchCrMemoHdr.Amount) * -1;

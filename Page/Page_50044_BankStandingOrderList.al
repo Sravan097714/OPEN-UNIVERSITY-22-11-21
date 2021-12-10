@@ -5,6 +5,7 @@ page 50044 "Bank Standing Order List"
     UsageCategory = Lists;
     SourceTable = "Bank Standing Orders";
     CardPageId = "Bank Standing Order";
+    SourceTableView = where(Archived = const(false));
 
     layout
     {
@@ -50,7 +51,7 @@ page 50044 "Bank Standing Order List"
                 PromotedCategory = Process;
                 PromotedIsBig = true;
                 Image = BankContact;
-
+                Visible = false;
                 trigger OnAction()
                 var
                     Bankstandingorderrec: Record "Bank Standing Orders";

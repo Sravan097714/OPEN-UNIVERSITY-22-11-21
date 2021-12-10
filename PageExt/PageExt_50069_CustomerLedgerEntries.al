@@ -89,7 +89,7 @@ pageextension 50069 CustomerLedgerEntries extends "Customer Ledger Entries"
         }
         modify("Reason Code")
         {
-            Visible = true;
+            Visible = false;
             ApplicationArea = All;
         }
         modify(Reversed)
@@ -116,6 +116,16 @@ pageextension 50069 CustomerLedgerEntries extends "Customer Ledger Entries"
         modify("External Document No.")
         {
             Visible = true;
+            ApplicationArea = All;
+        }
+        modify("Sales (LCY)")
+        {
+            Visible = false;
+            ApplicationArea = All;
+        }
+        modify(RecipientBankAccount)
+        {
+            Visible = false;
             ApplicationArea = All;
         }
         addlast(Control1)

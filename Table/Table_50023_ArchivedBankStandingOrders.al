@@ -74,8 +74,8 @@ table 50023 "Archived Bank Standing Orders"
         {
             Caption = 'Student Current / Savings Account No.';
         }
-        field(16; "From Month"; Text[15]) { }
-        field(17; "To Month"; Text[15]) { }
+        field(16; "From Month"; Date) { }
+        field(17; "To Month"; Date) { }
 
         field(18; "Account to Credit"; Text[20]) { }
 
@@ -111,6 +111,11 @@ table 50023 "Archived Bank Standing Orders"
         }
         field(29; "Archived"; Boolean)
         {
+            DataClassification = ToBeClassified;
+        }
+        field(30; "Bank Code"; Code[20])
+        {
+            TableRelation = "Bank Details"."Bank Code";
             DataClassification = ToBeClassified;
         }
         field(50; "Archieved By"; Code[50])

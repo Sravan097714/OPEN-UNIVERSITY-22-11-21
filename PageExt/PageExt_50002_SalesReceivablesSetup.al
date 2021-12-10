@@ -42,7 +42,7 @@ pageextension 50002 SalesReceivablesSetup extends "Sales & Receivables Setup"
                 {
                     ApplicationArea = All;
                 }
-                field("No. Series for OU Portal"; "No. Series for OU Portal")
+                field("No. Series for AppReg."; "No. Series for AppReg.")
                 {
                     ApplicationArea = All;
                 }
@@ -58,6 +58,7 @@ pageextension 50002 SalesReceivablesSetup extends "Sales & Receivables Setup"
                 {
                     ApplicationArea = All;
                 }
+                field("Customer Posting Group"; Rec."Customer Posting Group") { ApplicationArea = all; }
                 field("Cust. PG Mod. Fee Ins"; Rec."Cust. PG Mod. Fee Ins") { ApplicationArea = all; }
                 field("Cust. PG Mod. Fee Without Ins"; Rec."Cust. PG Mod. Fee Without Ins") { ApplicationArea = all; }
             }
@@ -101,6 +102,10 @@ pageextension 50002 SalesReceivablesSetup extends "Sales & Receivables Setup"
         }
         addlast("Number Series")
         {
+            field("No. Series for OU Portal"; "No. Series for OU Portal")
+            {
+                ApplicationArea = All;
+            }
             field("Posted Inv Nos. for OU Portal"; "Posted Inv Nos. for OU Portal")
             {
                 ApplicationArea = All;
