@@ -25,6 +25,8 @@ report 50056 "Fixed Asset Inventory Sheet"
             column(DateOfPurchase; FORMAT(grecFALedgerEntry."Posting Date")) { }
             column(gtextFilter; gtextFilter) { }
 
+            column(Model; Model) { }
+
             trigger OnAfterGetRecord()
             begin
                 gintEntry += 1;

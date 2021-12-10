@@ -11,7 +11,7 @@ report 50053 "Fixed Assets Register"
     {
         dataitem("Fixed Asset"; "Fixed Asset")
         {
-            RequestFilterFields = "No.", "FA Class Code", "FA Subclass Code";
+            RequestFilterFields = "No.", "FA Class Code", "FA Subclass Code", "FA Location Code";
             column(MainHeadLineText_FA; MainHeadLineText)
             {
             }
@@ -575,15 +575,19 @@ report 50053 "Fixed Assets Register"
     begin
         InPeriodText := Text004;
         DisposalText := Text005;
-        HeadLineText[1] := STRSUBSTNO('%1 %2', FADeprBook.FIELDCAPTION("Acquisition Cost"), StartText);
+        //HeadLineText[1] := STRSUBSTNO('%1 %2', FADeprBook.FIELDCAPTION("Acquisition Cost"), StartText);
+        HeadLineText[1] := STRSUBSTNO('%1 %2', 'Cost', StartText);
         HeadLineText[2] := STRSUBSTNO('%1 %2', Text006, InPeriodText);
         HeadLineText[3] := STRSUBSTNO('%1 %2', DisposalText, InPeriodText);
-        HeadLineText[4] := STRSUBSTNO('%1 %2', FADeprBook.FIELDCAPTION("Acquisition Cost"), EndText);
-        HeadLineText[5] := STRSUBSTNO('%1 %2', FADeprBook.FIELDCAPTION(Depreciation), StartText);
+        //HeadLineText[4] := STRSUBSTNO('%1 %2', FADeprBook.FIELDCAPTION("Acquisition Cost"), EndText);
+        HeadLineText[4] := STRSUBSTNO('%1 %2', 'Cost', EndText);
+        //HeadLineText[5] := STRSUBSTNO('%1 %2', FADeprBook.FIELDCAPTION(Depreciation), StartText);
+        HeadLineText[5] := STRSUBSTNO('%1 %2', 'Depreciation B/F', StartText);
         HeadLineText[6] := STRSUBSTNO('%1 %2', FADeprBook.FIELDCAPTION(Depreciation), InPeriodText);
         HeadLineText[7] := STRSUBSTNO(
             '%1 %2 %3', DisposalText, FADeprBook.FIELDCAPTION(Depreciation), InPeriodText);
-        HeadLineText[8] := STRSUBSTNO('%1 %2', FADeprBook.FIELDCAPTION(Depreciation), EndText);
+        //HeadLineText[8] := STRSUBSTNO('%1 %2', FADeprBook.FIELDCAPTION(Depreciation), EndText);
+        HeadLineText[8] := STRSUBSTNO('%1 %2', 'Cummulative Deprecation', EndText);
         HeadLineText[9] := STRSUBSTNO('%1 %2', FADeprBook.FIELDCAPTION("Book Value"), StartText);
         HeadLineText[10] := STRSUBSTNO('%1 %2', FADeprBook.FIELDCAPTION("Book Value"), EndText);
         HeadLineText[11] := STRSUBSTNO('%1 %2', 'Revaluation Cost', EndText);

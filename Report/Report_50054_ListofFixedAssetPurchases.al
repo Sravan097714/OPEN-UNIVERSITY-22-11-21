@@ -29,6 +29,7 @@ report 50054 "List of Fixed Asset Purchases"
             column(Life; grecFADeprBook."No. of Depreciation Years") { }
             column(FA_Supplier_No_; "FA Supplier No.") { }
             column(VendorRec_Name; VendorRec.Name) { }
+            column(FA_Location_Code; "FA Location Code") { }
 
             trigger OnPreDataItem()
             begin

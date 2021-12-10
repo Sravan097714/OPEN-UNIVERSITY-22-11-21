@@ -26,14 +26,22 @@ report 50057 "Fixed Asset Insurance Report"
 
                 Clear(gdatePostingDate);
                 Clear(gdecAcquisitionCost);
+
+                gdatePostingDate := "Date of Purchase";
+
                 grecFALedgerEntry.Reset();
                 grecFALedgerEntry.SetCurrentKey("Entry No.");
                 grecFALedgerEntry.SetRange("FA No.", "No.");
                 grecFALedgerEntry.SetRange("FA Posting Type", grecFALedgerEntry."FA Posting Type"::"Acquisition Cost");
                 grecFALedgerEntry.SetRange("FA Posting Category", grecFALedgerEntry."FA Posting Category"::" ");
                 grecFALedgerEntry.SetRange(Reversed, false);
+                /*
                 if grecFALedgerEntry.FindFirst() then
-                    gdatePostingDate := grecFALedgerEntry."Posting Date";
+                    if "Date of Purchase" <> 0D then
+                        gdatePostingDate := "Date of Purchase"
+                    else
+                        gdatePostingDate := grecFALedgerEntry."Posting Date";
+                */
 
                 //grecFALedgerEntry.SetRange("Document Type", grecFALedgerEntry."Document Type"::Invoice);
                 if grecFALedgerEntry.FindFirst() then
@@ -48,7 +56,7 @@ report 50057 "Fixed Asset Insurance Report"
                 if gdecAmount = 0 then begin
                     grecFAInsuranceSetup.Reset();
                     grecFAInsuranceSetup.SetCurrentKey("Entry No.");
-                    grecFAInsuranceSetup.SetRange("FA Posting Group", "FA Posting Group");
+                    //grecFAInsuranceSetup.SetRange("FA Posting Group", "FA Posting Group");
                     grecFAInsuranceSetup.SetRange("FA Class Code", "FA Class Code");
                     grecFAInsuranceSetup.SetRange("Insurance Type", "Insurance Type");
                     if grecFAInsuranceSetup.FindFirst() then begin
@@ -68,7 +76,7 @@ report 50057 "Fixed Asset Insurance Report"
                 if (gdecAcquisitionCost <> 0) and (gdecAmount = 0) then begin
                     grecFAInsuranceSetup.Reset();
                     grecFAInsuranceSetup.SetCurrentKey("Entry No.");
-                    grecFAInsuranceSetup.SetRange("FA Posting Group", "FA Posting Group");
+                    //grecFAInsuranceSetup.SetRange("FA Posting Group", "FA Posting Group");
                     grecFAInsuranceSetup.SetRange("FA Class Code", "FA Class Code");
                     grecFAInsuranceSetup.SetRange("Insurance Type", "Insurance Type");
                     if grecFAInsuranceSetup.FindLast() then begin

@@ -23,6 +23,7 @@ report 50063 "Transaction Listing"
             column(Source_No_; "Source No.") { }
             column(VendorName; grecVendor.Name) { }
             column(gintCount; gintCount) { }
+            column(gdateStartDate; gdateStartDate) { }
 
             trigger OnAfterGetRecord()
             begin

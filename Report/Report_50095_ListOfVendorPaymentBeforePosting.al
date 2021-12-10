@@ -39,6 +39,7 @@ report 50095 "List of Vendor Pymts Bfr Post"
             column(UserID; UserId) { }
             column(PrintDate; format(Today, 0)) { }
             column(ReportFilters; ReportFilters) { }
+            column(Posting_Date; "Posting Date") { }
 
             dataitem("Purchase Line"; "Purchase Line")
             {

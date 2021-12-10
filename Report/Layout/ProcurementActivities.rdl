@@ -2551,7 +2551,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=LAST(Fields!gdecAbove100.Value)</Value>
+                                  <Value>=Max(Fields!gdecAbove100.Value)</Value>
                                   <Style>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>n2</Format>
@@ -3118,7 +3118,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=LAST(Fields!gdecBelow100.Value)</Value>
+                                  <Value>=Max(Fields!gdecBelow100.Value)</Value>
                                   <Style>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>n2</Format>
@@ -4255,7 +4255,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=LAST(Fields!gdecSMEVendor.Value)</Value>
+                                  <Value>=Max(Fields!gdecSMEVendor.Value)</Value>
                                   <Style>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>n2</Format>
@@ -4905,7 +4905,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=LAST(Fields!gintSMEVendor.Value)</Value>
+                                  <Value>=Max(Fields!gintSMEVendor.Value)</Value>
                                   <Style>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>n2</Format>
@@ -4933,7 +4933,6 @@
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                   </TablixCells>

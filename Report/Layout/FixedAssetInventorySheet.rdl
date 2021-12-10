@@ -19,31 +19,34 @@
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>1.36229cm</Width>
+                  <Width>1.08735cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>2.68521cm</Width>
+                  <Width>2.28834cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>4.38954cm</Width>
+                  <Width>4.08239cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>2.63546cm</Width>
+                  <Width>2.47671cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>2.5cm</Width>
+                  <Width>2.10313cm</Width>
                 </TablixColumn>
                 <TablixColumn>
                   <Width>2.42063cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>2.81749cm</Width>
+                  <Width>2.5cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>2.52645cm</Width>
+                  <Width>2.49999cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>3.08208cm</Width>
+                  <Width>2.44707cm</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>2.65875cm</Width>
                 </TablixColumn>
                 <TablixColumn>
                   <Width>3.33315cm</Width>
@@ -64,6 +67,7 @@
                                 <TextRun>
                                   <Value>S/N</Value>
                                   <Style>
+                                    <FontSize>7pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -100,6 +104,7 @@
                                 <TextRun>
                                   <Value>Asset No. </Value>
                                   <Style>
+                                    <FontSize>7pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -136,6 +141,7 @@
                                 <TextRun>
                                   <Value>Description</Value>
                                   <Style>
+                                    <FontSize>7pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -172,6 +178,7 @@
                                 <TextRun>
                                   <Value>Responsible Employee</Value>
                                   <Style>
+                                    <FontSize>7pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -208,6 +215,7 @@
                                 <TextRun>
                                   <Value>FA Subclass Code</Value>
                                   <Style>
+                                    <FontSize>7pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -244,6 +252,7 @@
                                 <TextRun>
                                   <Value>Make</Value>
                                   <Style>
+                                    <FontSize>7pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -252,6 +261,43 @@
                             </Paragraph>
                           </Paragraphs>
                           <rd:DefaultName>Textbox10</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <BottomBorder>
+                              <Color>Black</Color>
+                              <Style>Solid</Style>
+                              <Width>1.5pt</Width>
+                            </BottomBorder>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox22">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Model</Value>
+                                  <Style>
+                                    <FontSize>7pt</FontSize>
+                                    <FontWeight>Bold</FontWeight>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox22</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>None</Style>
@@ -280,6 +326,7 @@
                                 <TextRun>
                                   <Value>Serial Number</Value>
                                   <Style>
+                                    <FontSize>7pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -316,6 +363,7 @@
                                 <TextRun>
                                   <Value>PO Number</Value>
                                   <Style>
+                                    <FontSize>7pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -352,6 +400,7 @@
                                 <TextRun>
                                   <Value>Date of Purchase</Value>
                                   <Style>
+                                    <FontSize>7pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -388,6 +437,7 @@
                                 <TextRun>
                                   <Value>Remark</Value>
                                   <Style>
+                                    <FontSize>7pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -430,7 +480,9 @@
                               <TextRuns>
                                 <TextRun>
                                   <Value>=Fields!gintEntry.Value</Value>
-                                  <Style />
+                                  <Style>
+                                    <FontSize>7pt</FontSize>
+                                  </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -461,7 +513,9 @@
                               <TextRuns>
                                 <TextRun>
                                   <Value>=Fields!FA_No_.Value</Value>
-                                  <Style />
+                                  <Style>
+                                    <FontSize>7pt</FontSize>
+                                  </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style />
@@ -490,7 +544,9 @@
                               <TextRuns>
                                 <TextRun>
                                   <Value>=Fields!Description.Value</Value>
-                                  <Style />
+                                  <Style>
+                                    <FontSize>7pt</FontSize>
+                                  </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style />
@@ -519,7 +575,9 @@
                               <TextRuns>
                                 <TextRun>
                                   <Value>=Fields!Responsible_Employee.Value</Value>
-                                  <Style />
+                                  <Style>
+                                    <FontSize>7pt</FontSize>
+                                  </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style />
@@ -548,7 +606,9 @@
                               <TextRuns>
                                 <TextRun>
                                   <Value>=Fields!FA_Subclass_Code.Value</Value>
-                                  <Style />
+                                  <Style>
+                                    <FontSize>7pt</FontSize>
+                                  </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style />
@@ -577,13 +637,46 @@
                               <TextRuns>
                                 <TextRun>
                                   <Value>=Fields!Make.Value</Value>
-                                  <Style />
+                                  <Style>
+                                    <FontSize>7pt</FontSize>
+                                  </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style />
                             </Paragraph>
                           </Paragraphs>
                           <rd:DefaultName>Make</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox23">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!Model.Value</Value>
+                                  <Style>
+                                    <FontSize>7pt</FontSize>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox23</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>None</Style>
@@ -606,7 +699,9 @@
                               <TextRuns>
                                 <TextRun>
                                   <Value>=Fields!SerialNo.Value</Value>
-                                  <Style />
+                                  <Style>
+                                    <FontSize>7pt</FontSize>
+                                  </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style />
@@ -635,7 +730,9 @@
                               <TextRuns>
                                 <TextRun>
                                   <Value>=Fields!PONumber.Value</Value>
-                                  <Style />
+                                  <Style>
+                                    <FontSize>7pt</FontSize>
+                                  </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style />
@@ -664,7 +761,9 @@
                               <TextRuns>
                                 <TextRun>
                                   <Value>=Fields!DateOfPurchase.Value</Value>
-                                  <Style />
+                                  <Style>
+                                    <FontSize>7pt</FontSize>
+                                  </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style />
@@ -693,7 +792,9 @@
                               <TextRuns>
                                 <TextRun>
                                   <Value />
-                                  <Style />
+                                  <Style>
+                                    <FontSize>7pt</FontSize>
+                                  </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -730,6 +831,7 @@
                 <TablixMember />
                 <TablixMember />
                 <TablixMember />
+                <TablixMember />
               </TablixMembers>
             </TablixColumnHierarchy>
             <TablixRowHierarchy>
@@ -747,7 +849,7 @@
             <Top>0.34078cm</Top>
             <Left>0cm</Left>
             <Height>1.8cm</Height>
-            <Width>27.7523cm</Width>
+            <Width>27.89751cm</Width>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -762,10 +864,10 @@
           </Border>
         </Style>
       </Body>
-      <Width>277.52302mm</Width>
+      <Width>278.9751mm</Width>
       <Page>
         <PageHeader>
-          <Height>33.93144mm</Height>
+          <Height>37.18908mm</Height>
           <PrintOnFirstPage>true</PrintOnFirstPage>
           <PrintOnLastPage>true</PrintOnLastPage>
           <ReportItems>
@@ -865,6 +967,40 @@
               <Height>0.59999cm</Height>
               <Width>27.7523cm</Width>
               <ZIndex>2</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+                <PaddingTop>2pt</PaddingTop>
+                <PaddingBottom>2pt</PaddingBottom>
+              </Style>
+            </Textbox>
+            <Textbox Name="Textbox20">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>=Globals!ExecutionTime</Value>
+                      <Style>
+                        <Format>g</Format>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Right</TextAlign>
+                  </Style>
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>Textbox20</rd:DefaultName>
+              <Top>2.87278cm</Top>
+              <Left>21.70688cm</Left>
+              <Height>0.6cm</Height>
+              <Width>6.04542cm</Width>
+              <ZIndex>3</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -1142,6 +1278,9 @@
         </Field>
         <Field Name="gtextFilter">
           <DataField>gtextFilter</DataField>
+        </Field>
+        <Field Name="Model">
+          <DataField>Model</DataField>
         </Field>
       </Fields>
       <Query>

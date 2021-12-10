@@ -6,6 +6,34 @@ pageextension 50087 GLBudgetExt extends "G/L Budget Names"
         {
             field("Include on Budget Matrix"; "Include on Budget Matrix") { ApplicationArea = All; }
         }
+        modify("Global Dimension 1 Code")
+        {
+            Visible = false;
+        }
+        modify("Global Dimension 2 Code")
+        {
+            Visible = false;
+        }
+        modify("Budget Dimension 1 Code")
+        {
+            Visible = false;
+        }
+        modify("Budget Dimension 2 Code")
+        {
+            Visible = false;
+        }
+        modify("Budget Dimension 3 Code")
+        {
+            Visible = false;
+        }
+        modify("Budget Dimension 4 Code")
+        {
+            Visible = false;
+        }
+        modify(Blocked)
+        {
+            Visible = false;
+        }
     }
 
 
