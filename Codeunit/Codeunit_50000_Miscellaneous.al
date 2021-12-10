@@ -487,22 +487,27 @@ codeunit 50000 Miscellaneous
         BankAccountLedgerEntry."Amount to Remit" := GenJournalLine."Amount To Remit"
     end;
 
-    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Batch Posting Print Mgt.", 'OnBeforeGLRegPostingReportPrint', '', true, true)]
-    local procedure "Batch Posting Print Mgt._OnBeforeGLRegPostingReportPrint"
-    (
-        var ReportID: Integer;
-        ReqWindow: Boolean;
-        SystemPrinter: Boolean;
-        var GLRegister: Record "G/L Register";
-        var Handled: Boolean
-    )
-    begin
-        if ReportID <> 50008 then
-            exit;
-        REPORT.Run(ReportID, false, true, GLRegister);
-        Handled := true;
-    end;
+    /*
+        [EventSubscriber(ObjectType::Codeunit, Codeunit::"Batch Posting Print Mgt.", 'OnBeforeGLRegPostingReportPrint', '', true, true)]
+        local procedure "Batch Posting Print Mgt._OnBeforeGLRegPostingReportPrint"
+        (
+            var ReportID: Integer;
+            ReqWindow: Boolean;
+            SystemPrinter: Boolean;
+            var GLRegister: Record "G/L Register";
+            var Handled: Boolean
+        )
+        var
+            DataRecRef: RecordRef;
+        begin
+            if ReportID <> 50008 then
+                exit;
 
+            REPORT.Run(ReportID, false, true, GLRegister);
+
+            Handled := true;
+        end;
+    */
 
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Reminder-Issue", 'OnBeforeIssueReminder', '', true, true)]
     local procedure "Reminder-Issue_OnBeforeIssueReminder"
@@ -525,6 +530,36 @@ codeunit 50000 Miscellaneous
     begin
         IssuedReminderHeader."Created By" := UserId;
         IssuedReminderHeader."Created On" := CurrentDateTime;
+    end;
+
+    local procedure GetRequestParametersText(ReportID: Integer): Text
+    var
+        TempBlob: Codeunit "Temp Blob";
+        InStr: InStream;
+        ReqPageXML: Text;
+        Index: Integer;
+        TempBlobIndicesNameValueBuffer: Record "Name/Value Buffer" temporary;
+        TempBlobList: Codeunit "Temp Blob List";
+    begin
+        TempBlobIndicesNameValueBuffer.Get(ReportID);
+        Evaluate(Index, TempBlobIndicesNameValueBuffer.Value);
+        TempBlobList.Get(Index, TempBlob);
+        TempBlob.CreateInStream(InStr);
+        InStr.ReadText(ReqPageXML);
+        exit(ReqPageXML);
+    end;
+
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Gen. Jnl.-Post Line", 'OnBeforePostGenJnlLine', '', true, true)]
+    local procedure "Gen. Jnl.-Post Line_OnBeforePostGenJnlLine"
+    (
+        var GenJournalLine: Record "Gen. Journal Line";
+        Balancing: Boolean
+    )
+    begin
+        if (GenJournalLine."Account Type" = GenJournalLine."Account Type"::"Fixed Asset") and
+            (GenJournalLine."FA Posting Type" = GenJournalLine."FA Posting Type"::"Acquisition Cost") then
+            GenJournalLine.TestField("FA Supplier No.");
     end;
 
 
