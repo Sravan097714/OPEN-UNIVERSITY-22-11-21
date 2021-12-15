@@ -143,7 +143,12 @@ report 50073 "Payment through Bank Transfer"
                     Check.InitTextVariable;
                     Check.FormatNoText(TextInWords, Amt, ''); */
 
-
+                    if (PrevVendor = "Vendor No.") and (PrevDocumentNo = "Document No.") then
+                        CurrReport.Skip()
+                    else begin
+                        PrevDocumentNo := "Document No.";
+                        PrevVendor := "Vendor No."
+                    end;
                 end;
 
                 trigger OnPreDataItem()
@@ -316,5 +321,7 @@ report 50073 "Payment through Bank Transfer"
         TextInWords: array[2] of Text;
 
         sumamount: Decimal;
+        PrevVendor: Code[20];
+        PrevDocumentNo: Code[20];
 }
 

@@ -174,6 +174,7 @@ page 50042 "G/L Budget by Account Category"
     {
         area(Processing)
         {
+
             action("Export Budget")
             {
                 ApplicationArea = All;
@@ -413,5 +414,10 @@ page 50042 "G/L Budget by Account Category"
         grecEarmarkingClaim: Record "Earmarking Claim Forms Table";
         Remarks: Text[150];
         Remarks2: Text[150];
+
+    procedure Setvalues(BugetNameP: Code[20])
+    begin
+        gtextBudgetName := BugetNameP;
+    end;
 
 }

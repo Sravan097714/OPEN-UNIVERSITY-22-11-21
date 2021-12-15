@@ -4,7 +4,7 @@ pageextension 50087 GLBudgetExt extends "G/L Budget Names"
     {
         addlast(Control1)
         {
-            field("Include on Budget Matrix"; "Include on Budget Matrix") { ApplicationArea = All; }
+            field("Include on Budget Matrix"; "Include on Budget Matrix") { ApplicationArea = All; Visible = false; }
         }
         modify("Global Dimension 1 Code")
         {
@@ -42,6 +42,26 @@ pageextension 50087 GLBudgetExt extends "G/L Budget Names"
     {
         addlast(Processing)
         {
+            action("Budget_Category")
+            {
+                Caption = 'Budget Category';
+                ApplicationArea = All;
+                Promoted = true;
+                PromotedIsBig = true;
+                PromotedCategory = Process;
+                Image = ListPage;
+
+                trigger OnAction();
+                var
+                    GLBudgetcat: Record "G/L Budget by Account Category";
+                    GlBudgetCatPage: Page "G/L Budget by Account Category";
+                begin
+
+                    GlBudgetCatPage.Setvalues(Rec.Name);
+                    GlBudgetCatPage.Run();
+
+                end;
+            }
             action("Update Budget Name for Budgeted Amount")
             {
                 Image = UpdateDescription;
