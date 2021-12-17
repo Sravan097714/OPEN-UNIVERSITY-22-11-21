@@ -51,7 +51,7 @@ report 50062 "Statement of Income Finance"
             column(gdecEmolument10; gdecEmolument[10]) { }
             column(gdecPAYEAmt10; gdecPAYEAmt[10]) { }
 
-            column(Sign; grecPurchPayableSetup."Sign for Emoluments") { }
+            column(Sign; grecCompanyInfo."Name Of Declarant") { }
 
             trigger OnPreDataItem()
             begin
@@ -61,12 +61,14 @@ report 50062 "Statement of Income Finance"
             end;
 
             trigger OnAfterGetRecord()
+            var
+                PurchasePayableSetup: Record "Purchases & Payables Setup";
             begin
                 if grecVendor2.get("Vendor No.") then begin
                     if grecVendor2."Vendor Category" <> 'TUTOR' then
                         CurrReport.Skip();
                 end;
-
+                PurchasePayableSetup.Get();
                 if gtextVendor <> "Vendor No." then begin
                     clear(gtextNID);
                     clear(gtextVendorName);
@@ -87,6 +89,49 @@ report 50062 "Statement of Income Finance"
                     grecVendLedgerEntry.SetRange("Vendor No.", "Vendor No.");
                     if grecVendLedgerEntry.Findset then begin
                         repeat
+                            grecVendLedgerEntry.CalcFields("Original Amt. (LCY)");
+                            gdecEmolument[7] += grecVendLedgerEntry."Original Amt. (LCY)";
+
+                            /* grecGLEntry.Reset();
+                            grecGLEntry.SetCurrentKey("Entry No.");
+                            grecGLEntry.SetRange("Bal. Account Type", grecGLEntry."Bal. Account Type"::"Bank Account");
+                            grecGLEntry.SetRange("Document No.", grecVendLedgerEntry."Document No.");
+                            grecGLEntry.SetRange("Payment Journal No.", grecVendLedgerEntry."Payment Journal No.");
+                            grecGLEntry.SetRange("Payment Type", 'PAY0007');
+                            grecGLEntry.SetRange(VAT, true);
+                            if grecGLEntry.FindSet then begin
+                                repeat
+                                    gdecPAYEAmt[7] += grecGLEntry.Amount;
+                                until grecGLEntry.Next = 0;
+                            end; */
+
+
+                            grecDetailedVendLedgerEntry.Reset();
+                            grecDetailedVendLedgerEntry.SetRange("Document No.", grecVendLedgerEntry."Document No.");
+                            grecDetailedVendLedgerEntry.SetRange("Entry Type", grecDetailedVendLedgerEntry."Entry Type"::Application);
+                            grecDetailedVendLedgerEntry.SetRange("Initial Document Type", grecDetailedVendLedgerEntry."Initial Document Type"::Payment);
+                            if grecDetailedVendLedgerEntry.FindFirst() then begin
+                                grecDetailedVendLedgerEntry2.Reset();
+                                grecDetailedVendLedgerEntry2.SetRange("Applied Vend. Ledger Entry No.", grecDetailedVendLedgerEntry."Applied Vend. Ledger Entry No.");
+                                grecDetailedVendLedgerEntry2.SetRange("Initial Document Type", grecDetailedVendLedgerEntry."Initial Document Type"::Invoice);
+                                if grecDetailedVendLedgerEntry2.FindFirst() then begin
+                                    repeat
+                                        grecVendLedgerEntry2.Reset();
+                                        //grecVendLedgerEntry2.SetRange("Payment Type", 'PAY0007');
+                                        grecVendLedgerEntry2.SetRange("Entry No.", grecDetailedVendLedgerEntry2."Vendor Ledger Entry No.");
+                                        if grecVendLedgerEntry2.FindFirst then begin
+                                            repeat
+                                                grecPurchInvLine.Reset();
+                                                grecPurchInvLine.SetRange("Document No.", grecVendLedgerEntry2."Document No.");
+                                                grecPurchInvLine.SetRange("No.", '110080');
+                                                if grecPurchInvLine.FindFirst() then
+                                                    gdecPAYEAmt[7] += grecPurchInvLine."Direct Unit Cost";
+                                            until grecVendLedgerEntry2.Next = 0;
+                                        end;
+                                    until grecDetailedVendLedgerEntry2.Next = 0;
+                                end;
+                            end;
+
                             Case grecVendLedgerEntry."Payment Type" of
                                 'PAY0001':
                                     begin
@@ -123,9 +168,9 @@ report 50062 "Statement of Income Finance"
                                                         repeat
                                                             grecPurchInvLine.Reset();
                                                             grecPurchInvLine.SetRange("Document No.", grecVendLedgerEntry2."Document No.");
-                                                            grecPurchInvLine.SetRange(PAYE, true);
+                                                            grecPurchInvLine.SetRange("No.", '110080');
                                                             if grecPurchInvLine.FindFirst() then
-                                                                gdecPAYEAmt[1] += grecPurchInvLine."Line Amount";
+                                                                gdecPAYEAmt[1] += grecPurchInvLine."Direct Unit Cost";
                                                         until grecVendLedgerEntry2.Next = 0;
                                                     end;
                                                 until grecDetailedVendLedgerEntry2.Next = 0;
@@ -169,9 +214,9 @@ report 50062 "Statement of Income Finance"
                                                         repeat
                                                             grecPurchInvLine.Reset();
                                                             grecPurchInvLine.SetRange("Document No.", grecVendLedgerEntry2."Document No.");
-                                                            grecPurchInvLine.SetRange(PAYE, true);
+                                                            grecPurchInvLine.SetRange("No.", '110080');
                                                             if grecPurchInvLine.FindFirst() then
-                                                                gdecPAYEAmt[2] += grecPurchInvLine."Line Amount";
+                                                                gdecPAYEAmt[2] += grecPurchInvLine."Direct Unit Cost";
                                                         until grecVendLedgerEntry2.Next = 0;
                                                     end;
                                                 until grecDetailedVendLedgerEntry2.Next = 0;
@@ -215,9 +260,9 @@ report 50062 "Statement of Income Finance"
                                                         repeat
                                                             grecPurchInvLine.Reset();
                                                             grecPurchInvLine.SetRange("Document No.", grecVendLedgerEntry2."Document No.");
-                                                            grecPurchInvLine.SetRange(PAYE, true);
+                                                            grecPurchInvLine.SetRange("No.", '110080');
                                                             if grecPurchInvLine.FindFirst() then
-                                                                gdecPAYEAmt[3] += grecPurchInvLine."Line Amount";
+                                                                gdecPAYEAmt[3] += grecPurchInvLine."Direct Unit Cost";
                                                         until grecVendLedgerEntry2.Next = 0;
                                                     end;
                                                 until grecDetailedVendLedgerEntry2.Next = 0;
@@ -262,9 +307,9 @@ report 50062 "Statement of Income Finance"
                                                         repeat
                                                             grecPurchInvLine.Reset();
                                                             grecPurchInvLine.SetRange("Document No.", grecVendLedgerEntry2."Document No.");
-                                                            grecPurchInvLine.SetRange(PAYE, true);
+                                                            grecPurchInvLine.SetRange("No.", '110080');
                                                             if grecPurchInvLine.FindFirst() then
-                                                                gdecPAYEAmt[4] += grecPurchInvLine."Line Amount";
+                                                                gdecPAYEAmt[4] += grecPurchInvLine."Direct Unit Cost";
                                                         until grecVendLedgerEntry2.Next = 0;
                                                     end;
                                                 until grecDetailedVendLedgerEntry2.Next = 0;
@@ -309,9 +354,9 @@ report 50062 "Statement of Income Finance"
                                                         repeat
                                                             grecPurchInvLine.Reset();
                                                             grecPurchInvLine.SetRange("Document No.", grecVendLedgerEntry2."Document No.");
-                                                            grecPurchInvLine.SetRange(PAYE, true);
+                                                            grecPurchInvLine.SetRange("No.", '110080');
                                                             if grecPurchInvLine.FindFirst() then
-                                                                gdecPAYEAmt[5] += grecPurchInvLine."Line Amount";
+                                                                gdecPAYEAmt[5] += grecPurchInvLine."Direct Unit Cost";
                                                         until grecVendLedgerEntry2.Next = 0;
                                                     end;
                                                 until grecDetailedVendLedgerEntry2.Next = 0;
@@ -356,9 +401,9 @@ report 50062 "Statement of Income Finance"
                                                         repeat
                                                             grecPurchInvLine.Reset();
                                                             grecPurchInvLine.SetRange("Document No.", grecVendLedgerEntry2."Document No.");
-                                                            grecPurchInvLine.SetRange(PAYE, true);
+                                                            grecPurchInvLine.SetRange("No.", '110080');
                                                             if grecPurchInvLine.FindFirst() then
-                                                                gdecPAYEAmt[6] += grecPurchInvLine."Line Amount";
+                                                                gdecPAYEAmt[6] += grecPurchInvLine."Direct Unit Cost";
                                                         until grecVendLedgerEntry2.Next = 0;
                                                     end;
                                                 until grecDetailedVendLedgerEntry2.Next = 0;
@@ -403,9 +448,9 @@ report 50062 "Statement of Income Finance"
                                                         repeat
                                                             grecPurchInvLine.Reset();
                                                             grecPurchInvLine.SetRange("Document No.", grecVendLedgerEntry2."Document No.");
-                                                            grecPurchInvLine.SetRange(PAYE, true);
+                                                            grecPurchInvLine.SetRange("No.", '110080');
                                                             if grecPurchInvLine.FindFirst() then
-                                                                gdecPAYEAmt[7] += grecPurchInvLine."Line Amount";
+                                                                gdecPAYEAmt[7] += grecPurchInvLine."Direct Unit Cost";
                                                         until grecVendLedgerEntry2.Next = 0;
                                                     end;
                                                 until grecDetailedVendLedgerEntry2.Next = 0;
@@ -450,9 +495,9 @@ report 50062 "Statement of Income Finance"
                                                         repeat
                                                             grecPurchInvLine.Reset();
                                                             grecPurchInvLine.SetRange("Document No.", grecVendLedgerEntry2."Document No.");
-                                                            grecPurchInvLine.SetRange(PAYE, true);
+                                                            grecPurchInvLine.SetRange("No.", '110080');
                                                             if grecPurchInvLine.FindFirst() then
-                                                                gdecPAYEAmt[8] += grecPurchInvLine."Line Amount";
+                                                                gdecPAYEAmt[8] += grecPurchInvLine."Direct Unit Cost";
                                                         until grecVendLedgerEntry2.Next = 0;
                                                     end;
                                                 until grecDetailedVendLedgerEntry2.Next = 0;
@@ -497,9 +542,9 @@ report 50062 "Statement of Income Finance"
                                                         repeat
                                                             grecPurchInvLine.Reset();
                                                             grecPurchInvLine.SetRange("Document No.", grecVendLedgerEntry2."Document No.");
-                                                            grecPurchInvLine.SetRange(PAYE, true);
+                                                            grecPurchInvLine.SetRange("No.", '110080');
                                                             if grecPurchInvLine.FindFirst() then
-                                                                gdecPAYEAmt[9] += grecPurchInvLine."Line Amount";
+                                                                gdecPAYEAmt[9] += grecPurchInvLine."Direct Unit Cost";
                                                         until grecVendLedgerEntry2.Next = 0;
                                                     end;
                                                 until grecDetailedVendLedgerEntry2.Next = 0;
@@ -544,9 +589,9 @@ report 50062 "Statement of Income Finance"
                                                         repeat
                                                             grecPurchInvLine.Reset();
                                                             grecPurchInvLine.SetRange("Document No.", grecVendLedgerEntry2."Document No.");
-                                                            grecPurchInvLine.SetRange(PAYE, true);
+                                                            grecPurchInvLine.SetRange("No.", '110080');
                                                             if grecPurchInvLine.FindFirst() then
-                                                                gdecPAYEAmt[10] += grecPurchInvLine."Line Amount";
+                                                                gdecPAYEAmt[10] += grecPurchInvLine."Direct Unit Cost";
                                                         until grecVendLedgerEntry2.Next = 0;
                                                     end;
                                                 until grecDetailedVendLedgerEntry2.Next = 0;

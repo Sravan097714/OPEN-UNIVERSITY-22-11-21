@@ -54,8 +54,8 @@ report 50059 "PAYE Return Finance"
                         if DateFilterGVar <> '' then
                             PurchInvLine.SetFilter("Posting Date", DateFilterGVar);
                         if PurchInvLine.FindSet() then begin
-                            PurchInvLine.CalcSums(PurchInvLine."Line Amount");
-                            EmolumentAmtGVar += Abs(Round(PurchInvLine."Line Amount", 1, '='));
+                            PurchInvLine.CalcSums(PurchInvLine."Direct Unit Cost");
+                            EmolumentAmtGVar += Abs(Round(PurchInvLine."Direct Unit Cost", 1, '='));
                         end;
                         PurchInvLine.Reset();
                         PurchInvLine.SetRange("Document No.", PurchInvHdr."No.");
@@ -65,8 +65,8 @@ report 50059 "PAYE Return Finance"
                         if DateFilterGVar <> '' then
                             PurchInvLine.SetFilter("Posting Date", DateFilterGVar);
                         if PurchInvLine.FindSet() then begin
-                            PurchInvLine.CalcSums(PurchInvLine."Line Amount");
-                            PAYEAmtGVar += Abs(Round(PurchInvLine."Line Amount", 1, '='));
+                            PurchInvLine.CalcSums(PurchInvLine."Direct Unit Cost");
+                            PAYEAmtGVar += Abs(Round(PurchInvLine."Direct Unit Cost", 1, '='));
                         end;
                     until PurchInvHdr.Next() = 0;
                 if (PAYEAmtGVar = 0) then

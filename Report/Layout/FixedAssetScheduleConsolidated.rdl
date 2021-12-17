@@ -519,7 +519,7 @@
                 <TablixMember>
                   <Group Name="FA_Posting_Group">
                     <GroupExpressions>
-                      <GroupExpression>=Fields!FA_Posting_Group.Value</GroupExpression>
+                      <GroupExpression>=Fields!Group_Code.Value</GroupExpression>
                     </GroupExpressions>
                   </Group>
                   <SortExpressions>
@@ -530,14 +530,14 @@
                   <TablixHeader>
                     <Size>0.6cm</Size>
                     <CellContents>
-                      <Textbox Name="FA_Posting_Group">
+                      <Textbox Name="Textbox19">
                         <CanGrow>true</CanGrow>
                         <KeepTogether>true</KeepTogether>
                         <Paragraphs>
                           <Paragraph>
                             <TextRuns>
                               <TextRun>
-                                <Value>=Fields!FA_Posting_Group.Value</Value>
+                                <Value>=Fields!Group_Code.Value</Value>
                                 <Style>
                                   <FontFamily>Arial Black</FontFamily>
                                   <FontWeight>Bold</FontWeight>
@@ -550,7 +550,7 @@
                             </Style>
                           </Paragraph>
                         </Paragraphs>
-                        <rd:DefaultName>FA_Posting_Group</rd:DefaultName>
+                        <rd:DefaultName>Textbox19</rd:DefaultName>
                         <Style>
                           <Border>
                             <Color>LightGrey</Color>
@@ -1065,7 +1065,7 @@
                 <TablixMember>
                   <Group Name="FA_Posting_Group2">
                     <GroupExpressions>
-                      <GroupExpression>=Fields!FA_Posting_Group.Value</GroupExpression>
+                      <GroupExpression>=Fields!Group_Code.Value</GroupExpression>
                     </GroupExpressions>
                   </Group>
                   <SortExpressions>
@@ -1490,7 +1490,7 @@
                 <TablixMember>
                   <Group Name="FA_Posting_Group3">
                     <GroupExpressions>
-                      <GroupExpression>=Fields!FA_Posting_Group.Value</GroupExpression>
+                      <GroupExpression>=Fields!Group_Code.Value</GroupExpression>
                     </GroupExpressions>
                   </Group>
                   <SortExpressions>
@@ -2104,7 +2104,7 @@
                 <TablixMember>
                   <Group Name="FA_Posting_Group4">
                     <GroupExpressions>
-                      <GroupExpression>=Fields!FA_Posting_Group.Value</GroupExpression>
+                      <GroupExpression>=Fields!Group_Code.Value</GroupExpression>
                     </GroupExpressions>
                   </Group>
                   <SortExpressions>
@@ -3124,7 +3124,7 @@
                 <TablixMember>
                   <Group Name="FA_Posting_Group5">
                     <GroupExpressions>
-                      <GroupExpression>=Fields!FA_Posting_Group.Value</GroupExpression>
+                      <GroupExpression>=Fields!Group_Code.Value</GroupExpression>
                     </GroupExpressions>
                   </Group>
                   <SortExpressions>
@@ -3656,7 +3656,7 @@
                 <TablixMember>
                   <Group Name="FA_Posting_Group6">
                     <GroupExpressions>
-                      <GroupExpression>=Fields!FA_Posting_Group.Value</GroupExpression>
+                      <GroupExpression>=Fields!Group_Code.Value</GroupExpression>
                     </GroupExpressions>
                   </Group>
                   <SortExpressions>
@@ -4083,7 +4083,7 @@
                 <TablixMember>
                   <Group Name="FA_Posting_Group7">
                     <GroupExpressions>
-                      <GroupExpression>=Fields!FA_Posting_Group.Value</GroupExpression>
+                      <GroupExpression>=Fields!Group_Code.Value</GroupExpression>
                     </GroupExpressions>
                   </Group>
                   <SortExpressions>
@@ -4505,7 +4505,7 @@
                 <TablixMember>
                   <Group Name="FA_Posting_Group8">
                     <GroupExpressions>
-                      <GroupExpression>=Fields!FA_Posting_Group.Value</GroupExpression>
+                      <GroupExpression>=Fields!Group_Code.Value</GroupExpression>
                     </GroupExpressions>
                   </Group>
                   <SortExpressions>
@@ -4927,7 +4927,7 @@
                 <TablixMember>
                   <Group Name="FA_Posting_Group9">
                     <GroupExpressions>
-                      <GroupExpression>=Fields!FA_Posting_Group.Value</GroupExpression>
+                      <GroupExpression>=Fields!Group_Code.Value</GroupExpression>
                     </GroupExpressions>
                   </Group>
                   <SortExpressions>
@@ -5186,6 +5186,9 @@
       <Fields>
         <Field Name="CompanyName">
           <DataField>CompanyName</DataField>
+        </Field>
+        <Field Name="Group_Code">
+          <DataField>Group_Code</DataField>
         </Field>
         <Field Name="gdateStartDate">
           <DataField>gdateStartDate</DataField>

@@ -24,13 +24,14 @@ report 50061 "Statement Emoluments Finance"
             column(gdecEmolument; gdecEmolument) { }
             column(gdecPAYEAmt; gdecPAYEAmt) { }
 
-            column(Sign; grecPurchPayableSetup."Sign for Emoluments") { }
+            column(Sign; CompanyInfo."Name Of Declarant") { }
 
             trigger OnPreDataItem()
             begin
                 if gcodeVendor <> '' then
                     SetRange("Vendor No.", gcodeVendor);
                 SetRange("Posting Date", gdateStartDate, gdateEndDate);
+                CompanyInfo.Get();
             end;
 
             trigger OnAfterGetRecord()
@@ -163,4 +164,5 @@ report 50061 "Statement Emoluments Finance"
         gcodeVendor: Code[20];
         grecVendor3: Record Vendor;
         gpageVendor: Page "Vendor List";
+        CompanyInfo: Record "Company Information";
 }

@@ -9,11 +9,12 @@ report 50063 "Transaction Listing"
     {
         dataitem("Value Entry"; "Value Entry")
         {
+            DataItemTableView = sorting("Posting Date");
             column(CompanyName; grecCompanyInfo.Name) { }
             column(CompanyAddress; grecCompanyInfo.Address) { }
             column(gdateEndDate; gdateEndDate) { }
             column(Posting_Date; format("Posting Date")) { }
-            column(Document_No_; "Document No.") { }
+            column(Document_No_; OrderNo) { }
             //column(Document_Type; item) { }
             column(Document_Type; "Item Ledger Entry Type") { }
             column(Item_No_; "Item No.") { }
@@ -26,6 +27,8 @@ report 50063 "Transaction Listing"
             column(gdateStartDate; gdateStartDate) { }
 
             trigger OnAfterGetRecord()
+            var
+                PurchReptHeader: Record "Purch. Rcpt. Header";
             begin
                 if grecItem.Get("Item No.") then begin
                     if grecItem.Module then
@@ -34,7 +37,11 @@ report 50063 "Transaction Listing"
 
                 if not grecVendor.get("Source No.") then
                     Clear(grecVendor);
-
+                Clear(OrderNo);
+                if ("Item Ledger Entry Type" = "Item Ledger Entry Type"::Purchase) and PurchReptHeader.Get("Document No.") then
+                    OrderNo := PurchReptHeader."Order No."
+                else
+                    OrderNo := "Document No.";
                 Clear(gdecAmount);
                 if "Cost Amount (Actual)" <> 0 then
                     gdecAmount := "Cost Amount (Actual)"
@@ -92,4 +99,5 @@ report 50063 "Transaction Listing"
         gintCount: Integer;
         grecItem: Record Item;
         grecValueEntry: Record "Value Entry";
+        OrderNo: Code[20];
 }
