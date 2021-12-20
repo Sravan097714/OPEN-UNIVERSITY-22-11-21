@@ -3069,7 +3069,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Sum(Fields!gdecAmt1.Value) + Sum(Fields!gdecAmt2.Value) + Sum(Fields!gdecAmt3.Value) + Sum(Fields!gdecAmt4.Value) + Sum(Fields!gdecAmt5.Value) + Sum(Fields!gdecAmt6.Value) + Sum(Fields!gdecAmt7.Value)</Value>
+                                  <Value>=Sum(Fields!gdecAmt12.Value) + Sum(Fields!gdecAmt22.Value) + Sum(Fields!gdecAmt32.Value) + Sum(Fields!gdecAmt42.Value) + Sum(Fields!gdecAmt52.Value) + Sum(Fields!gdecAmt62.Value) + Sum(Fields!gdecAmt72.Value)</Value>
                                   <Style>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>n2</Format>

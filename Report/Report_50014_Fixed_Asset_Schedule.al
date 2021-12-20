@@ -56,7 +56,7 @@ report 50014 "Fixed Asset Schedule"
                 grecFALedgerEntry.Reset();
                 grecFALedgerEntry.SetCurrentKey("Entry No.");
                 grecFALedgerEntry.SetRange("Entry No.", "FA Ledger Entry"."Entry No.");
-                grecFALedgerEntry.SetFilter("Posting Date", '<=%1', gdateEndDate[1]);
+                grecFALedgerEntry.SetFilter("Posting Date", '<=%1', ClosingDate[1]);
                 grecFALedgerEntry.SetFilter("FA Posting Type", '%1', grecFALedgerEntry."FA Posting Type"::"Acquisition Cost");
                 grecFALedgerEntry.SetRange(Reversed, false);
                 if grecFALedgerEntry.FindFirst() then begin
@@ -64,7 +64,7 @@ report 50014 "Fixed Asset Schedule"
                     gintRowNo1 := 1;
                 end;
 
-                grecFALedgerEntry.SetFilter("Posting Date", '<=%1', gdateEndDate[2]);
+                grecFALedgerEntry.SetFilter("Posting Date", '<=%1', ClosingDate[2]);
                 if grecFALedgerEntry.FindFirst() then begin
                     gdecAmt1[2] := grecFALedgerEntry.Amount;
                     gintRowNo1 := 1;
@@ -133,7 +133,7 @@ report 50014 "Fixed Asset Schedule"
                 //Start of Depreciation 
                 Clear(gdecAmt5);
                 Clear(gintRowNo5);
-                grecFALedgerEntry.SetFilter("Posting Date", '<=%1', gdateEndDate[1]);
+                grecFALedgerEntry.SetFilter("Posting Date", '<=%1', ClosingDate[1]);
                 grecFALedgerEntry.SetRange("FA Posting Type", grecFALedgerEntry."FA Posting Type"::Depreciation);
                 grecFALedgerEntry.SetRange("FA Posting Category");
                 if grecFALedgerEntry.FindFirst() then begin
@@ -141,7 +141,7 @@ report 50014 "Fixed Asset Schedule"
                     gintRowNo5 := 5;
                 end;
 
-                grecFALedgerEntry.SetFilter("Posting Date", '<=%1', gdateEndDate[2]);
+                grecFALedgerEntry.SetFilter("Posting Date", '<=%1', ClosingDate[2]);
                 if grecFALedgerEntry.FindFirst() then begin
                     gdecAmt5[2] := grecFALedgerEntry.Amount;
                     gintRowNo3 := 5;
@@ -257,6 +257,8 @@ report 50014 "Fixed Asset Schedule"
         Message(format(gdateEndDate[1]));
         Message(format(gdateStartDate[2]));
         Message(format(gdateEndDate[2])); */
+        ClosingDate[1] := DMY2Date(30, 06, Date2DMY(gdateEndDate[1], 3) - 1);
+        ClosingDate[2] := DMY2Date(30, 06, Date2DMY(gdateEndDate[2], 3) - 1);
         grecCompanyInfo.get;
     end;
 
@@ -274,6 +276,7 @@ report 50014 "Fixed Asset Schedule"
         gdecAmt5: array[2] of Decimal;
         gdecAmt6: array[2] of Decimal;
         gdecAmt7: array[2] of Decimal;
+        ClosingDate: array[2] of Date;
         gintRowNo1: Integer;
         gintRowNo2: Integer;
         gintRowNo3: Integer;
