@@ -24,6 +24,7 @@ page 50030 "Uploads from OU Portal"
 
             action("Upload Module Fees")
             {
+                Caption = 'User Module Fees';
                 ApplicationArea = All;
                 Promoted = true;
                 PromotedIsBig = true;

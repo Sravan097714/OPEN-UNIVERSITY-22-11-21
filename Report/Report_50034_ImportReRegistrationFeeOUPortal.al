@@ -72,30 +72,20 @@ report 50034 "Imp Registration Fee OU Portal"
 
         grecReRegistrationFromOUPortal.INIT;
         EVALUATE(grecReRegistrationFromOUPortal."Line No.", format(EntryNo));
-        EVALUATE(grecReRegistrationFromOUPortal."Date Processed", GetValueAtCell(RowNo, 28));
+        //Student Personal Info
+        if GetValueAtCell(RowNo, 1) <> '' then begin
+            Evaluate(grecReRegistrationFromOUPortal.PTN, GetValueAtCell(RowNo, 1));
+            gtextPTN := GetValueAtCell(RowNo, 1);
+        end else
+            grecReRegistrationFromOUPortal.PTN := gtextPTN;
+        Evaluate(grecReRegistrationFromOUPortal.Status, GetValueAtCell(RowNo, 2));
+        Evaluate(grecReRegistrationFromOUPortal.RDAP, GetValueAtCell(RowNo, 3));
         Evaluate(grecReRegistrationFromOUPortal."Student ID", GetValueAtCell(RowNo, 4));
-
-        //Module
-        Evaluate(grecReRegistrationFromOUPortal."Module Description", GetValueAtCell(RowNo, 13));
-        Evaluate(grecReRegistrationFromOUPortal."No.", GetValueAtCell(RowNo, 14));
-        Evaluate(grecReRegistrationFromOUPortal."Common Module Code", GetValueAtCell(RowNo, 15));
-        if GetValueAtCell(RowNo, 16) = '' then
-            Evaluate(grecReRegistrationFromOUPortal."Module Credit", '0')
-        else
-            Evaluate(grecReRegistrationFromOUPortal."Module Credit", GetValueAtCell(RowNo, 16));
-
-        if GetValueAtCell(RowNo, 17) = '' then
-            Evaluate(grecReRegistrationFromOUPortal."Module Amount", '0')
-        else
-            Evaluate(grecReRegistrationFromOUPortal."Module Amount", GetValueAtCell(RowNo, 17));
-
-        if GetValueAtCell(RowNo, 18) = '' then
-            Evaluate(grecReRegistrationFromOUPortal."Module Fee Ins", '0')
-        else
-            Evaluate(grecReRegistrationFromOUPortal."Module Fee Ins", GetValueAtCell(RowNo, 18));
+        Evaluate(grecReRegistrationFromOUPortal."First Name", GetValueAtCell(RowNo, 5));
+        Evaluate(grecReRegistrationFromOUPortal."Last Name", GetValueAtCell(RowNo, 6));
+        Evaluate(grecReRegistrationFromOUPortal."Maiden Name", GetValueAtCell(RowNo, 7));
 
         //Shortcut Dimension
-        EVALUATE(grecReRegistrationFromOUPortal."Shortcut Dimension 1 Code", GetValueAtCell(RowNo, 12));
 
         if GetValueAtCell(RowNo, 8) <> '' then begin
             grecGenLedgSetup.get;
@@ -111,48 +101,58 @@ report 50034 "Imp Registration Fee OU Portal"
                 until (grecDimValue.Next = 0) or (grecReRegistrationFromOUPortal."Shortcut Dimension 2 Code" <> '');
             end;
         End;
-
-        //Student Personal Info
-        if GetValueAtCell(RowNo, 1) <> '' then begin
-            Evaluate(grecReRegistrationFromOUPortal.PTN, GetValueAtCell(RowNo, 1));
-            gtextPTN := GetValueAtCell(RowNo, 1);
-        end else
-            grecReRegistrationFromOUPortal.PTN := gtextPTN;
-
-        Evaluate(grecReRegistrationFromOUPortal.Status, GetValueAtCell(RowNo, 2));
-        Evaluate(grecReRegistrationFromOUPortal.RDAP, GetValueAtCell(RowNo, 3));
-        Evaluate(grecReRegistrationFromOUPortal."First Name", GetValueAtCell(RowNo, 5));
-        Evaluate(grecReRegistrationFromOUPortal."Last Name", GetValueAtCell(RowNo, 6));
-        Evaluate(grecReRegistrationFromOUPortal."Maiden Name", GetValueAtCell(RowNo, 7));
         Evaluate(grecReRegistrationFromOUPortal."Payment Semester", GetValueAtCell(RowNo, 10));
+        EVALUATE(grecReRegistrationFromOUPortal."Shortcut Dimension 1 Code", GetValueAtCell(RowNo, 12));
+        Evaluate(grecReRegistrationFromOUPortal."Module ID", GetValueAtCell(RowNo, 13));
+        Evaluate(grecReRegistrationFromOUPortal."Module Description", GetValueAtCell(RowNo, 14));
+        Evaluate(grecReRegistrationFromOUPortal."No.", GetValueAtCell(RowNo, 15));
+        Evaluate(grecReRegistrationFromOUPortal."Common Module Code", GetValueAtCell(RowNo, 16));
+        if GetValueAtCell(RowNo, 17) = '' then
+            Evaluate(grecReRegistrationFromOUPortal."Module Credit", '0')
+        else
+            Evaluate(grecReRegistrationFromOUPortal."Module Credit", GetValueAtCell(RowNo, 17));
 
-        //Evaluate(grecReRegistrationFromOUPortal.Currency, GetValueAtCell(RowNo, 17));
+        if GetValueAtCell(RowNo, 18) = '' then
+            Evaluate(grecReRegistrationFromOUPortal."Module Amount", '0')
+        else
+            Evaluate(grecReRegistrationFromOUPortal."Module Amount", GetValueAtCell(RowNo, 18));
 
-        if (GetValueAtCell(RowNo, 20) <> '') AND (GetValueAtCell(RowNo, 20) <> 'Rs') then
+        if GetValueAtCell(RowNo, 19) = '' then
+            Evaluate(grecReRegistrationFromOUPortal."Module Fee Ins", '0')
+        else
+            Evaluate(grecReRegistrationFromOUPortal."Module Fee Ins", GetValueAtCell(RowNo, 19));
+
+        if GetValueAtCell(RowNo, 20) = 'yes' then
+            grecReRegistrationFromOUPortal."Gov Grant" := true;
+
+        if (GetValueAtCell(RowNo, 21) <> '') AND (GetValueAtCell(RowNo, 21) <> 'Rs') then
             grecReRegistrationFromOUPortal.Currency := 'USD';
 
-        if GetValueAtCell(RowNo, 22) = '' then
-            Evaluate(grecReRegistrationFromOUPortal.Total, '0')
-        else
-            Evaluate(grecReRegistrationFromOUPortal.Total, GetValueAtCell(RowNo, 22));
+        if GetValueAtCell(RowNo, 22) = 'yes' then
+            grecReRegistrationFromOUPortal.Instalment := true;
 
         if GetValueAtCell(RowNo, 23) = '' then
-            Evaluate(grecReRegistrationFromOUPortal."Penalty Fee", '0')
+            Evaluate(grecReRegistrationFromOUPortal.Total, '0')
         else
-            Evaluate(grecReRegistrationFromOUPortal."Penalty Fee", GetValueAtCell(RowNo, 23));
+            Evaluate(grecReRegistrationFromOUPortal.Total, GetValueAtCell(RowNo, 23));
 
         if GetValueAtCell(RowNo, 24) = '' then
+            Evaluate(grecReRegistrationFromOUPortal."Penalty Fee", '0')
+        else
+            Evaluate(grecReRegistrationFromOUPortal."Penalty Fee", GetValueAtCell(RowNo, 24));
+
+        if GetValueAtCell(RowNo, 25) = '' then
             Evaluate(grecReRegistrationFromOUPortal."Net Total", '0')
         else
-            Evaluate(grecReRegistrationFromOUPortal."Net Total", GetValueAtCell(RowNo, 24));
+            Evaluate(grecReRegistrationFromOUPortal."Net Total", GetValueAtCell(RowNo, 25));
 
-        Evaluate(grecReRegistrationFromOUPortal."Payment For", GetValueAtCell(RowNo, 25));
-        Evaluate(grecReRegistrationFromOUPortal."Payment Type", GetValueAtCell(RowNo, 26));
-        Evaluate(grecReRegistrationFromOUPortal."Date Paid On", GetValueAtCell(RowNo, 27));
-
-        Evaluate(grecReRegistrationFromOUPortal."MyT Money Ref", GetValueAtCell(RowNo, 29));
-        Evaluate(grecReRegistrationFromOUPortal."MyT Money Ref Staff", GetValueAtCell(RowNo, 30));
-        Evaluate(grecReRegistrationFromOUPortal.Remarks, GetValueAtCell(RowNo, 31));
+        Evaluate(grecReRegistrationFromOUPortal."Payment For", GetValueAtCell(RowNo, 26));
+        Evaluate(grecReRegistrationFromOUPortal."Payment Type", GetValueAtCell(RowNo, 27));
+        Evaluate(grecReRegistrationFromOUPortal."Date Paid On", GetValueAtCell(RowNo, 28));
+        EVALUATE(grecReRegistrationFromOUPortal."Date Processed", GetValueAtCell(RowNo, 29));
+        Evaluate(grecReRegistrationFromOUPortal."MyT Money Ref", GetValueAtCell(RowNo, 30));
+        Evaluate(grecReRegistrationFromOUPortal."MyT Money Ref Staff", GetValueAtCell(RowNo, 31));
+        Evaluate(grecReRegistrationFromOUPortal.Remarks, GetValueAtCell(RowNo, 32));
 
         grecReRegistrationFromOUPortal."Imported By" := UserId;
         grecReRegistrationFromOUPortal."Imported On" := CurrentDateTime;

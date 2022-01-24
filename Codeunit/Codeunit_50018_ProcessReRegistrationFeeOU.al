@@ -54,10 +54,10 @@ codeunit 50018 "Process ReRegistration Fee"
 
         ReRegistrationFeePar3.reset;
         ReRegistrationFeePar3.SetRange(PTN, ReRegistrationFeePar.PTN);
-        ReRegistrationFeePar3.SetFilter("No.", '<>%1', '');
+        ReRegistrationFeePar3.SetFilter("Module ID", '<>%1', '');
         if ReRegistrationFeePar3.FindSet() then
             repeat
-                Item.Get(ReRegistrationFeePar3."No.");
+                Item.Get(ReRegistrationFeePar3."Module ID");
             until ReRegistrationFeePar3.Next() = 0
         else
             Error('There are no module code on one line.');
@@ -132,10 +132,10 @@ codeunit 50018 "Process ReRegistration Fee"
 
         ReRegistrationFeePar3.reset;
         ReRegistrationFeePar3.SetRange(PTN, ReRegistrationFeePar.PTN);
-        ReRegistrationFeePar3.SetFilter("No.", '<>%1', '');
+        ReRegistrationFeePar3.SetFilter("Module ID", '<>%1', '');
         if ReRegistrationFeePar3.FindSet() then
             repeat
-                CreateSalesInvoiceLine(SalesHeader."No.", ReRegistrationFeePar3."No.", ReRegistrationFeePar3."Common Module Code", ReRegistrationFeePar3."Module Description", ReRegistrationFeePar3."Module Amount", ReRegistrationFeePar3."Shortcut Dimension 1 Code", ReRegistrationFeePar3.Instalment, ReRegistrationFeePar3."Module Fee Ins", ReRegistrationFeePar3."Penalty Fee");
+                CreateSalesInvoiceLine(SalesHeader."No.", ReRegistrationFeePar3."Module ID", ReRegistrationFeePar3."Common Module Code", ReRegistrationFeePar3."Module Description", ReRegistrationFeePar3."Module Amount", ReRegistrationFeePar3."Shortcut Dimension 1 Code", ReRegistrationFeePar3.Instalment, ReRegistrationFeePar3."Module Fee Ins", ReRegistrationFeePar3."Penalty Fee", ReRegistrationFeePar3."No.");
                 ReRegistrationFeePar3."NAV Doc No." := SalesHeader."No.";
                 ReRegistrationFeePar3.Modify();
             until ReRegistrationFeePar3.Next() = 0;
@@ -144,7 +144,7 @@ codeunit 50018 "Process ReRegistration Fee"
         ReRegistrationFeePar.Modify();
     end;
 
-    local procedure CreateSalesInvoiceLine(pcodeDocNo: Code[20]; pcodeModuleNo: Code[20]; pcodeCommonModuleCode: Code[20]; ptextDescription: Text[250]; pdecAmount: Decimal; DimValue1: Code[20]; pboolInstalment: Boolean; pdecInstalmentAmt: Decimal; pdecPenaltyFee: Decimal)
+    local procedure CreateSalesInvoiceLine(pcodeDocNo: Code[20]; pcodeModuleNo: Code[20]; pcodeCommonModuleCode: Code[20]; ptextDescription: Text[250]; pdecAmount: Decimal; DimValue1: Code[20]; pboolInstalment: Boolean; pdecInstalmentAmt: Decimal; pdecPenaltyFee: Decimal; PModuleID: code[20])
     var
         grecDimValue: Record "Dimension Value";
     begin
@@ -164,6 +164,7 @@ codeunit 50018 "Process ReRegistration Fee"
 
         grecSalesLine.Validate(Quantity, 1);
         grecSalesLine."Common Module Code" := pcodeCommonModuleCode;
+        grecSalesLine."Module Code" := PModuleID;
 
         grecSalesLine2.reset;
         grecSalesLine2.SetRange("Document No.", pcodeDocNo);

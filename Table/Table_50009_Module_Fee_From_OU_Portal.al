@@ -80,6 +80,12 @@ table 50009 "Module Fee From OU Portal"
         field(64; "MyT Money Ref"; Text[20]) { }
         field(65; "Payment Date"; Date) { }
         field(66; "NAV Doc No."; Code[20]) { }
+        field(67; "Module ID 1"; Code[20]) { }
+        field(68; "Module ID 2"; Code[20]) { }
+        field(69; "Module ID 3"; Code[20]) { }
+        field(70; "Module ID 4"; Code[20]) { }
+        field(71; "Module ID 5"; Code[20]) { }
+        field(72; "Module ID 6"; Code[20]) { }
     }
 
     keys

@@ -20,7 +20,7 @@ table 50011 "ReRegistration Fee OU Portal"
         field(11; "Module Description"; Text[250]) { }
         field(12; "No."; Code[20]) { }
         field(13; "Common Module Code"; Code[20]) { }
-        field(14; "Module Credit"; Integer) { }
+        field(14; "Module Credit"; Decimal) { }
         field(15; "Module Amount"; Decimal) { }
         field(16; "Module Fee Ins"; Decimal) { }
 
@@ -47,6 +47,7 @@ table 50011 "ReRegistration Fee OU Portal"
         field(60; "Gov Grant"; Boolean) { }
         field(61; Instalment; Boolean) { }
         field(65; "NAV Doc No."; Code[20]) { }
+        field(66; "Module ID"; Code[20]) { }
     }
 
     keys

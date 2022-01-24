@@ -5,5 +5,6 @@ tableextension 50042 SalesInvLineExt extends "Sales Invoice Line"
         field(50000; "Common Module Code"; Code[20]) { }
         field(50001; Instalment; Boolean) { }
         field(50002; "Original Amount"; Decimal) { }
+        field(50003; "Module Code"; Code[20]) { Editable = false; }
     }
 }

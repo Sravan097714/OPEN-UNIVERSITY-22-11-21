@@ -26,6 +26,7 @@ page 50021 "ReReg. Fee From OU Portal"
                 field("Shortcut Dimension 2 Code"; "Shortcut Dimension 2 Code") { ApplicationArea = All; }
 
                 field("Module Description"; "Module Description") { ApplicationArea = All; }
+                field("Module ID"; "Module ID") { ApplicationArea = all; }
                 field("No."; "No.") { ApplicationArea = All; }
                 field("Common Module Code"; "Common Module Code") { ApplicationArea = All; }
                 field("Module Credit"; "Module Credit") { ApplicationArea = All; }

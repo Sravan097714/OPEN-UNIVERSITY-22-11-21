@@ -82,6 +82,10 @@ pageextension 50040 SalesInvoiceSubformExt extends "Sales Invoice Subform"
             {
                 ApplicationArea = All;
             }
+            field("Module Code"; "Module Code")
+            {
+                ApplicationArea = all;
+            }
         }
         addlast(Control1)
         {

@@ -50,6 +50,7 @@ pageextension 50002 SalesReceivablesSetup extends "Sales & Receivables Setup"
 
             group("Module Fee OU Portal")
             {
+                Caption = 'User Module Fee';
                 field("VAT Bus. Posting Group"; "VAT Bus. Posting Group")
                 {
                     ApplicationArea = All;

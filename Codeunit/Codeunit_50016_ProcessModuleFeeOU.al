@@ -42,23 +42,23 @@ codeunit 50016 "Process Module Fee"
         end;
         //ModuleFeePar.Error := 'Student Number does not exist.';
 
-        if ModuleFeePar."No. 1" <> '' then
-            Item.Get(ModuleFeePar."No. 1");
+        if ModuleFeePar."Module ID 1" <> '' then
+            Item.Get(ModuleFeePar."Module ID 1");
 
-        if ModuleFeePar."No. 2" <> '' then
-            Item.Get(ModuleFeePar."No. 2");
+        if ModuleFeePar."Module ID 2" <> '' then
+            Item.Get(ModuleFeePar."Module ID 2");
 
-        if ModuleFeePar."No. 3" <> '' then
-            Item.Get(ModuleFeePar."No. 3");
+        if ModuleFeePar."Module ID 3" <> '' then
+            Item.Get(ModuleFeePar."Module ID 3");
 
-        if ModuleFeePar."No. 4" <> '' then
-            Item.Get(ModuleFeePar."No. 4");
+        if ModuleFeePar."Module ID 4" <> '' then
+            Item.Get(ModuleFeePar."Module ID 4");
 
-        if ModuleFeePar."No. 5" <> '' then
-            Item.Get(ModuleFeePar."No. 5");
+        if ModuleFeePar."Module ID 5" <> '' then
+            Item.Get(ModuleFeePar."Module ID 5");
 
-        if ModuleFeePar."No. 6" <> '' then
-            Item.Get(ModuleFeePar."No. 6");
+        if ModuleFeePar."Module ID 6" <> '' then
+            Item.Get(ModuleFeePar."Module ID 6");
 
 
         GenLedgSetup.Get();
@@ -69,12 +69,12 @@ codeunit 50016 "Process Module Fee"
         if ModuleFeePar."Shortcut Dimension 2 Code" <> '' then
             DimValue.Get(GenLedgSetup."Global Dimension 2 Code", ModuleFeePar."Shortcut Dimension 2 Code");
 
-        if (ModuleFeePar."No. 1" = '') AND
-            (ModuleFeePar."No. 2" = '') AND
-            (ModuleFeePar."No. 3" = '') AND
-            (ModuleFeePar."No. 4" = '') AND
-            (ModuleFeePar."No. 5" = '') AND
-            (ModuleFeePar."No. 6" = '')
+        if (ModuleFeePar."Module ID 1" = '') AND
+            (ModuleFeePar."Module ID 2" = '') AND
+            (ModuleFeePar."Module ID 3" = '') AND
+            (ModuleFeePar."Module ID 4" = '') AND
+            (ModuleFeePar."Module ID 5" = '') AND
+            (ModuleFeePar."Module ID 6" = '')
         then
             Error('There are no module code on this line.');
 
@@ -131,30 +131,30 @@ codeunit 50016 "Process Module Fee"
 
         SalesHeader.Modify();
 
-        if ModuleFeePar."No. 1" <> '' then
-            CreateSalesInvoiceLine(SalesHeader."No.", ModuleFeePar."No. 1", ModuleFeePar."Common Module Code 1", ModuleFeePar."Module Description 1", ModuleFeePar."Module Amount 1", ModuleFeePar."Shortcut Dimension 1 Code", ModuleFeePar.Instalment, ModuleFeePar."Module 1 Fee Ins");
+        if ModuleFeePar."Module ID 1" <> '' then
+            CreateSalesInvoiceLine(SalesHeader."No.", ModuleFeePar."Module ID 1", ModuleFeePar."Common Module Code 1", ModuleFeePar."Module Description 1", ModuleFeePar."Module Amount 1", ModuleFeePar."Shortcut Dimension 1 Code", ModuleFeePar.Instalment, ModuleFeePar."Module 1 Fee Ins", ModuleFeePar."No. 1");
 
-        if ModuleFeePar."No. 2" <> '' then
-            CreateSalesInvoiceLine(SalesHeader."No.", ModuleFeePar."No. 2", ModuleFeePar."Common Module Code 2", ModuleFeePar."Module Description 2", ModuleFeePar."Module Amount 2", ModuleFeePar."Shortcut Dimension 1 Code", ModuleFeePar.Instalment, ModuleFeePar."Module 1 Fee Ins");
+        if ModuleFeePar."Module ID 2" <> '' then
+            CreateSalesInvoiceLine(SalesHeader."No.", ModuleFeePar."Module ID 2", ModuleFeePar."Common Module Code 2", ModuleFeePar."Module Description 2", ModuleFeePar."Module Amount 2", ModuleFeePar."Shortcut Dimension 1 Code", ModuleFeePar.Instalment, ModuleFeePar."Module 1 Fee Ins", ModuleFeePar."No. 2");
 
-        if ModuleFeePar."No. 3" <> '' then
-            CreateSalesInvoiceLine(SalesHeader."No.", ModuleFeePar."No. 3", ModuleFeePar."Common Module Code 3", ModuleFeePar."Module Description 3", ModuleFeePar."Module Amount 3", ModuleFeePar."Shortcut Dimension 1 Code", ModuleFeePar.Instalment, ModuleFeePar."Module 1 Fee Ins");
+        if ModuleFeePar."Module ID 3" <> '' then
+            CreateSalesInvoiceLine(SalesHeader."No.", ModuleFeePar."Module ID 3", ModuleFeePar."Common Module Code 3", ModuleFeePar."Module Description 3", ModuleFeePar."Module Amount 3", ModuleFeePar."Shortcut Dimension 1 Code", ModuleFeePar.Instalment, ModuleFeePar."Module 1 Fee Ins", ModuleFeePar."No. 3");
 
-        if ModuleFeePar."No. 4" <> '' then
-            CreateSalesInvoiceLine(SalesHeader."No.", ModuleFeePar."No. 4", ModuleFeePar."Common Module Code 4", ModuleFeePar."Module Description 4", ModuleFeePar."Module Amount 4", ModuleFeePar."Shortcut Dimension 1 Code", ModuleFeePar.Instalment, ModuleFeePar."Module 1 Fee Ins");
+        if ModuleFeePar."Module ID 4" <> '' then
+            CreateSalesInvoiceLine(SalesHeader."No.", ModuleFeePar."Module ID 4", ModuleFeePar."Common Module Code 4", ModuleFeePar."Module Description 4", ModuleFeePar."Module Amount 4", ModuleFeePar."Shortcut Dimension 1 Code", ModuleFeePar.Instalment, ModuleFeePar."Module 1 Fee Ins", ModuleFeePar."No. 4");
 
-        if ModuleFeePar."No. 5" <> '' then
-            CreateSalesInvoiceLine(SalesHeader."No.", ModuleFeePar."No. 5", ModuleFeePar."Common Module Code 5", ModuleFeePar."Module Description 5", ModuleFeePar."Module Amount 5", ModuleFeePar."Shortcut Dimension 1 Code", ModuleFeePar.Instalment, ModuleFeePar."Module 1 Fee Ins");
+        if ModuleFeePar."Module ID 5" <> '' then
+            CreateSalesInvoiceLine(SalesHeader."No.", ModuleFeePar."Module ID 5", ModuleFeePar."Common Module Code 5", ModuleFeePar."Module Description 5", ModuleFeePar."Module Amount 5", ModuleFeePar."Shortcut Dimension 1 Code", ModuleFeePar.Instalment, ModuleFeePar."Module 1 Fee Ins", ModuleFeePar."No. 5");
 
-        if ModuleFeePar."No. 6" <> '' then
-            CreateSalesInvoiceLine(SalesHeader."No.", ModuleFeePar."No. 6", ModuleFeePar."Common Module Code 6", ModuleFeePar."Module Description 6", ModuleFeePar."Module Amount 6", ModuleFeePar."Shortcut Dimension 1 Code", ModuleFeePar.Instalment, ModuleFeePar."Module 1 Fee Ins");
+        if ModuleFeePar."Module ID 6" <> '' then
+            CreateSalesInvoiceLine(SalesHeader."No.", ModuleFeePar."Module ID 6", ModuleFeePar."Common Module Code 6", ModuleFeePar."Module Description 6", ModuleFeePar."Module Amount 6", ModuleFeePar."Shortcut Dimension 1 Code", ModuleFeePar.Instalment, ModuleFeePar."Module 1 Fee Ins", ModuleFeePar."No. 6");
 
         ModuleFeePar."NAV Doc No." := SalesHeader."No.";
         ModuleFeePar.Modify();
 
     end;
 
-    procedure CreateSalesInvoiceLine(pcodeDocNo: Code[20]; pcodeModuleNo: Code[20]; pcodeCommonModuleCode: Code[20]; ptextDescription: Text[250]; pdecAmount: Decimal; DimValue1: Code[20]; pboolInstalment: Boolean; pdecInstalmentAmt: Decimal)
+    procedure CreateSalesInvoiceLine(pcodeDocNo: Code[20]; pcodeModuleNo: Code[20]; pcodeCommonModuleCode: Code[20]; ptextDescription: Text[250]; pdecAmount: Decimal; DimValue1: Code[20]; pboolInstalment: Boolean; pdecInstalmentAmt: Decimal; PModuleCode: Code[20])
     var
         grecSalesLine: Record "Sales Line";
         grecSalesLine2: Record "Sales Line";
@@ -176,6 +176,7 @@ codeunit 50016 "Process Module Fee"
 
         grecSalesLine.Validate(Quantity, 1);
         grecSalesLine."Common Module Code" := pcodeCommonModuleCode;
+        grecSalesLine."Module Code" := PModuleCode;
 
         grecSalesLine2.reset;
         grecSalesLine2.SetRange("Document No.", pcodeDocNo);
