@@ -87,13 +87,70 @@ report 50073 "Payment through Bank Transfer"
                 column(bankaccnum; bankaccnum) { }
                 dataitem("Detailed Vendor Ledg. Entry"; "Detailed Vendor Ledg. Entry")
                 {
-                    DataItemLink = "Document No." = field("Document No.");
-                    DataItemTableView = where("Entry Type" = filter('Application'), "Initial Document Type" = filter('Invoice'));
-                    column(Amt_VLE; Amount) { }
+                    DataItemLink = "Vendor Ledger Entry No." = field("Entry No.");
+                    DataItemTableView = where(Unapplied = const(FALSE));
+                    column(Amt_VLE; abs(Amount)) { }
                     column(sumamount; sumamount) { }
                     column(AmountInWords; TextInWords[1] + '  ' + TextInWords[2]) { }
 
-                    dataitem(VendorLedgerEntry2; "Vendor Ledger Entry")
+                    dataitem(Integer; Integer)
+                    {
+                        dataitem(PurchaseInvHeader_Integer; Integer)
+                        {
+
+                            column(gtextBeneficiaryAccNo; gtextBeneficiaryAccNo) { }
+                            column(gtextBankCode; gtextBankCode) { }
+                            column(Buy_from_Vendor_Name; PurchInvHeader."Buy-from Vendor Name") { }
+                            column(Amount; PurchInvHeader.Amount) { }
+                            trigger OnPreDataItem()
+                            begin
+                                PurchInvHeader.Reset();
+                                PurchInvHeader.SetRange("No.", VendorLedgerEntry."Document No.");
+                                if PurchInvHeader.COUNT >= 1 then
+                                    SETRANGE(Number, 1, PurchInvHeader.COUNT)
+                                else
+                                    CurrReport.Break();
+                            end;
+
+                            trigger OnAfterGetRecord()
+                            begin
+                                if Number = 1 then
+                                    PurchInvHeader.FIND('-')
+                                else
+                                    PurchInvHeader.Next();
+                                clear(gtextBeneficiaryAccNo);
+                                Clear(gtextBankCode);
+                                /* grecVendorBankAcc.Reset();
+                                grecVendorBankAcc.SetRange("Vendor No.", "Purch. Inv. Header"."No.");
+                                if grecVendorBankAcc.FindFirst() then begin
+                                    gtextBeneficiaryAccNo := grecVendorBankAcc."Bank Account No.";
+                                    gtextBankCode := grecVendorBankAcc."Bank Branch No.";
+                                end; */
+                                if grecVendor.Get(PurchInvHeader."Buy-from Vendor No.") then begin
+                                    gtextBeneficiaryAccNo := grecVendor."Bank Accout No.";
+                                    gtextBankCode := grecVendor."Bank Code"
+                                end;
+                                PurchInvHeader.CalcFields(Amount);
+                            end;
+                        }
+                        trigger OnPreDataItem()
+                        begin
+                            VendorLedgerEntry.MarkedOnly(true);
+                            if VendorLedgerEntry.COUNT >= 1 then
+                                SETRANGE(Number, 1, VendorLedgerEntry.COUNT)
+                            else
+                                CurrReport.Break();
+                        end;
+
+                        trigger OnAfterGetRecord()
+                        begin
+                            if Number = 1 then
+                                VendorLedgerEntry.FIND('-')
+                            else
+                                VendorLedgerEntry.Next();
+                        end;
+                    }
+                    /*dataitem(VendorLedgerEntry2; "Vendor Ledger Entry")
                     {
                         DataItemLink = "Entry No." = field("Vendor Ledger Entry No.");
                         dataitem("Purch. Inv. Header"; "Purch. Inv. Header")
@@ -109,12 +166,12 @@ report 50073 "Payment through Bank Transfer"
                             begin
                                 clear(gtextBeneficiaryAccNo);
                                 Clear(gtextBankCode);
-                                /* grecVendorBankAcc.Reset();
+                                 grecVendorBankAcc.Reset();
                                 grecVendorBankAcc.SetRange("Vendor No.", "Purch. Inv. Header"."No.");
                                 if grecVendorBankAcc.FindFirst() then begin
                                     gtextBeneficiaryAccNo := grecVendorBankAcc."Bank Account No.";
                                     gtextBankCode := grecVendorBankAcc."Bank Branch No.";
-                                end; */
+                                end; 
                                 if grecVendor.Get("Buy-from Vendor No.") then begin
                                     gtextBeneficiaryAccNo := grecVendor."Bank Accout No.";
                                     gtextBankCode := grecVendor."Bank Code"
@@ -122,10 +179,39 @@ report 50073 "Payment through Bank Transfer"
 
                             end;
                         }
-                    }
+                    }*/
                     trigger OnAfterGetRecord()
+                    var
+                        DtldVendLedgEntry2: Record "Detailed Vendor Ledg. Entry";
                     begin
-                        sumamount += Amount;
+                        Clear(VendorLedgerEntry);
+                        IF "Vendor Ledger Entry No." = "Applied Vend. Ledger Entry No." THEN BEGIN
+                            DtldVendLedgEntry2.INIT;
+                            DtldVendLedgEntry2.SETCURRENTKEY("Applied Vend. Ledger Entry No.", "Entry Type");
+                            DtldVendLedgEntry2.SETRANGE("Applied Vend. Ledger Entry No.", "Applied Vend. Ledger Entry No.");
+                            DtldVendLedgEntry2.SETRANGE("Entry Type", DtldVendLedgEntry2."Entry Type"::Application);
+                            DtldVendLedgEntry2.SETRANGE(Unapplied, FALSE);
+                            IF DtldVendLedgEntry2.FIND('-') THEN
+                                REPEAT
+                                    IF DtldVendLedgEntry2."Vendor Ledger Entry No." <>
+                                       DtldVendLedgEntry2."Applied Vend. Ledger Entry No."
+                                    THEN BEGIN
+                                        VendorLedgerEntry.SETCURRENTKEY("Entry No.");
+                                        VendorLedgerEntry.SETRANGE("Entry No.", DtldVendLedgEntry2."Vendor Ledger Entry No.");
+                                        IF VendorLedgerEntry.FIND('-') THEN
+                                            VendorLedgerEntry.MARK(TRUE);
+                                    END;
+                                UNTIL DtldVendLedgEntry2.NEXT = 0;
+                        END ELSE BEGIN
+                            VendorLedgerEntry.SETCURRENTKEY("Entry No.");
+                            VendorLedgerEntry.SETRANGE("Entry No.", "Applied Vend. Ledger Entry No.");
+                            IF VendorLedgerEntry.FIND('-') THEN
+                                VendorLedgerEntry.MARK(TRUE);
+                        END;
+                        if "Entry Type" = "Entry Type"::Application then
+                            sumamount += abs(Amount)
+                        else
+                            CurrReport.Skip();
 
                         "Vendor Ledger Entry".CALCFIELDS(Amount);
                         Amt := ROUND(sumamount, 0.01);
@@ -141,14 +227,14 @@ report 50073 "Payment through Bank Transfer"
                     "Vendor Ledger Entry".CALCFIELDS(Amount);
                     Amt := ROUND(sumamount, 0.01);
                     Check.InitTextVariable;
-                    Check.FormatNoText(TextInWords, Amt, ''); */
+                    Check.FormatNoText(TextInWords, Amt, ''); 
 
                     if (PrevVendor = "Vendor No.") and (PrevDocumentNo = "Document No.") then
                         CurrReport.Skip()
                     else begin
                         PrevDocumentNo := "Document No.";
                         PrevVendor := "Vendor No."
-                    end;
+                    end;*/
                 end;
 
                 trigger OnPreDataItem()
@@ -323,5 +409,7 @@ report 50073 "Payment through Bank Transfer"
         sumamount: Decimal;
         PrevVendor: Code[20];
         PrevDocumentNo: Code[20];
+        VendorLedgerEntry: Record "Vendor Ledger Entry";
+        PurchInvHeader: Record "Purch. Inv. Header";
 }
 

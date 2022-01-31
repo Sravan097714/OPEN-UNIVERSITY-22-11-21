@@ -12,9 +12,11 @@ report 50016 "Sales Invoice"
         dataitem("Sales Invoice Header"; "Sales Invoice Header")
         {
             DataItemTableView = SORTING("No.");
-            RequestFilterFields = "No.", "Sell-to Customer No.", "No. Printed";
+            RequestFilterFields = "No.", "Sell-to Customer No.", "No. Printed", "Bill-to Customer No.";
             column(No_SalesInvoiceHeader; "Sales Invoice Header"."No.") { }
             column(CurrencyCode_SalesInvoiceHeader; gtextCurrency) { }
+            column(Sell_to_Customer_No_; "Sell-to Customer No.") { }
+            column(Bill_to_Customer_No_; "Bill-to Customer No.") { }
             column(Salesperson_Code; SalesPurchPerson.Name) { }
             column(VATText; VATText) { }
             column(Our_Ref; "Our Ref") { }

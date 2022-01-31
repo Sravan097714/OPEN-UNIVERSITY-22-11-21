@@ -9,7 +9,7 @@ report 50062 "Statement of Income Finance"
     {
         dataitem("Vendor Ledger Entry"; "Vendor Ledger Entry")
         {
-            DataItemTableView = sorting("Vendor No.", "Posting Date", "Currency Code") where("Document Type" = filter(Payment));
+            DataItemTableView = sorting("Vendor No.", "Posting Date", "Currency Code") where("Document Type" = filter(Invoice));
             column(gdateStartDate; format(gdateStartDate)) { }
             column(gdateEndDate; format(gdateEndDate)) { }
 
@@ -64,10 +64,10 @@ report 50062 "Statement of Income Finance"
             var
                 PurchasePayableSetup: Record "Purchases & Payables Setup";
             begin
-                if grecVendor2.get("Vendor No.") then begin
+                /*if grecVendor2.get("Vendor No.") then begin
                     if grecVendor2."Vendor Category" <> 'TUTOR' then
                         CurrReport.Skip();
-                end;
+                end;*/
                 PurchasePayableSetup.Get();
                 if gtextVendor <> "Vendor No." then begin
                     clear(gtextNID);
@@ -84,13 +84,13 @@ report 50062 "Statement of Income Finance"
                     Clear(gdecPAYEAmt);
                     grecVendLedgerEntry.Reset();
                     grecVendLedgerEntry.SetCurrentKey("Entry No.");
-                    grecVendLedgerEntry.SetRange("Document Type", grecVendLedgerEntry."Document Type"::Payment);
+                    grecVendLedgerEntry.SetRange("Document Type", grecVendLedgerEntry."Document Type"::Invoice);
                     grecVendLedgerEntry.SetRange("Posting Date", gdateStartDate, gdateEndDate);
                     grecVendLedgerEntry.SetRange("Vendor No.", "Vendor No.");
                     if grecVendLedgerEntry.Findset then begin
                         repeat
-                            grecVendLedgerEntry.CalcFields("Original Amt. (LCY)");
-                            gdecEmolument[7] += grecVendLedgerEntry."Original Amt. (LCY)";
+                            //grecVendLedgerEntry.CalcFields("Original Amt. (LCY)");
+                            //gdecEmolument[7] += grecVendLedgerEntry."Original Amt. (LCY)";
 
                             /* grecGLEntry.Reset();
                             grecGLEntry.SetCurrentKey("Entry No.");
@@ -106,7 +106,7 @@ report 50062 "Statement of Income Finance"
                             end; */
 
 
-                            grecDetailedVendLedgerEntry.Reset();
+                            /*grecDetailedVendLedgerEntry.Reset();
                             grecDetailedVendLedgerEntry.SetRange("Document No.", grecVendLedgerEntry."Document No.");
                             grecDetailedVendLedgerEntry.SetRange("Entry Type", grecDetailedVendLedgerEntry."Entry Type"::Application);
                             grecDetailedVendLedgerEntry.SetRange("Initial Document Type", grecDetailedVendLedgerEntry."Initial Document Type"::Payment);
@@ -120,17 +120,31 @@ report 50062 "Statement of Income Finance"
                                         //grecVendLedgerEntry2.SetRange("Payment Type", 'PAY0007');
                                         grecVendLedgerEntry2.SetRange("Entry No.", grecDetailedVendLedgerEntry2."Vendor Ledger Entry No.");
                                         if grecVendLedgerEntry2.FindFirst then begin
-                                            repeat
-                                                grecPurchInvLine.Reset();
-                                                grecPurchInvLine.SetRange("Document No.", grecVendLedgerEntry2."Document No.");
-                                                grecPurchInvLine.SetRange("No.", '110080');
-                                                if grecPurchInvLine.FindFirst() then
-                                                    gdecPAYEAmt[7] += grecPurchInvLine."Direct Unit Cost";
-                                            until grecVendLedgerEntry2.Next = 0;
-                                        end;
-                                    until grecDetailedVendLedgerEntry2.Next = 0;
-                                end;
+                                            repeat*/
+                            grecPurchInvLine.Reset();
+                            grecPurchInvLine.SetRange("Document No.", grecVendLedgerEntry."Document No.");
+                            grecPurchInvLine.SetFilter("TDS Code", '<>%1', '');
+                            grecPurchInvLine.SetFilter(Amount, '>%1', 0);
+                            if grecPurchInvLine.FindSet() then begin
+                                repeat
+                                    if not grecPurchInvLine.VAT then
+                                        gdecEmolument[7] += Abs(Round(grecPurchInvLine."Direct Unit Cost", 1, '='))
+                                    else
+                                        gdecEmolument[7] += Abs(Round(grecPurchInvLine."Line Amount Excluding VAT", 1, '='));
+                                until grecPurchInvLine.Next() = 0;
                             end;
+                            grecPurchInvLine.Reset();
+                            grecPurchInvLine.SetRange("Document No.", grecVendLedgerEntry."Document No.");
+                            grecPurchInvLine.SetRange("No.", '110080');
+                            if grecPurchInvLine.FindSet() then begin
+                                grecPurchInvLine.CalcSums("Direct Unit Cost");
+                                gdecPAYEAmt[7] += grecPurchInvLine."Direct Unit Cost";
+                            end;
+                            /*until grecVendLedgerEntry2.Next = 0;
+                        end;
+                                        until grecDetailedVendLedgerEntry2.Next = 0;
+                    end;
+                        end;*/
 
                             Case grecVendLedgerEntry."Payment Type" of
                                 'PAY0001':
@@ -605,6 +619,8 @@ report 50062 "Statement of Income Finance"
 
                     gtextVendor := "Vendor No.";
                 end else
+                    CurrReport.Skip();
+                if (gdecEmolument[7] = 0) and (gdecPAYEAmt[7] = 0) then
                     CurrReport.Skip();
             end;
         }

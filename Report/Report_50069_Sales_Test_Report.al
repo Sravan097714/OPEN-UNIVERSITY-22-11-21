@@ -12,10 +12,12 @@ report 50069 "Sales Test Report"
         dataitem("Sales Header"; "Sales Header")
         {
             DataItemTableView = SORTING("No.");
-            RequestFilterFields = "No.", "Sell-to Customer No.", "No. Printed";
+            RequestFilterFields = "No.", "Sell-to Customer No.", "No. Printed", "Bill-to Customer No.";
             column(No_SalesInvoiceHeader; "No.") { }
             column(CurrencyCode_SalesInvoiceHeader; gtextCurrency) { }
             column(Salesperson_Code; SalesPurchPerson.Name) { }
+            column(Sell_to_Customer_No_; "Sell-to Customer No.") { }
+            column(Bill_to_Customer_No_; "Bill-to Customer No.") { }
             column(VATText; VATText) { }
             column(Our_Ref; "Our Ref") { }
             column(Your_Ref; "Your Ref") { }
@@ -520,7 +522,8 @@ report 50069 "Sales Test Report"
             var
                 grecSalesInvLine: Record "Sales Line";
             begin
-
+                if BillToCustomerName <> '' then
+                    SetRange("Bill-to Name", BillToCustomerName);
                 CLEAR(CurrCode);
                 CLEAR(BRNText);
                 Clear(Dept);
@@ -675,6 +678,17 @@ report 50069 "Sales Test Report"
                         Visible = false;
                         ApplicationArea = all;
                     }
+                    field("Bill To Customer Name"; BillToCustomerName)
+                    {
+                        Visible = false;
+                        trigger OnLookup(var Text: Text): Boolean
+                        begin
+                            if Customer.LookupCustomer(Customer) then begin
+                                BillToCustomerName := Customer.Name;
+                            end;
+                        end;
+                    }
+
                 }
             }
         }
@@ -831,6 +845,7 @@ report 50069 "Sales Test Report"
 
         ExchangeRate: Decimal;
         BankAddress: Text;
+        BillToCustomerName: Text;
 
     procedure FindPostedShipmentDate(): Date;
     var

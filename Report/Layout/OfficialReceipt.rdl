@@ -515,6 +515,9 @@ Cstr(Fields!CompArr10_.Value) + Chr(177) + Cstr(Fields!Title1_.Value) + Chr(177)
                                               <Border>
                                                 <Style>None</Style>
                                               </Border>
+                                              <BottomBorder>
+                                                <Style>Solid</Style>
+                                              </BottomBorder>
                                               <PaddingLeft>2pt</PaddingLeft>
                                               <PaddingRight>2pt</PaddingRight>
                                               <PaddingTop>2pt</PaddingTop>
@@ -912,7 +915,7 @@ Cstr(Fields!CompArr10_.Value) + Chr(177) + Cstr(Fields!Title1_.Value) + Chr(177)
                                   <TablixMember />
                                   <TablixMember>
                                     <Visibility>
-                                      <Hidden>=IIf(Sum(Fields!Amount_DCLE.Value)=0,true,false)</Hidden>
+                                      <Hidden>true</Hidden>
                                     </Visibility>
                                   </TablixMember>
                                   <TablixMember>
@@ -3662,7 +3665,7 @@ Cstr(Fields!CompArr10_.Value) + Chr(177) + Cstr(Fields!Title1_.Value) + Chr(177)
           </Style>
         </PageHeader>
         <PageFooter>
-          <Height>3.00458cm</Height>
+          <Height>1.97271cm</Height>
           <PrintOnFirstPage>true</PrintOnFirstPage>
           <PrintOnLastPage>true</PrintOnLastPage>
           <ReportItems>
@@ -3685,10 +3688,13 @@ Cstr(Fields!CompArr10_.Value) + Chr(177) + Cstr(Fields!Title1_.Value) + Chr(177)
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox37</rd:DefaultName>
-              <Top>1.33742cm</Top>
-              <Left>9.58706cm</Left>
+              <Top>0.86971cm</Top>
+              <Left>9.62768cm</Left>
               <Height>0.46771cm</Height>
               <Width>8.30856cm</Width>
+              <Visibility>
+                <Hidden>true</Hidden>
+              </Visibility>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -3717,8 +3723,8 @@ Cstr(Fields!CompArr10_.Value) + Chr(177) + Cstr(Fields!Title1_.Value) + Chr(177)
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox40</rd:DefaultName>
-              <Top>2.19291cm</Top>
-              <Left>0.30968cm</Left>
+              <Top>0.73742cm</Top>
+              <Left>0.2348cm</Left>
               <Height>0.6cm</Height>
               <Width>17.25132cm</Width>
               <ZIndex>1</ZIndex>
@@ -3755,11 +3761,14 @@ Cstr(Fields!CompArr10_.Value) + Chr(177) + Cstr(Fields!Title1_.Value) + Chr(177)
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox22</rd:DefaultName>
-              <Top>0.73742cm</Top>
-              <Left>9.58706cm</Left>
+              <Top>0.26971cm</Top>
+              <Left>9.62768cm</Left>
               <Height>0.6cm</Height>
               <Width>8.30856cm</Width>
               <ZIndex>2</ZIndex>
+              <Visibility>
+                <Hidden>true</Hidden>
+              </Visibility>
               <Style>
                 <Border>
                   <Style>None</Style>

@@ -9,7 +9,7 @@ report 50093 "List of Payments After Posting"
     {
         dataitem("Bank Account Ledger Entry"; "Bank Account Ledger Entry")
         {
-            DataItemTableView = where("Document Type" = filter('Payment'));
+            DataItemTableView = where("Document Type" = filter('Payment'), Reversed = const(false));
             RequestFilterFields = "Document Type", "Document No.", "Bank Account No.", "Bal. Account Type", "Bal. Account No.", "PV Number";
             column(CompanyName; grecCompanyInfo.Name) { }
             column(Posting_Date; format("Posting Date")) { }
@@ -45,6 +45,7 @@ report 50093 "List of Payments After Posting"
                 else begin
                     grecvendorledgerentry.Reset();
                     grecvendorledgerentry.SetRange("Document No.", "Document No.");
+                    grecvendorledgerentry.SetRange("Transaction No.", "Transaction No.");
                     if grecvendorledgerentry.FindFirst then begin
                         grecvendorrec.Get(grecvendorledgerentry."Vendor No.");
                         payeenamevar := grecvendorrec.Name;

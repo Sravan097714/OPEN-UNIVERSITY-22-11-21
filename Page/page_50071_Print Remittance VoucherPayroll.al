@@ -1,7 +1,7 @@
-page 50033 "Print Remittance Voucher"
+page 50071 "Print Remit. Voucher - Payroll"
 {
     ApplicationArea = All;
-    //Caption = 'Vendor Ledger Entries';
+    Caption = 'Print Remittance Voucher - Payroll';
     DataCaptionFields = "Vendor No.";
     DeleteAllowed = false;
     InsertAllowed = false;
@@ -11,7 +11,7 @@ page 50033 "Print Remittance Voucher"
     PromotedActionCategories = 'New,Process,Report,Line,Entry';
     SourceTable = "Vendor Ledger Entry";
     SourceTableView = SORTING("Entry No.")
-                      ORDER(Descending) where("Source Code" = filter('PAYMENTJNL'), "Vendor Category" = filter('TUTOR'));
+                      ORDER(Descending) where("Source Code" = filter('PAYMENTJNL')/*, "Vendor Category" = filter('TUTOR')*/);
     UsageCategory = Lists;
 
     layout
@@ -434,7 +434,7 @@ page 50033 "Print Remittance Voucher"
                     grecVendLdgEntries: Record "Vendor Ledger Entry";
                 begin
                     grecVendLdgEntries.Reset();
-                    grecVendLdgEntries.SetRange("Vendor Category", 'TUTOR');
+                    grecVendLdgEntries.SetFilter("PV Number", 'PVP*');
                     grecVendLdgEntries.SetRange("Source Code", 'PAYMENTJNL');
                     if grecVendLdgEntries.FindSet() then
                         grecVendLdgEntries.ModifyAll(Print, true);
@@ -455,7 +455,7 @@ page 50033 "Print Remittance Voucher"
                     grecVendLdgEntries: Record "Vendor Ledger Entry";
                 begin
                     grecVendLdgEntries.Reset();
-                    grecVendLdgEntries.SetRange("Vendor Category", 'TUTOR');
+                    grecVendLdgEntries.SetFilter("PV Number", 'PVP*');
                     grecVendLdgEntries.SetRange("Source Code", 'PAYMENTJNL');
                     if grecVendLdgEntries.FindSet() then
                         grecVendLdgEntries.ModifyAll(Print, false);
@@ -477,7 +477,7 @@ page 50033 "Print Remittance Voucher"
                     grepRemittance: Report "Remittance Voucher Detailed";
                 begin
                     grecVendLdgEntries.Reset();
-                    grecVendLdgEntries.SetRange("Vendor Category", 'TUTOR');
+                    grecVendLdgEntries.SetFilter("PV Number", 'PVP*');
                     grecVendLdgEntries.SetRange("Source Code", 'PAYMENTJNL');
                     grecVendLdgEntries.SetRange(Print, true);
                     if grecVendLdgEntries.FindSet() then begin
@@ -505,7 +505,7 @@ page 50033 "Print Remittance Voucher"
                 begin
                     if Confirm('Do you want to email Remittance Vouchers?', true) then begin
                         grecVendLdgEntries.Reset();
-                        grecVendLdgEntries.SetRange("Vendor Category", 'TUTOR');
+                        grecVendLdgEntries.SetFilter("PV Number", 'PVP*');
                         grecVendLdgEntries.SetRange("Source Code", 'PAYMENTJNL');
                         grecVendLdgEntries.SetRange(Print, true);
                         if grecVendLdgEntries.FindSet() then begin
@@ -821,6 +821,7 @@ page 50033 "Print Remittance Voucher"
         //SetControlVisibility;
         if GetFilters <> '' then
             if FindFirst then;
+        SetFilter("PV Number", 'PVP*');
     end;
 
     trigger OnQueryClosePage(CloseAction: Action): Boolean

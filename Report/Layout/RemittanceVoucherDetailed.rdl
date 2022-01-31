@@ -1057,6 +1057,14 @@
                                   <Value>=Fields!Description1.Value</Value>
                                   <Style />
                                 </TextRun>
+                                <TextRun>
+                                  <Value> - </Value>
+                                  <Style />
+                                </TextRun>
+                                <TextRun>
+                                  <Value>=Fields!gvendorinvno.Value</Value>
+                                  <Style />
+                                </TextRun>
                               </TextRuns>
                               <Style />
                             </Paragraph>
@@ -1559,6 +1567,9 @@
         </Field>
         <Field Name="PAYE1Format">
           <DataField>PAYE1Format</DataField>
+        </Field>
+        <Field Name="gvendorinvno">
+          <DataField>gvendorinvno</DataField>
         </Field>
       </Fields>
       <Query>

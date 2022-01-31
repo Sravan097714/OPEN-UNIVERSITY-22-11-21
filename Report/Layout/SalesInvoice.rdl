@@ -7513,7 +7513,7 @@ Cstr(Fields!CustName.Value)+Chr(177)+Cstr(Fields!CompanyBRN.Value)+Chr(177)+Cstr
       <Width>18.97681cm</Width>
       <Page>
         <PageHeader>
-          <Height>8.11512cm</Height>
+          <Height>8.40616cm</Height>
           <PrintOnFirstPage>true</PrintOnFirstPage>
           <PrintOnLastPage>true</PrintOnLastPage>
           <ReportItems>
@@ -7569,7 +7569,7 @@ Cstr(Fields!CustName.Value)+Chr(177)+Cstr(Fields!CompanyBRN.Value)+Chr(177)+Cstr
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox23</rd:DefaultName>
-              <Top>4.3071cm</Top>
+              <Top>4.65106cm</Top>
               <Left>0.0159cm</Left>
               <Height>0.423cm</Height>
               <Width>6.38045cm</Width>
@@ -7600,7 +7600,7 @@ Cstr(Fields!CustName.Value)+Chr(177)+Cstr(Fields!CompanyBRN.Value)+Chr(177)+Cstr
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox23</rd:DefaultName>
-              <Top>4.76118cm</Top>
+              <Top>5.10514cm</Top>
               <Left>0.0159cm</Left>
               <Height>0.423cm</Height>
               <Width>6.38045cm</Width>
@@ -7629,7 +7629,7 @@ Cstr(Fields!CustName.Value)+Chr(177)+Cstr(Fields!CompanyBRN.Value)+Chr(177)+Cstr
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox23</rd:DefaultName>
-              <Top>5.18419cm</Top>
+              <Top>5.52815cm</Top>
               <Left>0.0159cm</Left>
               <Height>0.423cm</Height>
               <Width>6.38045cm</Width>
@@ -7660,7 +7660,7 @@ Cstr(Fields!CustName.Value)+Chr(177)+Cstr(Fields!CompanyBRN.Value)+Chr(177)+Cstr
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox23</rd:DefaultName>
-              <Top>5.60719cm</Top>
+              <Top>5.95115cm</Top>
               <Left>0.0159cm</Left>
               <Height>0.423cm</Height>
               <Width>6.38045cm</Width>
@@ -7820,7 +7820,7 @@ Cstr(Fields!CustName.Value)+Chr(177)+Cstr(Fields!CompanyBRN.Value)+Chr(177)+Cstr
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox23</rd:DefaultName>
-              <Top>6.03019cm</Top>
+              <Top>6.37415cm</Top>
               <Left>0.0159cm</Left>
               <Height>0.423cm</Height>
               <Width>6.38045cm</Width>
@@ -7850,7 +7850,7 @@ Cstr(Fields!CustName.Value)+Chr(177)+Cstr(Fields!CompanyBRN.Value)+Chr(177)+Cstr
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox1</rd:DefaultName>
-              <Top>2.73015cm</Top>
+              <Top>3.07411cm</Top>
               <Left>0.0159cm</Left>
               <Height>0.423cm</Height>
               <Width>1.45457cm</Width>
@@ -7947,7 +7947,7 @@ Cstr(Fields!CustName.Value)+Chr(177)+Cstr(Fields!CompanyBRN.Value)+Chr(177)+Cstr
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox1</rd:DefaultName>
-              <Top>2.73015cm</Top>
+              <Top>3.07411cm</Top>
               <Left>1.55695cm</Left>
               <Height>0.423cm</Height>
               <Width>9.01796cm</Width>
@@ -7983,7 +7983,7 @@ Cstr(Fields!CustName.Value)+Chr(177)+Cstr(Fields!CompanyBRN.Value)+Chr(177)+Cstr
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox23</rd:DefaultName>
-              <Top>6.74878cm</Top>
+              <Top>7.09274cm</Top>
               <Left>3.28493cm</Left>
               <Height>0.423cm</Height>
               <Width>5.55378cm</Width>
@@ -8023,7 +8023,7 @@ Cstr(Fields!CustName.Value)+Chr(177)+Cstr(Fields!CompanyBRN.Value)+Chr(177)+Cstr
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox23</rd:DefaultName>
-              <Top>7.17178cm</Top>
+              <Top>7.51574cm</Top>
               <Left>3.28493cm</Left>
               <Height>0.63466cm</Height>
               <Width>5.55378cm</Width>
@@ -8056,7 +8056,7 @@ Cstr(Fields!CustName.Value)+Chr(177)+Cstr(Fields!CompanyBRN.Value)+Chr(177)+Cstr
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox6</rd:DefaultName>
-              <Top>6.74878cm</Top>
+              <Top>7.09274cm</Top>
               <Height>0.423cm</Height>
               <Width>3.21438cm</Width>
               <ZIndex>16</ZIndex>
@@ -8087,7 +8087,7 @@ Cstr(Fields!CustName.Value)+Chr(177)+Cstr(Fields!CompanyBRN.Value)+Chr(177)+Cstr
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox6</rd:DefaultName>
-              <Top>7.20705cm</Top>
+              <Top>7.55101cm</Top>
               <Height>0.59939cm</Height>
               <Width>3.21438cm</Width>
               <ZIndex>17</ZIndex>
@@ -8182,7 +8182,7 @@ Cstr(Fields!CustName.Value)+Chr(177)+Cstr(Fields!CompanyBRN.Value)+Chr(177)+Cstr
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox1</rd:DefaultName>
-              <Top>3.71726cm</Top>
+              <Top>4.06122cm</Top>
               <Left>0.01591cm</Left>
               <Height>0.423cm</Height>
               <Width>10.40022cm</Width>
@@ -8211,7 +8211,7 @@ Cstr(Fields!CustName.Value)+Chr(177)+Cstr(Fields!CompanyBRN.Value)+Chr(177)+Cstr
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox1</rd:DefaultName>
-              <Top>3.25898cm</Top>
+              <Top>3.60294cm</Top>
               <Left>0.01591cm</Left>
               <Height>0.423cm</Height>
               <Width>2.02851cm</Width>
@@ -8245,11 +8245,74 @@ Cstr(Fields!CustName.Value)+Chr(177)+Cstr(Fields!CompanyBRN.Value)+Chr(177)+Cstr
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox1</rd:DefaultName>
-              <Top>3.25898cm</Top>
+              <Top>3.60294cm</Top>
               <Left>2.0797cm</Left>
               <Height>0.423cm</Height>
               <Width>10.40022cm</Width>
               <ZIndex>22</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+              </Style>
+            </Textbox>
+            <Textbox Name="Textbox66">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>Customer Code</Value>
+                      <Style>
+                        <FontSize>8pt</FontSize>
+                        <FontWeight>Bold</FontWeight>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style />
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>Textbox1</rd:DefaultName>
+              <Top>2.61583cm</Top>
+              <Left>0cm</Left>
+              <Height>0.423cm</Height>
+              <Width>2.42062cm</Width>
+              <ZIndex>23</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+              </Style>
+            </Textbox>
+            <Textbox Name="Textbox67">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>: </Value>
+                      <Style>
+                        <FontSize>8pt</FontSize>
+                      </Style>
+                    </TextRun>
+                    <TextRun>
+                      <Value>=First(Fields!Bill_to_Customer_No_.Value, "DataSet_Result")</Value>
+                      <Style>
+                        <FontSize>8pt</FontSize>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style />
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>Textbox1</rd:DefaultName>
+              <Top>2.61583cm</Top>
+              <Left>2.4559cm</Left>
+              <Height>0.423cm</Height>
+              <Width>8.13839cm</Width>
+              <ZIndex>24</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -8569,6 +8632,12 @@ End Function
         </Field>
         <Field Name="CurrencyCode_SalesInvoiceHeader">
           <DataField>CurrencyCode_SalesInvoiceHeader</DataField>
+        </Field>
+        <Field Name="Sell_to_Customer_No_">
+          <DataField>Sell_to_Customer_No_</DataField>
+        </Field>
+        <Field Name="Bill_to_Customer_No_">
+          <DataField>Bill_to_Customer_No_</DataField>
         </Field>
         <Field Name="Salesperson_Code">
           <DataField>Salesperson_Code</DataField>

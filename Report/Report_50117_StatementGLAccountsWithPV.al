@@ -1,10 +1,10 @@
-report 50040 "Statement of GL Accounts"
+report 50117 "Statement of GL Accounts PV"
 {
     DefaultLayout = RDLC;
-    RDLCLayout = 'Report\Layout\DetailTrialBalance.rdl';
+    RDLCLayout = 'Report\Layout\StatementofGLAccountsWithPV.rdl';
     AdditionalSearchTerms = 'payment due,order status';
     ApplicationArea = All;
-    //Caption = 'Detail Trial Balance';
+    Caption = 'Statement of GL Accounts With PV';
     PreviewMode = PrintLayout;
     UsageCategory = ReportsAndAnalysis;
     DataAccessIntent = ReadOnly;
@@ -135,6 +135,8 @@ report 50040 "Statement of GL Accounts"
                     {
                     }
                     column(gtextName; gtextName) { }
+                    column(PVNumber; PVNumber) { }
+                    column(BankCheckNo; BankCheckNo) { }
                     column(TotalDebitAmount; TotalDebitAmount) { }
                     column(TotalcreditAmount; TotalcreditAmount) { }
                     dataitem("Dimension Set Entry"; "Dimension Set Entry")
@@ -162,7 +164,14 @@ report 50040 "Statement of GL Accounts"
                     }
 
                     trigger OnAfterGetRecord()
+                    Var
+                        VendorLedgerEntry: Record "Vendor Ledger Entry";
+                        DtldVendLedgEntry: Record "Detailed Vendor Ledg. Entry";
+                        VendorLedgerEntry2: Record "Vendor Ledger Entry";
+                        DtldVendLedgEntry2: Record "Detailed Vendor Ledg. Entry";
                     begin
+                        Clear(PVNumber);
+                        Clear(BankCheckNo);
                         if PrintOnlyCorrections then
                             if not (("Debit Amount" < 0) or ("Credit Amount" < 0)) then
                                 CurrReport.Skip();
@@ -202,6 +211,49 @@ report 50040 "Statement of GL Accounts"
                         end;
                         TotalDebitAmount += "Debit Amount";
                         TotalcreditAmount += "Credit Amount";
+                        VendorLedgerEntry2.Reset();
+                        VendorLedgerEntry2.SetRange("Document No.", "Document No.");
+                        VendorLedgerEntry2.SetRange("Vendor No.", "Source No.");
+                        VendorLedgerEntry2.SetRange("Transaction No.", "Transaction No.");
+                        if VendorLedgerEntry2.FindFirst() then begin
+                            DtldVendLedgEntry.Reset();
+                            DtldVendLedgEntry.SetRange("Vendor Ledger Entry No.", VendorLedgerEntry2."Entry No.");
+                            DtldVendLedgEntry.SetRange(Unapplied, false);
+                            if DtldVendLedgEntry.FindSet() then
+                                repeat
+                                    IF DtldVendLedgEntry."Vendor Ledger Entry No." = DtldVendLedgEntry."Applied Vend. Ledger Entry No." THEN BEGIN
+                                        DtldVendLedgEntry2.INIT;
+                                        DtldVendLedgEntry2.SETCURRENTKEY("Applied Vend. Ledger Entry No.", "Entry Type");
+                                        DtldVendLedgEntry2.SETRANGE("Applied Vend. Ledger Entry No.", DtldVendLedgEntry."Applied Vend. Ledger Entry No.");
+                                        DtldVendLedgEntry2.SETRANGE("Entry Type", DtldVendLedgEntry2."Entry Type"::Application);
+                                        DtldVendLedgEntry2.SETRANGE(Unapplied, FALSE);
+                                        IF DtldVendLedgEntry2.FIND('-') THEN
+                                            REPEAT
+                                                IF DtldVendLedgEntry2."Vendor Ledger Entry No." <>
+                                                   DtldVendLedgEntry2."Applied Vend. Ledger Entry No."
+                                                THEN BEGIN
+                                                    VendorLedgerEntry.SETCURRENTKEY("Entry No.");
+                                                    VendorLedgerEntry.SETRANGE("Entry No.", DtldVendLedgEntry2."Vendor Ledger Entry No.");
+                                                    IF VendorLedgerEntry.FIND('-') THEN
+                                                        VendorLedgerEntry.MARK(TRUE);
+                                                END;
+                                            UNTIL DtldVendLedgEntry2.NEXT = 0;
+                                    END ELSE BEGIN
+                                        VendorLedgerEntry.SETCURRENTKEY("Entry No.");
+                                        VendorLedgerEntry.SETRANGE("Entry No.", DtldVendLedgEntry."Applied Vend. Ledger Entry No.");
+                                        IF VendorLedgerEntry.FIND('-') THEN
+                                            VendorLedgerEntry.MARK(TRUE);
+                                    END;
+                                until DtldVendLedgEntry.Next() = 0;
+                        end;
+                        VendorLedgerEntry.MarkedOnly(true);
+                        VendorLedgerEntry.SetRange("Document Type", VendorLedgerEntry."Document Type"::Payment);
+                        if VendorLedgerEntry.FindFirst() then begin
+                            PVNumber := VendorLedgerEntry."PV Number";
+                            BankCheckNo := VendorLedgerEntry."Document No.";
+                        end;
+                        if PVNumber = '' then
+                            PVNumber := "PV Number";
                     end;
 
                     trigger OnPreDataItem()
@@ -352,6 +404,8 @@ report 50040 "Statement of GL Accounts"
         DimensionName2: Text;
         TotalDebitAmount: Decimal;
         TotalcreditAmount: Decimal;
+        PVNumber: Code[20];
+        BankCheckNo: code[20];
 
     procedure InitializeRequest(NewPrintOnlyOnePerPage: Boolean; NewExcludeBalanceOnly: Boolean; NewPrintClosingEntries: Boolean; NewPrintReversedEntries: Boolean; NewPrintOnlyCorrections: Boolean)
     begin

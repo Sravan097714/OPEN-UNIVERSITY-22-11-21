@@ -2526,10 +2526,17 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=": " +Today()</Value>
+                      <Value>: </Value>
                       <Style>
                         <FontSize>8pt</FontSize>
                         <Format>MM/dd/yy</Format>
+                      </Style>
+                    </TextRun>
+                    <TextRun>
+                      <Value>=Globals!ExecutionTime</Value>
+                      <Style>
+                        <FontSize>8pt</FontSize>
+                        <Format>g</Format>
                       </Style>
                     </TextRun>
                   </TextRuns>

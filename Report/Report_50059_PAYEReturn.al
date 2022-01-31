@@ -48,15 +48,32 @@ report 50059 "PAYE Return Finance"
                 PurchInvHdr.SetRange("Buy-from Vendor No.", "No.");
                 if PurchInvHdr.FindSet() then
                     repeat
+                        /*
+                            PurchInvLine.Reset();
+                            PurchInvLine.SetRange("Document No.", PurchInvHdr."No.");
+                            PurchInvLine.SetFilter(Amount, '>%1', 0);
+                            if DateFilterGVar <> '' then
+                                PurchInvLine.SetFilter("Posting Date", DateFilterGVar);
+                            if PurchInvLine.FindSet() then begin
+                                PurchInvLine.CalcSums(PurchInvLine."Line Amount");
+                                EmolumentAmtGVar += Abs(Round(PurchInvLine."Line Amount", 1, '='));
+                            end;*/
                         PurchInvLine.Reset();
                         PurchInvLine.SetRange("Document No.", PurchInvHdr."No.");
-                        PurchInvLine.SetFilter(Amount, '>%1', 0);
+                        //PurchInvLine.SetRange(PAYE, true);
+                        PurchInvLine.SetRange(Type, PurchInvLine.Type::"G/L Account");
+                        PurchInvLine.SetFilter("No.", '<>%1|<>%2', PurchasePaybleSetup."PAYE Claims", PurchasePaybleSetup."PAYE Payroll");
                         if DateFilterGVar <> '' then
                             PurchInvLine.SetFilter("Posting Date", DateFilterGVar);
-                        if PurchInvLine.FindSet() then begin
+                        if PurchInvLine.FindSet() then
+                            repeat
+
+                                EmolumentAmtGVar += Abs(Round(PurchInvLine."Direct Unit Cost" * PurchInvLine.Quantity, 1, '='));
+                            /*
                             PurchInvLine.CalcSums(PurchInvLine."Direct Unit Cost");
-                            EmolumentAmtGVar += Abs(Round(PurchInvLine."Direct Unit Cost", 1, '='));
-                        end;
+                            EmolumentAmtGVar += Abs(Round(PurchInvLine."Direct Unit Cost", 1, '='));*/
+                            until PurchInvLine.Next() = 0;
+
                         PurchInvLine.Reset();
                         PurchInvLine.SetRange("Document No.", PurchInvHdr."No.");
                         PurchInvLine.SetRange(PAYE, true);
@@ -65,8 +82,8 @@ report 50059 "PAYE Return Finance"
                         if DateFilterGVar <> '' then
                             PurchInvLine.SetFilter("Posting Date", DateFilterGVar);
                         if PurchInvLine.FindSet() then begin
-                            PurchInvLine.CalcSums(PurchInvLine."Direct Unit Cost");
-                            PAYEAmtGVar += Abs(Round(PurchInvLine."Direct Unit Cost", 1, '='));
+                            PurchInvLine.CalcSums(PurchInvLine."Line Amount");
+                            PAYEAmtGVar += Abs(Round(PurchInvLine."Line Amount", 1, '='));
                         end;
                     until PurchInvHdr.Next() = 0;
                 if (PAYEAmtGVar = 0) then

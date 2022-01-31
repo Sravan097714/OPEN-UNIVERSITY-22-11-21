@@ -26,10 +26,14 @@ report 50060 "TDS Return Finance"
             column(TaxPeriod; TaxPeriod) { }
             column(EmolumentAmtGVar; EmolumentAmtGVar) { }
             column(PAYEAmtGVar; PAYEAmtGVar) { }
-            column(Surname; Surname) { }
+            column(Surname; SurnameTxt) { }
             column(Other_Names; "Other Names") { }
             trigger OnAfterGetRecord()
             begin
+                if (Surname = '') and ("Other Names" = '') then
+                    SurnameTxt := Name
+                else
+                    SurnameTxt := Surname;
                 Clear(EmolumentAmtGVar);
                 Clear(PAYEAmtGVar);
                 Clear(NIDVar);
@@ -62,10 +66,11 @@ report 50060 "TDS Return Finance"
                         PurchInvLine.Reset();
                         PurchInvLine.SetRange("Document No.", PurchInvHdr."No.");
                         PurchInvLine.SetFilter(Amount, '>%1', 0);
+                        PurchInvLine.SetFilter("TDS Code", '<>%1', '');
                         if PurchInvLine.FindSet() then
                             repeat
                                 if not PurchInvLine.VAT then
-                                    EmolumentAmtGVar += Abs(Round(PurchInvLine."Line Amount", 1, '='))
+                                    EmolumentAmtGVar += Abs(Round(PurchInvLine."Direct Unit Cost", 1, '='))
                                 else
                                     EmolumentAmtGVar += Abs(Round(PurchInvLine."Line Amount Excluding VAT", 1, '='));
                             until PurchInvLine.Next() = 0;
@@ -75,8 +80,8 @@ report 50060 "TDS Return Finance"
                         PurchInvLine.SetRange(Type, PurchInvLine.Type::"G/L Account");
                         PurchInvLine.SetRange("No.", '110080');
                         if PurchInvLine.FindSet() then begin
-                            PurchInvLine.CalcSums(PurchInvLine."Line Amount");
-                            PAYEAmtGVar += Abs(Round(PurchInvLine."Line Amount", 1, '='));
+                            PurchInvLine.CalcSums(PurchInvLine."Direct Unit Cost");
+                            PAYEAmtGVar += Abs(Round(PurchInvLine."Direct Unit Cost", 1, '='));
                         end;
                     until PurchInvHdr.Next() = 0;
                 if (PAYEAmtGVar = 0) then
@@ -112,4 +117,5 @@ report 50060 "TDS Return Finance"
         EndDate: Date;
         TaxPeriod: Text;
         NIDVar: Text;
+        SurnameTxt: Text;
 }

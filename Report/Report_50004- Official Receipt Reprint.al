@@ -385,7 +385,7 @@ report 50004 "Official Receipt Reprint"
         DotText: Text[2];
         OutputNo: Integer;
         Text000: Label 'Access Denied!';
-        Text001: Label 'ORIGINAL RECEIPT';
+        Text001: Label 'RECEIPT';
         Text002: Label 'COPY';
         Text003: Label 'Payment Receipt';
         Text004: Label 'Payment Voucher';
