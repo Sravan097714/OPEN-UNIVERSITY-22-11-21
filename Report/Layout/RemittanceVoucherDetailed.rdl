@@ -1903,7 +1903,11 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>Tel: 403 8200</Value>
+                      <Value>Tel: </Value>
+                      <Style />
+                    </TextRun>
+                    <TextRun>
+                      <Value>=First(Fields!CompanyPhone.Value, "DataSet_Result")</Value>
                       <Style />
                     </TextRun>
                   </TextRuns>
@@ -1915,7 +1919,7 @@
               <rd:DefaultName>Textbox2</rd:DefaultName>
               <Top>1.25828cm</Top>
               <Left>7.92903cm</Left>
-              <Height>0.6cm</Height>
+              <Height>0.52062cm</Height>
               <Width>2.5cm</Width>
               <ZIndex>2</ZIndex>
               <Style>
