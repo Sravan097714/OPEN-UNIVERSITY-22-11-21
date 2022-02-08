@@ -3,7 +3,7 @@ report 50074 "Remittance Voucher.PJ No."
     UsageCategory = ReportsAndAnalysis;
     //ApplicationArea = All;
     DefaultLayout = RDLC;
-    RDLCLayout = 'Report\Layout\RemittanceVoucher2edited.rdl';
+    RDLCLayout = 'Report\Layout\RemittanceVoucher2.rdl';
 
 
     dataset

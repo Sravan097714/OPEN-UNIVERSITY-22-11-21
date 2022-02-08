@@ -19,7 +19,7 @@ report 50040 "Statement of GL Accounts"
             column(PeriodGLDtFilter; StrSubstNo(Text000, GLDateFilter))
             {
             }
-            column(CompanyName; COMPANYPROPERTY.DisplayName)
+            column(CompanyName; CompanyInfo.Name)
             {
             }
             column(ExcludeBalanceOnly; ExcludeBalanceOnly)
@@ -93,7 +93,7 @@ report 50040 "Statement of GL Accounts"
                 {
                     DataItemLink = "G/L Account No." = FIELD("No."), "Posting Date" = FIELD("Date Filter"), "Global Dimension 1 Code" = FIELD("Global Dimension 1 Filter"), "Global Dimension 2 Code" = FIELD("Global Dimension 2 Filter"), "Business Unit Code" = FIELD("Business Unit Filter");
                     DataItemLinkReference = "G/L Account";
-                    //DataItemTableView = SORTING("G/L Account No.", "Posting Date");
+                    DataItemTableView = SORTING("G/L Account No.", "Posting Date") ORDER(ascending);
                     RequestFilterFields = "Global Dimension 1 Code", "Global Dimension 2 Code";
                     column(VATAmount_GLEntry; "VAT Amount")
                     {
@@ -320,6 +320,7 @@ report 50040 "Statement of GL Accounts"
         GLDateFilter := "G/L Account".GetFilter("Date Filter");
 
         OnAfterOnPreReport("G/L Account");
+        CompanyInfo.Get();
     end;
 
     var
@@ -352,6 +353,7 @@ report 50040 "Statement of GL Accounts"
         DimensionName2: Text;
         TotalDebitAmount: Decimal;
         TotalcreditAmount: Decimal;
+        CompanyInfo: Record "Company Information";
 
     procedure InitializeRequest(NewPrintOnlyOnePerPage: Boolean; NewExcludeBalanceOnly: Boolean; NewPrintClosingEntries: Boolean; NewPrintReversedEntries: Boolean; NewPrintOnlyCorrections: Boolean)
     begin
