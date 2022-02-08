@@ -18,6 +18,7 @@ page 50021 "ReReg. Fee From OU Portal"
                 field(Status; Status) { ApplicationArea = All; }
                 field(RDAP; RDAP) { ApplicationArea = All; }
                 field("Student ID"; "Student ID") { ApplicationArea = All; }
+                field("Customer ID"; "Customer ID") { ApplicationArea = all; }
                 field("First Name"; "First Name") { ApplicationArea = All; }
                 field("Last Name"; "Last Name") { ApplicationArea = All; }
                 field("Maiden Name"; "Maiden Name") { ApplicationArea = All; }

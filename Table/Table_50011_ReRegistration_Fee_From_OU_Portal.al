@@ -48,6 +48,7 @@ table 50011 "ReRegistration Fee OU Portal"
         field(61; Instalment; Boolean) { }
         field(65; "NAV Doc No."; Code[20]) { }
         field(66; "Module ID"; Code[20]) { }
+        field(67; "Customer ID"; Code[20]) { }
     }
 
     keys

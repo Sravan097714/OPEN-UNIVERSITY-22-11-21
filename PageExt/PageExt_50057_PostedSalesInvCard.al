@@ -181,6 +181,7 @@ pageextension 50057 PostedSalesInvCardExt extends "Posted Sales Invoice"
             field("Amount Tendered"; Rec."Amount Tendered") { ApplicationArea = all; }
             field("Amount Returned"; Rec."Amount Returned") { ApplicationArea = all; }
             field("Bank Code"; "Bank Code") { ApplicationArea = all; }
+            field("Learner ID"; Rec."Learner ID") { ApplicationArea = all; }
         }
         addbefore("Sell-to Contact")
         {

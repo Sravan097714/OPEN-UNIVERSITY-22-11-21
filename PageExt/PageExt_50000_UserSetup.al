@@ -94,6 +94,7 @@ pageextension 50000 UserSetup extends "User Setup"
             field("Can modify Cust Date Created"; "Can modify Cust Date Created") { ApplicationArea = All; }
             field("Validate Purchase Orders"; "Validate Purchase Orders") { ApplicationArea = All; }
             field("Clear Validated Purchase Order"; "Clear Validated Purchase Order") { ApplicationArea = All; }
+
         }
     }
 }

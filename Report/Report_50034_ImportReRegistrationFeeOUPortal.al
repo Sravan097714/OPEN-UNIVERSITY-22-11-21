@@ -153,6 +153,7 @@ report 50034 "Imp Registration Fee OU Portal"
         Evaluate(grecReRegistrationFromOUPortal."MyT Money Ref", GetValueAtCell(RowNo, 30));
         Evaluate(grecReRegistrationFromOUPortal."MyT Money Ref Staff", GetValueAtCell(RowNo, 31));
         Evaluate(grecReRegistrationFromOUPortal.Remarks, GetValueAtCell(RowNo, 32));
+        grecReRegistrationFromOUPortal."Customer ID" := GetValueAtCell(RowNo, 33);
 
         grecReRegistrationFromOUPortal."Imported By" := UserId;
         grecReRegistrationFromOUPortal."Imported On" := CurrentDateTime;

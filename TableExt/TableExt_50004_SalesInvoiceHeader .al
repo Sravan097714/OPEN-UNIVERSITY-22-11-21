@@ -77,6 +77,10 @@ tableextension 50004 SalesInvoiceHeaderExt extends "Sales Invoice Header"
             DataClassification = ToBeClassified;
             TableRelation = "Bank Account";
         }
-
+        field(50030; "Learner ID"; Code[20])
+        {
+            Caption = 'Learner/Student ID';
+            Editable = false;
+        }
     }
 }

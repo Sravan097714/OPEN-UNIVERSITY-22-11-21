@@ -85,6 +85,11 @@ tableextension 50003 SalesHeaderExt extends "Sales Header"
             DataClassification = ToBeClassified;
             TableRelation = "Bank Account";
         }
+        field(50030; "Learner ID"; Code[20])
+        {
+            Caption = 'Learner/Student ID';
+            Editable = false;
+        }
     }
 
     trigger OnInsert()

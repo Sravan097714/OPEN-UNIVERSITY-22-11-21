@@ -246,6 +246,7 @@ report 50030 "Import Module Fee OU Portal"
             grecModuleFromOUPortal."MyT Money Ref" := GetValueAtCell(RowNo, 67);
             Evaluate(grecModuleFromOUPortal."Payment Date", GetValueAtCell(RowNo, 68));
             EVALUATE(grecModuleFromOUPortal."Posting Date", GetValueAtCell(RowNo, 68));
+            grecModuleFromOUPortal."Customer ID" := GetValueAtCell(RowNo, 69);
 
             grecModuleFromOUPortal."Imported By" := UserId;
             grecModuleFromOUPortal."Imported On" := CurrentDateTime;
