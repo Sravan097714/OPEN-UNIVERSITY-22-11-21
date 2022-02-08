@@ -31,9 +31,9 @@ codeunit 50018 "Process ReRegistration Fee"
             Window.Update(1, ReRegistrationFeePar."Line No.");
 
         SalesReceivableSetup.Get();
-        if (not Customer.get(ReRegistrationFeePar."Student ID")) and (ReRegistrationFeePar."Student ID" <> '') then begin
+        if (not Customer.get(ReRegistrationFeePar."Customer ID")) and (ReRegistrationFeePar."Customer ID" <> '') then begin
             Customer2.Init();
-            Customer2."No." := ReRegistrationFeePar."Student ID";
+            Customer2."No." := ReRegistrationFeePar."Customer ID";
             Customer2.Name := ReRegistrationFeePar."First Name" + ' ' + ReRegistrationFeePar."Last Name";
             Customer2."First Name" := ReRegistrationFeePar."First Name";
             Customer2."Last Name" := ReRegistrationFeePar."Last Name";
@@ -47,6 +47,7 @@ codeunit 50018 "Process ReRegistration Fee"
             Customer2."VAT Bus. Posting Group" := SalesReceivableSetup."VAT Bus. Posting Group";
             Customer2."Gen. Bus. Posting Group" := SalesReceivableSetup."Gen. Bus. Posting Group";
             Customer2."Customer Posting Group" := SalesReceivableSetup."Customer Posting Group";
+            Customer2."Learner ID" := ReRegistrationFeePar."Student ID";
             //Customer2."Customer Category" := Customer2."Customer Category";
             Customer2.Insert();
             Commit();
@@ -97,8 +98,11 @@ codeunit 50018 "Process ReRegistration Fee"
         SalesHeader.Init;
         SalesHeader."No." := NoSeriesMgt.GetNextNo(SalesReceivableSetup."No. Series for OU Portal", Today, TRUE);
         SalesHeader.Validate("Document Type", SalesHeader."Document Type"::Invoice);
-        SalesHeader.validate("Sell-to Customer No.", ReRegistrationFeePar."Student ID");
-        SalesHeader.Validate("Posting Date", ReRegistrationFeePar."Date Processed");
+        SalesHeader.validate("Sell-to Customer No.", ReRegistrationFeePar."Customer ID");
+        if ReRegistrationFeePar."Date Processed" <> 0D then
+            SalesHeader.Validate("Posting Date", ReRegistrationFeePar."Date Processed")
+        else
+            SalesHeader.validate("Posting Date", WorkDate());
         SalesHeader.Insert(true);
 
         SalesHeader.Validate("Shortcut Dimension 1 Code", ReRegistrationFeePar."Shortcut Dimension 1 Code");
@@ -110,7 +114,7 @@ codeunit 50018 "Process ReRegistration Fee"
         SalesHeader.PTN := ReRegistrationFeePar.PTN;
         SalesHeader."Payment Semester" := ReRegistrationFeePar."Payment Semester";
         SalesHeader."From OU Portal" := true;
-
+        SalesHeader."Learner ID" := ReRegistrationFeePar."Student ID";
         if (ReRegistrationFeePar.Currency <> '') and (ReRegistrationFeePar.Currency <> 'Rs') then
             SalesHeader."Currency Code" := 'USD';
 

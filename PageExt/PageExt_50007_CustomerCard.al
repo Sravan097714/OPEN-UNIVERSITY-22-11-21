@@ -291,6 +291,7 @@ pageextension 50007 CustomerExt extends "Customer Card"
             field("Date Created"; "Date Created") { ApplicationArea = All; }
             field("Created By"; "Created By") { ApplicationArea = All; }
             field("Balance(LCY)"; "Balance (LCY)") { ApplicationArea = all; }
+            field("Learner ID"; "Learner ID") { ApplicationArea = all; }
         }
         moveafter(NIC; "VAT Registration No.")
 
@@ -307,6 +308,11 @@ pageextension 50007 CustomerExt extends "Customer Card"
         {
             field("Contact Title"; Rec."Contact Title") { ApplicationArea = all; }
         }
+        modify("Address 2")
+        {
+            Visible = true;
+        }
+        moveafter(Address; "Address 2")
     }
 
     trigger OnOpenPage()

@@ -23,20 +23,22 @@ codeunit 50016 "Process Module Fee"
     begin
         Window.Update(1, ModuleFeePar."Line No.");
         SalesReceivableSetup.Get();
-        if not Customer.get(ModuleFeePar."Learner ID") then begin
+        if not Customer.get(ModuleFeePar."Customer ID") then begin
             Customer2.Init();
-            Customer2."No." := ModuleFeePar."Learner ID";
+            Customer2."No." := ModuleFeePar."Customer ID";
             Customer2.Name := ModuleFeePar."First Name" + ' ' + ModuleFeePar."Last Name";
             Customer2."First Name" := ModuleFeePar."First Name";
             Customer2."Last Name" := ModuleFeePar."Last Name";
             Customer2."Maiden Name" := ModuleFeePar."Maiden Name";
             Customer2.Address := ModuleFeePar.Address;
+            Customer2."Address 2" := ModuleFeePar.Country;
             Customer2."Phone No." := ModuleFeePar."Phone No.";
             Customer2."Mobile Phone No." := ModuleFeePar."Mobile No.";
             Customer2."Country/Region Code" := ModuleFeePar.Country;
             Customer2."VAT Bus. Posting Group" := SalesReceivableSetup."VAT Bus. Posting Group";
             Customer2."Gen. Bus. Posting Group" := SalesReceivableSetup."Gen. Bus. Posting Group";
             Customer2."Customer Posting Group" := SalesReceivableSetup."Customer Posting Group";
+            Customer2."Learner ID" := ModuleFeePar."Learner ID";
             //Customer2."Customer Category" := Customer2."Customer Category";
             Customer2.Insert();
         end;
@@ -98,8 +100,11 @@ codeunit 50016 "Process Module Fee"
         SalesHeader.Init;
         SalesHeader."No." := NoSeriesMgt.GetNextNo(SalesReceivableSetup."No. Series for OU Portal", Today, TRUE);
         SalesHeader.Validate("Document Type", SalesHeader."Document Type"::Invoice);
-        SalesHeader.validate("Sell-to Customer No.", ModuleFeePar."Learner ID");
-        SalesHeader.Validate("Posting Date", ModuleFeePar."Posting Date");
+        SalesHeader.validate("Sell-to Customer No.", ModuleFeePar."Customer ID");
+        if ModuleFeePar."Posting Date" <> 0D then
+            SalesHeader.Validate("Posting Date", ModuleFeePar."Posting Date")
+        else
+            SalesHeader.validate("Posting Date", WorkDate());
         SalesHeader.Insert(true);
 
         SalesHeader.Validate("Shortcut Dimension 1 Code", ModuleFeePar."Shortcut Dimension 1 Code");
@@ -113,7 +118,7 @@ codeunit 50016 "Process Module Fee"
         SalesHeader."Login Email" := ModuleFeePar."Login Email";
         SalesHeader."Contact Email" := ModuleFeePar."Contact Email";
         SalesHeader."From OU Portal" := true;
-
+        SalesHeader."Learner ID" := ModuleFeePar."Learner ID";
         SalesHeader."Gov Grant" := ModuleFeePar."Gov Grant";
         SalesHeader.Instalment := ModuleFeePar.Instalment;
         SalesHeader."Payment Amount" := ModuleFeePar."Payment Amount";

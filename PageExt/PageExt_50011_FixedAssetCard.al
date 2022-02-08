@@ -133,6 +133,29 @@ pageextension 50011 FixedAssetCardExt extends "Fixed Asset Card"
 
     actions
     {
+        addafter("C&opy Fixed Asset")
+        {
+            action("C&opy Fixed Asset2")
+            {
+                ApplicationArea = FixedAssets;
+                Caption = 'C&opy Fixed Asset';
+                Ellipsis = true;
+                Image = CopyFixedAssets;
+                ToolTip = 'View or edit fixed asset components of the main fixed asset that is represented by the fixed asset card.';
+
+                trigger OnAction()
+                var
+                    CopyFA: Report "Copy Fixed Asset 2";
+                begin
+                    CopyFA.SetFANo("No.");
+                    CopyFA.RunModal;
+                end;
+            }
+        }
+        modify("C&opy Fixed Asset")
+        {
+            Visible = false;
+        }
         addlast("Fixed &Asset")
         {
             action("Print FA Barcode")

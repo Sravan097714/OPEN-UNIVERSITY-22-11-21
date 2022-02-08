@@ -103,6 +103,7 @@ codeunit 50003 GenJnlPosting
         BankAccountLedgerEntry."Payment Method Code" := GenJournalLine."Payment Method Code";
         BankAccountLedgerEntry.ReceiptPaymentRep := GenJournalLine.ReceiptPaymentRep;
         BankAccountLedgerEntry."Payment Journal No." := GenJournalLine."Payment Journal No.";
+        BankAccountLedgerEntry."Student ID" := GenJournalLine."Student ID";
     end;
 
 

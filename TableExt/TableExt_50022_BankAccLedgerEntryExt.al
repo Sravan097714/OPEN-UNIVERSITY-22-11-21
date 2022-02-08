@@ -69,5 +69,9 @@ tableextension 50022 BankAccLedgerEntryExt extends "Bank Account Ledger Entry"
         {
             Caption = 'Amount to Remit';
         }
+        field(50037; "Student ID"; Code[10])
+        {
+            Caption = 'Student ID';
+        }
     }
 }
