@@ -93,7 +93,8 @@ report 50040 "Statement of GL Accounts"
                 {
                     DataItemLink = "G/L Account No." = FIELD("No."), "Posting Date" = FIELD("Date Filter"), "Global Dimension 1 Code" = FIELD("Global Dimension 1 Filter"), "Global Dimension 2 Code" = FIELD("Global Dimension 2 Filter"), "Business Unit Code" = FIELD("Business Unit Filter");
                     DataItemLinkReference = "G/L Account";
-                    DataItemTableView = SORTING("G/L Account No.", "Posting Date") ORDER(ascending);
+                    // DataItemTableView = SORTING("G/L Account No.", "Posting Date") ORDER(ascending);
+                    DataItemTableView = SORTING("Posting Date") ORDER(ascending);
                     RequestFilterFields = "Global Dimension 1 Code", "Global Dimension 2 Code";
                     column(VATAmount_GLEntry; "VAT Amount")
                     {
