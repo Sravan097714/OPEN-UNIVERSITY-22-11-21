@@ -42,7 +42,7 @@ tableextension 50000 GLEntryExt extends "G/L Entry"
         {
             Editable = false;
         }
-        field(50012; Address; Text[100])
+        field(50012; Address; Text[150])
         {
             Editable = false;
         }

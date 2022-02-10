@@ -45,6 +45,7 @@ page 50021 "ReReg. Fee From OU Portal"
                 field("MyT Money Ref"; "MyT Money Ref") { ApplicationArea = All; }
                 field("MyT Money Ref Staff"; "MyT Money Ref Staff") { ApplicationArea = All; }
                 field(Remarks; Remarks) { ApplicationArea = All; }
+                field("Address 2"; "Address 2") { ApplicationArea = all; }
 
                 field(Error; Error)
                 {

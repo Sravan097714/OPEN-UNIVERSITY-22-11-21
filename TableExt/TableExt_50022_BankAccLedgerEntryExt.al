@@ -39,7 +39,7 @@ tableextension 50022 BankAccLedgerEntryExt extends "Bank Account Ledger Entry"
         {
             Editable = false;
         }
-        field(50002; Address; Text[100])
+        field(50002; Address; Text[150])
         {
             Editable = false;
         }

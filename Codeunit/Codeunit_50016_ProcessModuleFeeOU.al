@@ -31,10 +31,10 @@ codeunit 50016 "Process Module Fee"
             Customer2."Last Name" := ModuleFeePar."Last Name";
             Customer2."Maiden Name" := ModuleFeePar."Maiden Name";
             Customer2.Address := ModuleFeePar.Address;
-            Customer2."Address 2" := ModuleFeePar.Country;
+            Customer2."Address 2" := ModuleFeePar."Address 2";
             Customer2."Phone No." := ModuleFeePar."Phone No.";
             Customer2."Mobile Phone No." := ModuleFeePar."Mobile No.";
-            Customer2."Country/Region Code" := ModuleFeePar.Country;
+            Customer2.County := copystr(ModuleFeePar.Country, 1, MaxStrLen(Customer2.County));
             Customer2."VAT Bus. Posting Group" := SalesReceivableSetup."VAT Bus. Posting Group";
             Customer2."Gen. Bus. Posting Group" := SalesReceivableSetup."Gen. Bus. Posting Group";
             Customer2."Customer Posting Group" := SalesReceivableSetup."Customer Posting Group";

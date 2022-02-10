@@ -44,7 +44,7 @@ tableextension 50034 GenJnlLine extends "Gen. Journal Line"
         {
             Editable = false;
         }
-        field(50012; Address; Text[100])
+        field(50012; Address; Text[150])
         {
             Editable = false;
         }

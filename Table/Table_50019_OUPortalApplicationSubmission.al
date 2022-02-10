@@ -24,7 +24,7 @@ table 50019 "OU Portal App Submission"
         field(13; "Contact Email"; Text[100]) { }
         field(14; "Phone"; Text[20]) { }
         field(15; "Mobile"; Text[20]) { }
-        field(16; Address; Text[100]) { }
+        field(16; Address; Text[150]) { }
         field(17; Country; Text[50]) { }
         field(18; Status; Text[20]) { }
         field(19; "Programme 1"; Text[250]) { }

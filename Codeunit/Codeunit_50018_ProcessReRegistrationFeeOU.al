@@ -38,6 +38,7 @@ codeunit 50018 "Process ReRegistration Fee"
             Customer2."First Name" := ReRegistrationFeePar."First Name";
             Customer2."Last Name" := ReRegistrationFeePar."Last Name";
             Customer2."Maiden Name" := ReRegistrationFeePar."Maiden Name";
+            Customer2."Address 2" := ReRegistrationFeePar."Address 2";
             /*
             Customer2.Address := ReRegistrationFeePar.Address;
             Customer2."Phone No." := ReRegistrationFeePar."Phone No.";

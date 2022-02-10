@@ -104,7 +104,6 @@ page 50020 "Sales Invoice OU Portal"
                     group(Control60)
                     {
                         ShowCaption = false;
-                        Visible = IsSellToCountyVisible;
                         field("Sell-to County"; "Sell-to County")
                         {
                             ApplicationArea = Basic, Suite;

@@ -1,6 +1,7 @@
 page 50018 "Module Fee from OU Portal"
 {
     PageType = List;
+    Caption = 'User Module Fee';
     //ApplicationArea = All;
     SourceTable = "Module Fee From OU Portal";
     //UsageCategory = Administration;
@@ -11,7 +12,7 @@ page 50018 "Module Fee from OU Portal"
     {
         area(Content)
         {
-            repeater("Module Fees")
+            repeater("User Module Fees")
             {
                 field("Line No."; "Line No.") { ApplicationArea = All; }
                 field("Posting Date"; "Posting Date") { ApplicationArea = All; }
@@ -74,6 +75,7 @@ page 50018 "Module Fee from OU Portal"
                 field("Phone No."; "Phone No.") { ApplicationArea = All; }
                 field("Mobile No."; "Mobile No.") { ApplicationArea = All; }
                 field(Address; Address) { ApplicationArea = All; }
+                field("Address 2"; "Address 2") { ApplicationArea = all; }
                 field(Country; Country) { ApplicationArea = All; }
                 field(Status; Status) { ApplicationArea = All; }
                 field(Currency; Currency) { ApplicationArea = All; }
