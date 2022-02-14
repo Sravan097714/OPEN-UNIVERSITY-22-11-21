@@ -43,6 +43,10 @@ codeunit 50014 "Import Files"
 
             for RowNo := 2 to Rows do begin
 
+                //KTM14/02/22
+                //Removed Document type, Externa Doc No, Curr Code
+                //Re-numbered order of importing the excel
+
                 GenJournalLine."Line No." := LineNo;
                 GenJournalLine."Journal Batch Name" := JournalBatchName;
                 GenJournalLine."Journal Template Name" := JournalTemplateName;
@@ -50,40 +54,42 @@ codeunit 50014 "Import Files"
                 Evaluate(GenJournalLine."Posting Date", GetValueAtIndex(RowNo, 1, ExcelBufferRec));
                 GenJournalLine.Validate(GenJournalLine."Posting Date");
 
-                Evaluate(GenJournalLine."Document Type", GetValueAtIndex(RowNo, 2, ExcelBufferRec));
-                GenJournalLine.Validate(GenJournalLine."Document Type");
+                // Evaluate(GenJournalLine."Document Type", GetValueAtIndex(RowNo, 2, ExcelBufferRec));
+                // GenJournalLine.Validate(GenJournalLine."Document Type");
+                //KTM114/02/22
 
-                Evaluate(GenJournalLine."Document No.", GetValueAtIndex(RowNo, 3, ExcelBufferRec));
+                Evaluate(GenJournalLine."Document No.", GetValueAtIndex(RowNo, 2, ExcelBufferRec));
                 GenJournalLine.Validate(GenJournalLine."Document No.");
 
-                Evaluate(GenJournalLine."External Document No.", GetValueAtIndex(RowNo, 4, ExcelBufferRec));
-                GenJournalLine.Validate(GenJournalLine."External Document No.");
+                // Evaluate(GenJournalLine."External Document No.", GetValueAtIndex(RowNo, 4, ExcelBufferRec));
+                // GenJournalLine.Validate(GenJournalLine."External Document No.");
+                //KTM114/02/22
 
-                Evaluate(GenJournalLine."Account Type", GetValueAtIndex(RowNo, 5, ExcelBufferRec));
+                Evaluate(GenJournalLine."Account Type", GetValueAtIndex(RowNo, 3, ExcelBufferRec));
                 GenJournalLine.Validate(GenJournalLine."Account Type");
 
-                Evaluate(GenJournalLine."Account No.", GetValueAtIndex(RowNo, 6, ExcelBufferRec));
+                Evaluate(GenJournalLine."Account No.", GetValueAtIndex(RowNo, 4, ExcelBufferRec));
                 GenJournalLine.Validate(GenJournalLine."Account No.");
 
-                Evaluate(GenJournalLine.Description, GetValueAtIndex(RowNo, 7, ExcelBufferRec));
+                Evaluate(GenJournalLine.Description, GetValueAtIndex(RowNo, 5, ExcelBufferRec));
                 GenJournalLine.Validate(GenJournalLine.Description);
 
-                Evaluate(GenJournalLine.Amount, GetValueAtIndex(RowNo, 8, ExcelBufferRec));
+                Evaluate(GenJournalLine.Amount, GetValueAtIndex(RowNo, 6, ExcelBufferRec));
                 GenJournalLine.Validate(GenJournalLine.Amount);
 
-                Evaluate(GenJournalLine."Amount (LCY)", GetValueAtIndex(RowNo, 9, ExcelBufferRec));
+                Evaluate(GenJournalLine."Amount (LCY)", GetValueAtIndex(RowNo, 7, ExcelBufferRec));
                 GenJournalLine.Validate(GenJournalLine."Amount (LCY)");
 
-                Evaluate(GenJournalLine."Bal. Account Type", GetValueAtIndex(RowNo, 10, ExcelBufferRec));
+                Evaluate(GenJournalLine."Bal. Account Type", GetValueAtIndex(RowNo, 8, ExcelBufferRec));
                 GenJournalLine.Validate(GenJournalLine."Bal. Account Type");
 
-                Evaluate(GenJournalLine."Bal. Account No.", GetValueAtIndex(RowNo, 11, ExcelBufferRec));
+                Evaluate(GenJournalLine."Bal. Account No.", GetValueAtIndex(RowNo, 9, ExcelBufferRec));
                 GenJournalLine.Validate(GenJournalLine."Bal. Account No.");
 
-                Evaluate(GenJournalLine."Shortcut Dimension 1 Code", GetValueAtIndex(RowNo, 12, ExcelBufferRec));
+                Evaluate(GenJournalLine."Shortcut Dimension 1 Code", GetValueAtIndex(RowNo, 10, ExcelBufferRec));
                 GenJournalLine.Validate(GenJournalLine."Shortcut Dimension 1 Code");
 
-                Evaluate(GenJournalLine."Shortcut Dimension 2 Code", GetValueAtIndex(RowNo, 13, ExcelBufferRec));
+                Evaluate(GenJournalLine."Shortcut Dimension 2 Code", GetValueAtIndex(RowNo, 11, ExcelBufferRec));
                 GenJournalLine.Validate(GenJournalLine."Shortcut Dimension 2 Code");
 
                 GenJournalLine.Insert();
@@ -140,49 +146,53 @@ codeunit 50014 "Import Files"
 
                 Evaluate(GenJournalLine."Posting Date", GetValueAtIndex(RowNo, 1, ExcelBufferRec));
                 GenJournalLine.Validate(GenJournalLine."Posting Date");
-                Evaluate(GenJournalLine."Document Type", GetValueAtIndex(RowNo, 2, ExcelBufferRec));
-                GenJournalLine.Validate(GenJournalLine."Document Type");
 
-                Evaluate(GenJournalLine."Document No.", GetValueAtIndex(RowNo, 3, ExcelBufferRec));
+                // Evaluate(GenJournalLine."Document Type", GetValueAtIndex(RowNo, 2, ExcelBufferRec));
+                // GenJournalLine.Validate(GenJournalLine."Document Type");
+
+                Evaluate(GenJournalLine."Document No.", GetValueAtIndex(RowNo, 2, ExcelBufferRec));
                 GenJournalLine.Validate(GenJournalLine."Document No.");
 
-                Evaluate(GenJournalLine."External Document No.", GetValueAtIndex(RowNo, 4, ExcelBufferRec));
-                GenJournalLine.Validate(GenJournalLine."External Document No.");
+                // Evaluate(GenJournalLine."External Document No.", GetValueAtIndex(RowNo, 4, ExcelBufferRec));
+                // GenJournalLine.Validate(GenJournalLine."External Document No.");
 
-                Evaluate(GenJournalLine."Account Type", GetValueAtIndex(RowNo, 5, ExcelBufferRec));
+                Evaluate(GenJournalLine."Account Type", GetValueAtIndex(RowNo, 3, ExcelBufferRec));
                 GenJournalLine.Validate(GenJournalLine."Account Type");
 
-                Evaluate(GenJournalLine."Account No.", GetValueAtIndex(RowNo, 6, ExcelBufferRec));
+                Evaluate(GenJournalLine."Account No.", GetValueAtIndex(RowNo, 4, ExcelBufferRec));
                 GenJournalLine.Validate(GenJournalLine."Account No.");
 
                 /*Evaluate(GenJournalLine.Description, GetValueAtIndex(RowNo, 7, ExcelBufferRec));
                 GenJournalLine.Validate(GenJournalLine.Description);*/
-                Evaluate(GenJournalLine."Description 2", GetValueAtIndex(RowNo, 7, ExcelBufferRec));
+                Evaluate(GenJournalLine."Description 2", GetValueAtIndex(RowNo, 5, ExcelBufferRec));
                 GenJournalLine.Validate(GenJournalLine."Description 2");
 
-                Evaluate(GenJournalLine."Currency Code", GetValueAtIndex(RowNo, 8, ExcelBufferRec));
-                GenJournalLine.Validate(GenJournalLine."Currency Code");
+                // Evaluate(GenJournalLine."Currency Code", GetValueAtIndex(RowNo, 8, ExcelBufferRec));
+                // GenJournalLine.Validate(GenJournalLine."Currency Code");
+                //KTM114/02/22
 
-                Evaluate(GenJournalLine.Amount, GetValueAtIndex(RowNo, 9, ExcelBufferRec));
+                Evaluate(GenJournalLine.Amount, GetValueAtIndex(RowNo, 6, ExcelBufferRec));
                 GenJournalLine.Validate(GenJournalLine.Amount);
-                Evaluate(GenJournalLine."Amount (LCY)", GetValueAtIndex(RowNo, 10, ExcelBufferRec));
-                GenJournalLine.Validate(GenJournalLine."Amount (LCY)");
 
-                /*Evaluate(GenJournalLine."Bal. Account Type", GetValueAtIndex(RowNo, 11, ExcelBufferRec));
+                Evaluate(GenJournalLine."Amount (LCY)", GetValueAtIndex(RowNo, 7, ExcelBufferRec));
+                GenJournalLine.Validate(GenJournalLine."Amount (LCY)");
+                //KTM14/02/22
+                Evaluate(GenJournalLine."Bal. Account Type", GetValueAtIndex(RowNo, 8, ExcelBufferRec));
                 GenJournalLine.Validate(GenJournalLine."Bal. Account Type");
 
-                Evaluate(GenJournalLine."Bal. Account No.", GetValueAtIndex(RowNo, 12, ExcelBufferRec));
-                GenJournalLine.Validate(GenJournalLine."Bal. Account No.");*/
+                Evaluate(GenJournalLine."Bal. Account No.", GetValueAtIndex(RowNo, 9, ExcelBufferRec));
+                GenJournalLine.Validate(GenJournalLine."Bal. Account No.");
+                //EN KTM14/02/22
 
-                Evaluate(GenJournalLine."Shortcut Dimension 1 Code", GetValueAtIndex(RowNo, 11, ExcelBufferRec));
+                Evaluate(GenJournalLine."Shortcut Dimension 1 Code", GetValueAtIndex(RowNo, 10, ExcelBufferRec));
                 GenJournalLine.Validate(GenJournalLine."Shortcut Dimension 1 Code");
 
-                Evaluate(GenJournalLine."Shortcut Dimension 2 Code", GetValueAtIndex(RowNo, 12, ExcelBufferRec));
+                Evaluate(GenJournalLine."Shortcut Dimension 2 Code", GetValueAtIndex(RowNo, 11, ExcelBufferRec));
                 GenJournalLine.Validate(GenJournalLine."Shortcut Dimension 2 Code");
 
-                Evaluate(SD3, GetValueAtIndex(RowNo, 13, ExcelBufferRec));
+                Evaluate(SD3, GetValueAtIndex(RowNo, 12, ExcelBufferRec)); //KTM114/02/22
                 GenJournalLine.ValidateShortcutDimCode(3, SD3);
-                Evaluate(SD4, GetValueAtIndex(RowNo, 14, ExcelBufferRec));
+                Evaluate(SD4, GetValueAtIndex(RowNo, 13, ExcelBufferRec)); //KTM114/02/22
                 GenJournalLine.ValidateShortcutDimCode(4, SD4);
                 GenJournalLine.Insert();
                 LineNo := LineNo + 10000;

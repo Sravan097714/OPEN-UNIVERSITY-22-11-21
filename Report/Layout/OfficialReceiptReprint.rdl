@@ -3496,7 +3496,7 @@ Cstr(Fields!CompArr10_.Value) + Chr(177) + Cstr(Fields!Title1_.Value) + Chr(177)
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=Code.GetData(27,1) &amp; " " &amp; Code.GetData(33,1)</Value>
+                      <Value>=Code.GetData(27,1)</Value>
                       <Style>
                         <FontWeight>Bold</FontWeight>
                       </Style>
@@ -3989,6 +3989,9 @@ End Function
         </Field>
         <Field Name="DisplaySection_">
           <DataField>DisplaySection_</DataField>
+        </Field>
+        <Field Name="ClientCodeCaption">
+          <DataField>ClientCodeCaption</DataField>
         </Field>
         <Field Name="ClientCode_">
           <DataField>ClientCode_</DataField>

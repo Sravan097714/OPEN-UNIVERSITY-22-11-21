@@ -39,6 +39,10 @@ report 50004 "Official Receipt Reprint"
             column(Title2_; Title[2]) { }
 
             column(DisplaySection_; DisplaySection) { }
+            column(ClientCodeCaption; ClientCodeCaption)//KTM11/02/22
+            {
+
+            }
             column(ClientCode_; ClientCode) { }
             column(VoidTrans_; VarVoid) { }
             column(EntryNo_BLE; "Bank Account Ledger Entry"."Entry No.") { }
@@ -79,7 +83,8 @@ report 50004 "Official Receipt Reprint"
             column(Payment_of; '') { }
             column(Description_BLE; "Bank Account Ledger Entry".Description) { }
             column(RemAmount_; RemAmount) { }
-            column(Amount; gdecAmount) { }
+            // column(Amount; gdecAmount) { }//KTM11/02/22
+            column(Amount; ABS(gdecAmount)) { }//KTM11/02/22
             column(Currency_Code; gtextCurrencyCode) { }
 
             dataitem("Detailed Cust. Ledg. Entry"; "Detailed Cust. Ledg. Entry")
@@ -210,13 +215,21 @@ report 50004 "Official Receipt Reprint"
 
                 if CustArray[1] = '' then
                     CustArray[1] := "Bank Account Ledger Entry".Payee;
-
+                //KTM11/02/22
+                if CustArray[1] = '' then
+                    CustArray[1] := "Bank Account Ledger Entry"."Payee Name";
+                //End KTM11/02/22
 
                 IF "Bal. Account Type" IN
                  ["Bal. Account Type"::Customer, "Bal. Account Type"::Vendor] THEN
                     ClientCode := "Bal. Account No."
                 ELSE
                     ClientCode := '';
+                //KTM11/02/22  
+                Clear(ClientCodeCaption);
+                if "Bal. Account Type" <> "Bal. Account Type"::"G/L Account" then
+                    ClientCodeCaption := 'Client Code';
+                //KTM11/02/22
 
 
                 CurCod := COPYSTR("Currency Code", 1, 3);
@@ -247,9 +260,13 @@ report 50004 "Official Receipt Reprint"
                 //IF PaymentMethod.FIND('-') THEN
                 // PaymentMethodDesc := PaymentMethod.Description;
 
+
+                //KTM 11/02/22 - gdecAmount should not display as negative 
+                // CheckReport.InitTextVariable();
+                // CheckReport.FormatNoText(NumberText, gdecAmount, '');
                 CheckReport.InitTextVariable();
-                //CheckReport.FormatNoText(NumberText, ABS(Amount), '');
-                CheckReport.FormatNoText(NumberText, gdecAmount, '');
+                CheckReport.FormatNoText(NumberText, Abs(gdecAmount), '');
+                //END KTM 11/02/22
 
                 CustledgEntry.Reset();
                 CustledgEntry.SETRANGE(CustledgEntry."Transaction No.", "Bank Account Ledger Entry"."Transaction No.");
@@ -260,6 +277,13 @@ report 50004 "Official Receipt Reprint"
                         PaymentMethodDesc := PaymentMethod.Description;
 
                 END;
+
+                //KTM11/02/22
+                if PaymentMethodDesc = '' then begin
+                    IF PaymentMethod.Get("Payment Method Code") then
+                        PaymentMethodDesc := PaymentMethod.Description;
+                end;
+                //END KTM11/02/22
 
                 IF ("Bank Account Ledger Entry"."Document Type" IN ["Bank Account Ledger Entry"."Document Type"::Payment,
                     "Bank Account Ledger Entry"."Document Type"::Refund]) AND
@@ -404,5 +428,6 @@ report 50004 "Official Receipt Reprint"
         CustLedgEntry2: Record "Cust. Ledger Entry";
         grecBankAccLedgerEntry: Record "Bank Account Ledger Entry";
         gtextCopy: Text;
+        ClientCodeCaption: Text;
 }
 

@@ -21,8 +21,9 @@ report 50021 "Check Laser printer"
 
             trigger OnPreDataItem()
             begin
+                /*
                 IF CurrReport.PREVIEW THEN
-                    ERROR(Text000);
+                    ERROR(Text000);*/
 
                 IF UseCheckNo = '' THEN
                     ERROR(Text001);
@@ -52,7 +53,8 @@ report 50021 "Check Laser printer"
             column(GenJnlLine_Line_No_; "Line No.")
             {
             }
-            column(Bal__Account_No_; "Bal. Account No.") { }
+            //column(Bal__Account_No_; "Bal. Account No.") { }
+            column(Bal__Account_No_; CheckNoText) { }
             dataitem(CheckPages; Integer)
             {
                 DataItemTableView = SORTING(Number);
@@ -192,7 +194,10 @@ report 50021 "Check Laser printer"
                                   LineDiscount := 0;
                                   RemainingAmount := 0;
                                 END ELSE*/
+                                //Add Description here
+
                                 TotalLineAmount += RemainingAmount;
+
                                 //RCTS1.0 10/10/18
                                 CurrReport.BREAK;
                             END ELSE BEGIN
@@ -267,16 +272,20 @@ report 50021 "Check Laser printer"
                                             IF GenJnlLine2."Applies-to Doc. No." = '' THEN BEGIN
                                                 DocType := Text015;
                                                 DocNo := '';
-                                                ExtDocNo := '';
-                                                LineAmount := CurrentLineAmount;
+                                                //ExtDocNo := '';
+                                                ExtDocNo := GenJnlLine."Document No.";
+                                                LineAmount := GenJnlLine.Amount;
                                                 LineDiscount := 0;
+                                                Details := GenJnlLine.Description;
+
                                             END ELSE BEGIN
                                                 CASE BalancingType OF
                                                     BalancingType::"G/L Account":
                                                         BEGIN
                                                             DocType := FORMAT(GenJnlLine2."Document Type");
                                                             DocNo := GenJnlLine2."Document No.";
-                                                            ExtDocNo := GenJnlLine2."External Document No.";
+                                                            ExtDocNo := GenJnlLine."External Document No.";
+                                                            Details := GenJnlLine.Description;
                                                             LineAmount := CurrentLineAmount;
                                                             LineDiscount := 0;
                                                         END;
@@ -885,9 +894,11 @@ report 50021 "Check Laser printer"
                     CASE BalancingType OF
                         BalancingType::"G/L Account":
                             BEGIN
-                                CheckToAddr[1] := GenJnlLine.Description;
+                                //CheckToAddr[1] := GenJnlLine.Description;
+                                CheckToAddr[2] := GenJnlLine."Payee Name";
                                 //MESSAGE(CheckToAddr[1]);
                                 Details := GenJnlLine.Description;
+                                LineAmount := GenJnlLine.Amount;
 
 
                             END;
@@ -897,7 +908,25 @@ report 50021 "Check Laser printer"
                                 IF Cust.Blocked = Cust.Blocked::All THEN
                                     ERROR(Text064, Cust.FIELDCAPTION(Blocked), Cust.Blocked, Cust.TABLECAPTION, Cust."No.");
                                 Cust.Contact := '';
-                                FormatAddr.Customer(CheckToAddr, Cust);
+                                //FormatAddr.Customer(CheckToAddr, Cust);
+                                CheckToAddr[1] := Cust.Name;
+                                CheckToAddr[2] := Cust.Address;
+                                CheckToAddr[3] := Cust."Address 2";
+                                CheckToAddr[4] := Cust.City;
+                                IF CountryRegion.GET(Vend."Country/Region Code") THEN
+                                    CheckToAddr[5] := CountryRegion.Name;
+
+                                if Cust."VAT Registration No." = '' then
+                                    CheckToAddr[6] := ''
+                                else
+                                    CheckToAddr[6] := 'VAT: ' + Cust."VAT Registration No.";
+
+                                if Cust.BRN = '' then
+                                    CheckToAddr[7] := ''
+                                else
+                                    CheckToAddr[7] := 'BRN:' + ' ' + Cust.BRN;
+                                COMPRESSARRAY(CheckToAddr);
+
                                 IF BankAcc2."Currency Code" <> "Currency Code" THEN
                                     ERROR(Text005);
                                 IF Cust."Salesperson Code" <> '' THEN BEGIN
@@ -922,8 +951,16 @@ report 50021 "Check Laser printer"
                                 CheckToAddr[4] := Vend.City;
                                 IF CountryRegion.GET(Vend."Country/Region Code") THEN
                                     CheckToAddr[5] := CountryRegion.Name;
-                                CheckToAddr[6] := 'Phone No.: ' + Vend."Phone No.";
-                                CheckToAddr[7] := 'Fax No.:' + ' ' + Vend."Fax No.";
+
+                                if Vend."VAT Registration No." = '' then
+                                    CheckToAddr[6] := ''
+                                else
+                                    CheckToAddr[6] := 'VAT: ' + Vend."VAT Registration No.";
+
+                                if Vend.BRN = '' then
+                                    CheckToAddr[7] := ''
+                                else
+                                    CheckToAddr[7] := 'BRN:' + ' ' + Vend.BRN;
                                 COMPRESSARRAY(CheckToAddr);
 
 
@@ -1164,8 +1201,8 @@ report 50021 "Check Laser printer"
         Currency: Record 4;
         FormatAddr: Codeunit 365;
         CheckManagement: Codeunit 367;
-        CompanyAddr: array[8] of Text[50];
-        CheckToAddr: array[8] of Text[100];
+        CompanyAddr: array[8] of Text[100];
+        CheckToAddr: array[8] of Text[150];
         OnesText: array[20] of Text[30];
         TensText: array[10] of Text[30];
         ExponentText: array[5] of Text[30];
@@ -1244,6 +1281,8 @@ report 50021 "Check Laser printer"
         DecimalPosition: Decimal;
         OnesDec: Integer;
         TensDec: Integer;
+        GenLedSetup: Record "General Ledger Setup";
+        CurrDescription: Text;
     begin
         /* CLEAR(NoText);
         NoTextIndex := 1;
@@ -1286,6 +1325,9 @@ report 50021 "Check Laser printer"
         NoTextIndex := 1;
         NoText[1] := '****';
 
+        GenLedSetup.Get();//KTM11/02/22
+
+
         IF No < 1 THEN
             AddToNoText(NoText, NoTextIndex, PrintExponent, Text026)
         ELSE BEGIN
@@ -1323,9 +1365,13 @@ report 50021 "Check Laser printer"
         TensDec := (No * 100) DIV 10;
         OnesDec := (No * 100) MOD 10;
 
-        IF No = 0 THEN
-            AddToNoText(NoText, NoTextIndex, PrintExponent, ' ONLY')
-        ELSE BEGIN
+        //KTM11/02/22
+        IF No = 0 THEN begin
+            IF CurrencyCode = '' THEN
+                AddToNoText(NoText, NoTextIndex, PrintExponent, GenLedSetup."Local Currency Description" + ' ONLY')
+            else
+                AddToNoText(NoText, NoTextIndex, PrintExponent, ' ONLY');
+        END ELSE BEGIN
             // AddToNoText(NoText, NoTextIndex, PrintExponent, ' and Cents');
             AddToNoText(NoText, NoTextIndex, PrintExponent, Text028);//RCTSB2B1.03 31Oct2019
             IF TensDec >= 2 THEN BEGIN
@@ -1335,8 +1381,13 @@ report 50021 "Check Laser printer"
             END ELSE
                 IF (TensDec * 10 + OnesDec) > 0 THEN
                     AddToNoText(NoText, NoTextIndex, PrintExponent, OnesText[TensDec * 10 + OnesDec]);
-            AddToNoText(NoText, NoTextIndex, PrintExponent, 'CENTS ONLY');//RCTSB2B1.03 31Oct2019
+
+            IF CurrencyCode = '' THEN
+                AddToNoText(NoText, NoTextIndex, PrintExponent, GenLedSetup."Local Currency Description" + 'ONLY')
+            else
+                AddToNoText(NoText, NoTextIndex, PrintExponent, 'CENTS ONLY');//RCTSB2B1.03 31Oct2019
         END;
+        //END KTM11/02/22
 
         /*
         
@@ -1364,6 +1415,8 @@ report 50021 "Check Laser printer"
     end;
 
     local procedure CustUpdateAmounts(var CustLedgEntry2: Record 21; RemainingAmount2: Decimal)
+    var
+        salescreditmemoline: Record "Sales Cr.Memo Line";
     begin
         IF (ApplyMethod = ApplyMethod::OneLineOneEntry) OR
            (ApplyMethod = ApplyMethod::MoreLinesOneEntry)
@@ -1389,10 +1442,20 @@ report 50021 "Check Laser printer"
                         CustLedgEntry2."Customer No."));
         END;
 
-        DocType := FORMAT(CustLedgEntry2."Document Type");
+        //DocType := FORMAT(CustLedgEntry2."Document Type");
         DocNo := CustLedgEntry2."Document No.";
         ExtDocNo := CustLedgEntry2."External Document No.";
-        Details := CustLedgEntry2.Description;
+        salescreditmemoline.Reset();
+        Clear(Details);
+        salescreditmemoline.SetRange("Document No.", CustLedgEntry2."Document No.");
+        if salescreditmemoline.FindFirst then begin
+            if salescreditmemoline."Description 2" <> '' then
+                Details := salescreditmemoline."Description 2"
+            else
+                Details := salescreditmemoline.Description;
+        end;
+
+        //Details := CustLedgEntry2.Description;
         DocDate := CustLedgEntry2."Posting Date";
         CurrencyCode2 := CustLedgEntry2."Currency Code";
 
@@ -1441,6 +1504,8 @@ report 50021 "Check Laser printer"
     end;
 
     local procedure VendUpdateAmounts(var VendLedgEntry2: Record 25; RemainingAmount2: Decimal)
+    var
+        purchaseinvline: Record "Purch. Inv. Line";
     begin
         IF (ApplyMethod = ApplyMethod::OneLineOneEntry) OR
            (ApplyMethod = ApplyMethod::MoreLinesOneEntry)
@@ -1471,7 +1536,16 @@ report 50021 "Check Laser printer"
 
         //RCTS START 140518
         //Details := VendLedgEntry2."External Document No.";
-        Details := VendLedgEntry2.Description; //Added on 21-11-19
+        purchaseinvline.Reset();
+        Clear(Details);
+        purchaseinvline.SetRange("Document No.", DocNo);
+        if purchaseinvline.FindFirst then begin
+            if purchaseinvline."Description 2" <> '' then
+                Details := purchaseinvline."Description 2"
+            else
+                Details := purchaseinvline.Description;
+        end;
+        //Details := VendLedgEntry2.Description; //Added on 21-11-19
         ExtDocNo := VendLedgEntry2."External Document No.";//Added on 21-11-19
         DocDate := VendLedgEntry2."Posting Date";
         CurrencyCode2 := VendLedgEntry2."Currency Code";
