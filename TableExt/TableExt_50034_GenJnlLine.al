@@ -58,7 +58,17 @@ tableextension 50034 GenJnlLine extends "Gen. Journal Line"
         }
         field(50015; VAT; Boolean) { }
         field(50016; "Retention Fee"; Boolean) { }
-        field(50017; Payee; Text[100]) { }
+        field(50017; Payee; Text[100])
+        {
+            //KTM 11/02/22
+            trigger OnValidate()
+            begin
+                if Payee <> '' then
+                    if Rec.Payee <> xRec.Payee then
+                        "Payee Name" := Payee;
+            end;
+            //End //KTM 11/02/22
+        }
         field(50018; "Vendor Type"; Text[50]) { }
         field(50019; Earmarked; Text[150]) { }
         field(50020; "Date Earmarked"; Date) { }
