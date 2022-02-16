@@ -365,6 +365,61 @@ pageextension 50021 PurchaseOrderSubformExt extends "Purchase Order Subform"
                 end;
             end;
         }
+        //RCTS-SRA1.0 >>
+        modify(Control19)
+        {
+            Visible = false;
+        }
+        modify(Control37)
+        {
+            Visible = false;
+        }
+        addafter(Control19)
+        {
+            group(LineStatistics)
+            {
+                ShowCaption = false;
+                field("Total Discount Amount"; TotalPurchaseLineGRec."Line Discount Amount")
+                {
+                    ApplicationArea = Suite;
+                    AutoFormatExpression = Currency.Code;
+                    AutoFormatType = 1;
+                    CaptionClass = GetTotalInvDiscCaption(Currency.Code);
+                    Caption = 'Total Line Discount Amount';
+                    Editable = false;
+                }
+                field("Total VAT Amount Input"; TotalPurchaseLineGRec."VAT Amount Input")
+                {
+                    ApplicationArea = Suite;
+                    AutoFormatExpression = Currency.Code;
+                    AutoFormatType = 1;
+                    CaptionClass = DocumentTotals.GetTotalVATCaption(Currency.Code);
+                    Caption = 'Total VAT Input Amount';
+                    DrillDown = false;
+                    Editable = false;
+                }
+                field("Total Amount Incl. VAT Custom"; TotalPurchaseLineGRec."Amount Including VAT")
+                {
+                    ApplicationArea = Suite;
+                    AutoFormatExpression = Currency.Code;
+                    AutoFormatType = 1;
+                    CaptionClass = DocumentTotals.GetTotalInclVATCaption(Currency.Code);
+                    Caption = 'Total Amount Incl. VAT';
+                    Editable = false;
+                    ToolTip = 'Specifies the sum of the value in the Line Amount Incl. VAT field on all lines in the document minus any discount amount in the Invoice Discount Amount field.';
+                }
+                field("Total Amount Exc VAT"; TotalPurchaseLineGRec."Amount Including VAT" - TotalPurchaseLineGRec."VAT Amount Input")
+                {
+                    ApplicationArea = Suite;
+                    AutoFormatExpression = Currency.Code;
+                    AutoFormatType = 1;
+                    CaptionClass = DocumentTotals.GetTotalExclVATCaption(Currency.Code);
+                    Caption = 'Total Amount Exc VAT';
+                    Editable = false;
+                }
+            }
+        }
+        //RCTS-SRA1.0 <<
     }
 
     actions
@@ -416,14 +471,50 @@ pageextension 50021 PurchaseOrderSubformExt extends "Purchase Order Subform"
         }
     }
 
+    procedure GetTotalInvDiscCaption(CurrencyCode: Code[10]): Text
+    begin
+        exit(GetCaptionClassWithCurrencyCode('Total Line Invoice Discount', CurrencyCode));
+    end;
+
+    local procedure GetCaptionClassWithCurrencyCode(CaptionWithoutCurrencyCode: Text; CurrencyCode: Code[10]): Text
+    begin
+        exit('3,' + GetCaptionWithCurrencyCode(CaptionWithoutCurrencyCode, CurrencyCode));
+    end;
+
+    local procedure GetCaptionWithCurrencyCode(CaptionWithoutCurrencyCode: Text; CurrencyCode: Code[10]): Text
+    var
+        GLSetup: Record "General Ledger Setup";
+    begin
+        if CurrencyCode = '' then begin
+            GLSetup.Get();
+            CurrencyCode := GLSetup.GetCurrencyCode(CurrencyCode);
+        end;
+
+        if CurrencyCode <> '' then
+            exit(CaptionWithoutCurrencyCode + StrSubstNo(' (%1)', CurrencyCode));
+
+        exit(CaptionWithoutCurrencyCode);
+    end;
+
     trigger OnOpenPage()
     begin
         if grecUserSetup.Get(UserId) then
             gboolEditable := grecUserSetup."Edit GL Account Budget Purch";
     end;
 
+    trigger OnAfterGetCurrRecord()
+    begin
+        DocumentTotals.GetTotalPurchaseHeaderAndCurrency(Rec, TotalPurchaseHeaderGRec, Currency);
+        PurchasePosting.CalculatePurchaseSubPageTotalsCustom(TotalPurchaseHeaderGRec, TotalPurchaseLineGRec);
+    end;
+
     var
         gboolEditable: Boolean;
         grecUserSetup: Record "User Setup";
         GroupCompanyDisplayName: Text;
+        TotalPurchaseHeaderGRec: Record "Purchase Header";
+        TotalPurchaseLineGRec: Record "Purchase Line";
+        DocumentTotals: Codeunit "Document Totals";
+        Currency: Record Currency;
+        PurchasePosting: Codeunit "Purchase Posting";
 }

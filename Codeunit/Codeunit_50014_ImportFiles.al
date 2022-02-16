@@ -177,7 +177,10 @@ codeunit 50014 "Import Files"
                 Evaluate(GenJournalLine."Amount (LCY)", GetValueAtIndex(RowNo, 7, ExcelBufferRec));
                 GenJournalLine.Validate(GenJournalLine."Amount (LCY)");
                 //KTM14/02/22
-                Evaluate(GenJournalLine."Bal. Account Type", GetValueAtIndex(RowNo, 8, ExcelBufferRec));
+                if GetValueAtIndex(RowNo, 8, ExcelBufferRec) <> '' then
+                    Evaluate(GenJournalLine."Bal. Account Type", GetValueAtIndex(RowNo, 8, ExcelBufferRec))
+                else
+                    Evaluate(GenJournalLine."Bal. Account Type", 'G/L Account');
                 GenJournalLine.Validate(GenJournalLine."Bal. Account Type");
 
                 Evaluate(GenJournalLine."Bal. Account No.", GetValueAtIndex(RowNo, 9, ExcelBufferRec));
