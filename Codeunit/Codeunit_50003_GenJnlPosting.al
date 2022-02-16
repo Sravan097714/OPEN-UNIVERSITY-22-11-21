@@ -65,6 +65,7 @@ codeunit 50003 GenJnlPosting
         GLEntry.Address := GenJournalLine.Address;
         GLEntry.Country := GenJournalLine.Country;
         GLEntry."Payee Name" := GenJournalLine."Payee Name";
+        GLEntry.Payee := GenJournalLine.Payee;//KTM15/02/22
         GLEntry."Vendor Type" := GenJournalLine."Vendor Type";
         GLEntry."Vendor Category" := GenJournalLine."Vendor Category";
         GLEntry."Earmark ID" := GenJournalLine."Earmark ID";
@@ -98,6 +99,7 @@ codeunit 50003 GenJnlPosting
         BankAccountLedgerEntry.Address := GenJournalLine.Address;
         BankAccountLedgerEntry.Country := GenJournalLine.Country;
         BankAccountLedgerEntry."Payee Name" := GenJournalLine."Payee Name"; //LS061021
+        BankAccountLedgerEntry.Payee := GenJournalLine.Payee;//KTM11/02/22
         BankAccountLedgerEntry."Vendor Type" := GenJournalLine."Vendor Type";
         BankAccountLedgerEntry."Vendor Category" := GenJournalLine."Vendor Category";
         BankAccountLedgerEntry."Payment Method Code" := GenJournalLine."Payment Method Code";

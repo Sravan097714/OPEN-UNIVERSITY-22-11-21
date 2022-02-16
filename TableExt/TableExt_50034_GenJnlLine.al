@@ -65,7 +65,7 @@ tableextension 50034 GenJnlLine extends "Gen. Journal Line"
             begin
                 if Payee <> '' then
                     if Rec.Payee <> xRec.Payee then
-                        "Payee Name" := Payee;
+                        "Student Name" := Payee;
             end;
             //End //KTM 11/02/22
         }
