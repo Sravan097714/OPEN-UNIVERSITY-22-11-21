@@ -127,7 +127,10 @@ pageextension 50057 PostedSalesInvCardExt extends "Posted Sales Invoice"
         {
             Visible = true;
         }
-
+        modify(Cancelled)
+        {
+            Visible = false;
+        }
         addafter("Shortcut Dimension 2 Code")
         {
             field("VAT Bus. Posting Group"; Rec."VAT Bus. Posting Group")

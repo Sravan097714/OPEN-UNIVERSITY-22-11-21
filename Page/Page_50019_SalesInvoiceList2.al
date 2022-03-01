@@ -193,6 +193,7 @@ page 50019 "Sales Invoice List OU Portal"
                 {
                     ApplicationArea = Basic, Suite;
                     ToolTip = 'Specifies when the sales invoice must be paid.';
+                    Visible = false;
                 }
                 field("Payment Discount %"; "Payment Discount %")
                 {
@@ -261,7 +262,10 @@ page 50019 "Sales Invoice List OU Portal"
                 field(RDAP; RDAP) { ApplicationArea = All; }
                 field(RDBL; RDBL) { ApplicationArea = All; }
                 field(PTN; PTN) { ApplicationArea = All; }
-
+                field("Transaction Type"; Rec."Transaction Type") { ApplicationArea = all; }
+                field(Instalment; Rec.Instalment) { ApplicationArea = all; }
+                field("Gov Grant"; Rec."Gov Grant") { ApplicationArea = all; }
+                field(NIC; Rec.NIC) { ApplicationArea = all; }
             }
         }
         area(factboxes)

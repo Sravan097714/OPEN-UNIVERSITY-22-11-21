@@ -138,6 +138,7 @@ codeunit 50000 Miscellaneous
         FALedgerEntry."Created By" := GenJournalLine."Created By";
         FALedgerEntry."Description 2" := GenJournalLine."Description 2";
         FALedgerEntry."FA Supplier No." := GenJournalLine."FA Supplier No.";
+        FALedgerEntry."Purch Rcpt No." := GenJournalLine."Purch Rcpt No.";
     end;
 
 

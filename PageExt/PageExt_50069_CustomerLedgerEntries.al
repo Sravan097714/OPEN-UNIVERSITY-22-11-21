@@ -147,6 +147,7 @@ pageextension 50069 CustomerLedgerEntries extends "Customer Ledger Entries"
             {
                 ApplicationArea = All;
             }
+            field("Transaction Type"; Rec."Transaction Type") { ApplicationArea = all; }
         }
     }
 }

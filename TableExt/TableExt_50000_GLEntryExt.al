@@ -93,6 +93,11 @@ tableextension 50000 GLEntryExt extends "G/L Entry"
             Editable = false;
 
         }
+        field(50038; "Purch Rcpt No."; code[20])
+        {
+            DataClassification = ToBeClassified;
+            TableRelation = "Purch. Rcpt. Header"."No.";
+        }
     }
 
     trigger OnInsert()

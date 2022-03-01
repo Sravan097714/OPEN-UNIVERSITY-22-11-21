@@ -29,6 +29,7 @@ codeunit 50002 "Sales Posting"
     local procedure OnBeforePostInvPostBuffer(var GenJnlLine: Record "Gen. Journal Line"; var InvoicePostBuffer: Record "Invoice Post. Buffer"; var SalesHeader: Record "Sales Header"; CommitIsSuppressed: Boolean; var GenJnlPostLine: Codeunit "Gen. Jnl.-Post Line"; PreviewMode: Boolean)
     begin
         GenJnlLine."From OU Portal" := SalesHeader."From OU Portal";
+        GenJnlLine."Transaction Type" := SalesHeader."Transaction Type";
     end;
 
 
@@ -36,5 +37,6 @@ codeunit 50002 "Sales Posting"
     local procedure OnBeforePostCustomerEntry(var GenJnlLine: Record "Gen. Journal Line"; var SalesHeader: Record "Sales Header"; var TotalSalesLine: Record "Sales Line"; var TotalSalesLineLCY: Record "Sales Line"; CommitIsSuppressed: Boolean; PreviewMode: Boolean; var GenJnlPostLine: Codeunit "Gen. Jnl.-Post Line")
     begin
         GenJnlLine."From OU Portal" := SalesHeader."From OU Portal";
+        GenJnlLine."Transaction Type" := SalesHeader."Transaction Type";
     end;
 }

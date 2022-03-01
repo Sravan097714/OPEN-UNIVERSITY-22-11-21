@@ -12,6 +12,13 @@ pageextension 50066 FixedAssetGLJournal extends "Fixed Asset G/L Journal"
             Visible = true;
             ApplicationArea = All;
         }
+        addafter("External Document No.")
+        {
+            field("Purch Rcpt No."; "Purch Rcpt No.")
+            {
+                Caption = 'Purchase receipt No.';
+            }
+        }
         modify("FA Posting Type")
         {
             Visible = true;

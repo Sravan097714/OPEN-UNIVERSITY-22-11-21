@@ -11,6 +11,11 @@ tableextension 50039 FALedgerEntryExt extends "FA Ledger Entry"
             Caption = 'Supplier No.';
             TableRelation = Vendor."No.";
         }
+        field(50004; "Purch Rcpt No."; code[20])
+        {
+            DataClassification = ToBeClassified;
+            TableRelation = "Purch. Rcpt. Header"."No.";
+        }
     }
 
     trigger OnInsert()

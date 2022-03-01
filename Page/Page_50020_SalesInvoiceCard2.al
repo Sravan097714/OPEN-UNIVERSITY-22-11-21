@@ -693,6 +693,7 @@ page 50020 "Sales Invoice OU Portal"
                     {
                         ApplicationArea = Basic, Suite;
                         Caption = 'Bill-to';
+                        Editable = false;
                         OptionCaption = 'Default (Customer),Another Customer,Custom Address';
                         ToolTip = 'Specifies the customer that the sales invoice will be sent to. Default (Customer): The same as the customer on the sales invoice. Another Customer: Any customer that you specify in the fields below.';
 
@@ -1303,6 +1304,21 @@ page 50020 "Sales Invoice OU Portal"
                         MoveNegSalesLines.SetSalesHeader(Rec);
                         MoveNegSalesLines.RunModal;
                         MoveNegSalesLines.ShowDocument;
+                    end;
+                }
+                action("List of Module Fees")
+                {
+                    ApplicationArea = all;
+                    Caption = 'List of Module Fees';
+                    Image = ListPage;
+
+                    trigger OnAction()
+                    var
+                        SalesRec: Record "Sales & Receivables Setup";
+                    begin
+                        SalesRec.Get();
+                        SalesRec.TestField("Web Link");
+                        Hyperlink(SalesRec."Web Link");
                     end;
                 }
                 group("Incoming Document")

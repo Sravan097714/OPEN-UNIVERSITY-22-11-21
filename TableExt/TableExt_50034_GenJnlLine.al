@@ -160,6 +160,21 @@ tableextension 50034 GenJnlLine extends "Gen. Journal Line"
             Caption = 'Supplier No.';
             TableRelation = Vendor."No.";
         }
+        field(50038; "Purch Rcpt No."; code[20])
+        {
+            DataClassification = ToBeClassified;
+            TableRelation = "Purch. Rcpt. Header"."No.";
+            trigger OnValidate()
+
+            begin
+                TestField("FA Posting Type", "FA Posting Type"::"Acquisition Cost");
+            end;
+        }
+        field(50039; "Transaction Type"; Code[10])
+        {
+            Caption = 'Transaction Type';
+            TableRelation = "Transaction Type";
+        }
         modify(Amount)
         {
             trigger OnAfterValidate()

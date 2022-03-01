@@ -41,14 +41,14 @@ pageextension 50040 SalesInvoiceSubformExt extends "Sales Invoice Subform"
         {
             Visible = false;
         }
-        modify("Shortcut Dimension 1 Code")
+        modify(ShortcutDimCode3)
         {
-            Visible = true;
+            Visible = false;
             ApplicationArea = All;
         }
-        modify("Shortcut Dimension 2 Code")
+        modify(ShortcutDimCode4)
         {
-            Visible = true;
+            Visible = false;
             ApplicationArea = All;
         }
         modify("Unit of Measure Code")

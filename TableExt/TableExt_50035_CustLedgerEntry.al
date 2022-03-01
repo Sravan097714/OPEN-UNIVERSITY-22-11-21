@@ -6,6 +6,11 @@ tableextension 50035 CustLedgerEntryExt extends "Cust. Ledger Entry"
         field(50001; "Created By"; Text[50]) { }
         field(50002; "Customer Category"; Text[50]) { }
         field(50003; "From OU Portal"; Boolean) { Editable = false; }
+        field(50004; "Transaction Type"; Code[10])
+        {
+            Caption = 'Transaction Type';
+            TableRelation = "Transaction Type";
+        }
     }
 
     trigger OnInsert()

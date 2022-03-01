@@ -4,10 +4,14 @@ pageextension 50056 PostedSalesInvListExt extends "Posted Sales Invoices"
     {
         modify("Order No.")
         {
-            Visible = true;
+            Visible = false;
             ApplicationArea = All;
         }
         modify(Closed)
+        {
+            Visible = false;
+        }
+        modify(Cancelled)
         {
             Visible = false;
         }
@@ -60,7 +64,6 @@ pageextension 50056 PostedSalesInvListExt extends "Posted Sales Invoices"
             ApplicationArea = All;
         }
 
-
         addlast(Control1)
         {
             field("Pre-Assigned No."; Rec."Pre-Assigned No.")
@@ -81,6 +84,7 @@ pageextension 50056 PostedSalesInvListExt extends "Posted Sales Invoices"
             field("Delivery Date"; Rec."Delivery Date")
             {
                 ApplicationArea = All;
+                Visible = false;
             }
             field("Created By"; Rec."Created By")
             {
@@ -90,6 +94,13 @@ pageextension 50056 PostedSalesInvListExt extends "Posted Sales Invoices"
             {
                 ApplicationArea = All;
             }
+            field("Transaction Type"; Rec."Transaction Type") { ApplicationArea = all; }
+            field(Instalment; Rec.Instalment) { ApplicationArea = all; }
+            field("Gov Grant"; Rec."Gov Grant") { ApplicationArea = all; }
+            field(NIC; Rec.NIC) { ApplicationArea = all; }
+            field(RDAP; Rec.RDAP) { ApplicationArea = all; }
+            field(RDBL; Rec.RDBL) { ApplicationArea = all; }
+            field(PTN; Rec.PTN) { ApplicationArea = all; }
         }
     }
 

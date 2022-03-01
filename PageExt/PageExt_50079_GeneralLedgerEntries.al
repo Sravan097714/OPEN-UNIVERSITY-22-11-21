@@ -117,6 +117,7 @@ pageextension 50079 GeneralLedgerEntries extends "General Ledger Entries"
             field("Account Category"; "Account Category") { ApplicationArea = All; }
             field("Amount Tendered"; Rec."Amount Tendered") { ApplicationArea = all; }
             field("Amount To Remit"; Rec."Amount To Remit") { ApplicationArea = all; }
+            field("Purch Rcpt No."; Rec."Purch Rcpt No.") { ApplicationArea = all; }
         }
 
         addafter(Description)

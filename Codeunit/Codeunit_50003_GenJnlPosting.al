@@ -80,6 +80,7 @@ codeunit 50003 GenJnlPosting
         GLEntry."From OU Portal" := GenJournalLine."From OU Portal";
         GLEntry."Description 2" := GenJournalLine."Description 2";
         GLEntry."Student ID" := GenJournalLine."Student ID";
+        GLEntry."Purch Rcpt No." := GenJournalLine."Purch Rcpt No.";
     end;
 
 
@@ -131,6 +132,7 @@ codeunit 50003 GenJnlPosting
         CustLedgerEntry."Voucher No." := GenJournalLine."Voucher No.";
         CustLedgerEntry."Created By" := GenJournalLine."Created By";
         CustLedgerEntry."From OU Portal" := GenJournalLine."From OU Portal";
+        CustLedgerEntry."Transaction Type" := GenJournalLine."Transaction Type";
     end;
 
 

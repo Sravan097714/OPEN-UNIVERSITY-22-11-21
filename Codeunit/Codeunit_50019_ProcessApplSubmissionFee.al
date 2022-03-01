@@ -33,11 +33,11 @@ codeunit 50019 "Process Appl Submission Fee"
             GenJnlLine."Line No." := 10000;
 
         GenJnlLine.Init();
-
         GenJnlLine.Validate("Journal Template Name", JournalTemplateName);
         GenJnlLine.Validate("Journal Batch Name", JournalBatchName);
+        GenJnlLine.SetUpNewLine(GenJnlLine2, 0, true);
         GenJnlLine.Validate("Document Type", GenJnlLine."Document Type"::Payment);
-        GenJnlLine.Validate("Document No.", NoSeriesMgt.GetNextNo(grecGenJnlBatch."No. Series", Today, false));
+        //GenJnlLine.Validate("Document No.", NoSeriesMgt.GetNextNo(grecGenJnlBatch."No. Series", Today, false));
         GenJnlLine.Validate("Posting Date", Today);
         GenJnlLine.Validate("Account Type", GenJnlLine."Account Type"::"G/L Account");
         GenJnlLine.Validate("Account No.", SalesReceivableSetup."G/L for Appl Submission Fee");

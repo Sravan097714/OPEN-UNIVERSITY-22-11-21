@@ -62,6 +62,7 @@ pageextension 50002 SalesReceivablesSetup extends "Sales & Receivables Setup"
                 field("Customer Posting Group"; Rec."Customer Posting Group") { ApplicationArea = all; }
                 field("Cust. PG Mod. Fee Ins"; Rec."Cust. PG Mod. Fee Ins") { ApplicationArea = all; }
                 field("Cust. PG Mod. Fee Without Ins"; Rec."Cust. PG Mod. Fee Without Ins") { ApplicationArea = all; }
+                field("Web Link"; Rec."Web Link") { ApplicationArea = all; }
             }
 
             group("Re-registration Fee OU Portal")

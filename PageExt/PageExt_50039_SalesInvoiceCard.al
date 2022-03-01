@@ -194,6 +194,10 @@ pageextension 50039 SalesInvoiceCardExt extends "Sales Invoice"
         {
             field("Contact Title"; Rec."Contact Title") { ApplicationArea = all; }
         }
+        modify(BillToOptions)
+        {
+            Editable = false;
+        }
     }
 
     actions

@@ -134,11 +134,15 @@ tableextension 50012 SalesReceivablesSetupExt extends "Sales & Receivables Setup
             Caption = 'Customer Posting Group';
             TableRelation = "Customer Posting Group";
         }
-        field(500032; "No. Series for AppReg."; Code[20])
+        field(50032; "No. Series for AppReg."; Code[20])
         {
 
             Caption = 'No. Series for Application Registration OU Portal';
             TableRelation = "No. Series";
+        }
+        field(50033; "Web Link"; Text[250])
+        {
+            DataClassification = ToBeClassified;
         }
     }
 }
