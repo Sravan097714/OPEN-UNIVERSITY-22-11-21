@@ -175,6 +175,14 @@ tableextension 50034 GenJnlLine extends "Gen. Journal Line"
             Caption = 'Transaction Type';
             TableRelation = "Transaction Type";
         }
+        field(50041; Remitter; Text[50])
+        {
+            DataClassification = ToBeClassified;
+        }
+        field(50042; Purpose; Text[250])
+        {
+            DataClassification = ToBeClassified;
+        }
         modify(Amount)
         {
             trigger OnAfterValidate()

@@ -98,6 +98,14 @@ tableextension 50000 GLEntryExt extends "G/L Entry"
             DataClassification = ToBeClassified;
             TableRelation = "Purch. Rcpt. Header"."No.";
         }
+        field(50039; Remitter; Text[50])
+        {
+            DataClassification = ToBeClassified;
+        }
+        field(50040; Purpose; Text[250])
+        {
+            DataClassification = ToBeClassified;
+        }
     }
 
     trigger OnInsert()

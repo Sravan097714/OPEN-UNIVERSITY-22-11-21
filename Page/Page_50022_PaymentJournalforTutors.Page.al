@@ -690,6 +690,8 @@ page 50022 "Payments"
                 //field(Payee; Payee) { ApplicationArea = All; }
                 field("Payee Name"; "Payee Name") { ApplicationArea = all; Caption = 'Payee Name'; Editable = payeeenable; }
                 field("Payment Journal No."; "Payment Journal No.") { ApplicationArea = All; }
+                field(Remitter; Rec.Remitter) { ApplicationArea = all; }
+                field(Purpose; Rec.Purpose) { ApplicationArea = all; }
             }
             group(Control24)
             {
@@ -1714,11 +1716,13 @@ page 50022 "Payments"
 
     trigger OnNewRecord(BelowxRec: Boolean)
     begin
+        CompanyInfo.Get;
         HasPmtFileErr := false;
         UpdateBalance;
         EnableApplyEntriesAction;
         SetUpNewLine(xRec, Balance, BelowxRec);
         Clear(ShortcutDimCode);
+        Remitter := CompanyInfo."Payer Name";
     end;
 
     trigger OnOpenPage()
@@ -1809,6 +1813,7 @@ page 50022 "Payments"
         ShowAllLinesEnabled: Boolean;
         grecUserSetup: Record "User Setup";
         gtextErrorAccess: Label 'You do not have access to this option.';
+        CompanyInfo: Record "Company Information";
 
     protected var
         ShortcutDimCode: array[8] of Code[20];

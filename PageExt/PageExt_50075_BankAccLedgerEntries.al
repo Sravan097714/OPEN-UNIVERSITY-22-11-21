@@ -116,6 +116,8 @@ pageextension 50075 BankAccLedgerEntries extends "Bank Account Ledger Entries"
 
             field("Amount Tendered"; Rec."Amount Tendered") { ApplicationArea = all; }
             field("Amount to Remit"; Rec."Amount to Remit") { ApplicationArea = all; }
+            field(Remitter; Rec.Remitter) { ApplicationArea = all; }
+            field(Purpose; Rec.Purpose) { ApplicationArea = all; }
         }
         addafter(Description)
         {

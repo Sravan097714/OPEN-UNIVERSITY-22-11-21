@@ -135,6 +135,8 @@ pageextension 50076 VendorLedgerEntries extends "Vendor Ledger Entries"
             field("Vendor Category"; "Vendor Category") { ApplicationArea = All; }
             field("Vendor Type"; "Vendor Type") { ApplicationArea = All; }
             field("Payment Journal No."; "Payment Journal No.") { ApplicationArea = All; }
+            field(Remitter; Rec.Remitter) { ApplicationArea = all; }
+            field(Purpose; Rec.Purpose) { ApplicationArea = all; }
         }
     }
 }

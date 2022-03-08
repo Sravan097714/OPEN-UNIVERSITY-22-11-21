@@ -16,6 +16,14 @@ tableextension 50024 VendLedgerEntryExt extends "Vendor Ledger Entry"
         field(50008; "Vendor Category"; Text[50]) { }
         field(50009; "Payment Journal No."; Text[20]) { }
         field(50010; Print; Boolean) { }
+        field(50011; Remitter; Text[50])
+        {
+            DataClassification = ToBeClassified;
+        }
+        field(50012; Purpose; Text[250])
+        {
+            DataClassification = ToBeClassified;
+        }
     }
 
     trigger OnInsert()

@@ -13,7 +13,7 @@ report 50040 "Statement of GL Accounts"
     {
         dataitem("G/L Account"; "G/L Account")
         {
-            DataItemTableView = WHERE("Account Type" = CONST(Posting));
+            //DataItemTableView = WHERE("Account Type" = CONST(Posting));
             PrintOnlyIfDetail = true;
             RequestFilterFields = "No.", "Search Name", "Income/Balance", "Debit/Credit", "Date Filter";
             column(PeriodGLDtFilter; StrSubstNo(Text000, GLDateFilter))
@@ -248,8 +248,19 @@ report 50040 "Statement of GL Accounts"
             end;
 
             trigger OnPreDataItem()
+            var
+                GLAccLRec: Record "G/L Account";
             begin
                 PageGroupNo := 1;
+
+                if IsEndTotalGL then begin
+                    GLAccEndTotal := "G/L Account".GetFilter("No.");
+                    GLAccLRec.Get(GLAccEndTotal);
+                    SetFilter("No.", GLAccLRec.Totaling);
+                    SetRange("Account Type", "Account Type"::Posting);
+                end else
+                    SetRange("Account Type", "Account Type"::Posting);
+
             end;
         }
     }
@@ -320,6 +331,14 @@ report 50040 "Statement of GL Accounts"
         GLFilter := "G/L Account".GetFilters;
         GLDateFilter := "G/L Account".GetFilter("Date Filter");
 
+        MinGLAcc := "G/L Account".GetRangeMin("No.");
+        MaxGLAcc := "G/L Account".GetRangeMax("No.");
+
+        if MinGLAcc <> MaxGLAcc then
+            IsEndTotalGL := false
+        else
+            IsEndTotalGL := true;
+
         OnAfterOnPreReport("G/L Account");
         CompanyInfo.Get();
     end;
@@ -355,6 +374,10 @@ report 50040 "Statement of GL Accounts"
         TotalDebitAmount: Decimal;
         TotalcreditAmount: Decimal;
         CompanyInfo: Record "Company Information";
+        GLAccEndTotal: Code[20];
+        IsEndTotalGL: Boolean;
+        MaxGLAcc: Code[20];
+        MinGLAcc: Code[20];
 
     procedure InitializeRequest(NewPrintOnlyOnePerPage: Boolean; NewExcludeBalanceOnly: Boolean; NewPrintClosingEntries: Boolean; NewPrintReversedEntries: Boolean; NewPrintOnlyCorrections: Boolean)
     begin

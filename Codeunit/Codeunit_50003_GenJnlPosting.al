@@ -81,6 +81,8 @@ codeunit 50003 GenJnlPosting
         GLEntry."Description 2" := GenJournalLine."Description 2";
         GLEntry."Student ID" := GenJournalLine."Student ID";
         GLEntry."Purch Rcpt No." := GenJournalLine."Purch Rcpt No.";
+        GLEntry.Remitter := GenJournalLine.Remitter;
+        GLEntry.Purpose := GenJournalLine.Purpose;
     end;
 
 
@@ -107,6 +109,8 @@ codeunit 50003 GenJnlPosting
         BankAccountLedgerEntry.ReceiptPaymentRep := GenJournalLine.ReceiptPaymentRep;
         BankAccountLedgerEntry."Payment Journal No." := GenJournalLine."Payment Journal No.";
         BankAccountLedgerEntry."Student ID" := GenJournalLine."Student ID";
+        BankAccountLedgerEntry.Remitter := GenJournalLine.Remitter;
+        BankAccountLedgerEntry.Purpose := GenJournalLine.Purpose;
     end;
 
 
@@ -123,6 +127,8 @@ codeunit 50003 GenJnlPosting
         VendorLedgerEntry."Retention Fee" := GenJournalLine."Retention Fee";
         VendorLedgerEntry."Vendor Category" := GenJournalLine."Vendor Category";
         VendorLedgerEntry."Payment Journal No." := GenJournalLine."Payment Journal No.";
+        VendorLedgerEntry.Remitter := GenJournalLine.Remitter;
+        VendorLedgerEntry.Purpose := GenJournalLine.Purpose;
     end;
 
 

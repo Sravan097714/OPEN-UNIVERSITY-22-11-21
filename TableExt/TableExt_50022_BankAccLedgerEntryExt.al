@@ -73,5 +73,13 @@ tableextension 50022 BankAccLedgerEntryExt extends "Bank Account Ledger Entry"
         {
             Caption = 'Student ID';
         }
+        field(50038; Remitter; Text[50])
+        {
+            DataClassification = ToBeClassified;
+        }
+        field(50039; Purpose; Text[250])
+        {
+            DataClassification = ToBeClassified;
+        }
     }
 }
