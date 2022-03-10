@@ -40,7 +40,7 @@ tableextension 50001 CustExt extends Customer
         field(50011; "Learner ID"; Code[20])
         {
             Caption = 'Learner/Student ID';
-            Editable = false;
+            //Editable = false;
         }
     }
 

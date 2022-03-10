@@ -16,8 +16,9 @@ pageextension 50007 CustomerExt extends "Customer Card"
         }
         modify(County)
         {
-            Visible = false;
+            Visible = true;
         }
+        moveafter("Country/Region Code"; County)
         modify("Salesperson Code")
         {
             Visible = false;
