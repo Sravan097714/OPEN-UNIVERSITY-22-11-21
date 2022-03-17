@@ -20,7 +20,7 @@ report 50093 "List of Payments After Posting"
             column(BankName; gtextBankName) { }
             column(Bank_Account_No_; "Bank Account No.") { }
             column(gtextDateFilter; gtextDateFilter) { }
-
+            column(RecordCount; RecordCount) { }
 
             trigger OnPreDataItem()
             begin
@@ -29,12 +29,13 @@ report 50093 "List of Payments After Posting"
                     Error('Please select G/L Register No.');
                 glregisterrec.Get(gintGLRegisterNo);
                 SetRange("Entry No.", glregisterrec."From Entry No.", glregisterrec."To Entry No.");
-
+                Clear(RecordCount);
 
             end;
 
             trigger OnAfterGetRecord()
             begin
+                RecordCount += 1;
                 Clear(gtextBankName);
                 if grecBankAccount.get("Bank Account No.") then
                     gtextBankName := grecBankAccount.Name;
@@ -100,4 +101,5 @@ report 50093 "List of Payments After Posting"
         grecvendorledgerentry: Record "Vendor Ledger Entry";
         grecvendorrec: Record Vendor;
         payeenamevar: Text;
+        RecordCount: Integer;
 }

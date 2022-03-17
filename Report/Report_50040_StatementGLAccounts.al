@@ -253,7 +253,7 @@ report 50040 "Statement of GL Accounts"
             begin
                 PageGroupNo := 1;
 
-                if IsEndTotalGL then begin
+                if AccTypeFilter = AccTypeFilter::"End-Total" then begin
                     GLAccEndTotal := "G/L Account".GetFilter("No.");
                     GLAccLRec.Get(GLAccEndTotal);
                     SetFilter("No.", GLAccLRec.Totaling);
@@ -308,6 +308,11 @@ report 50040 "Statement of GL Accounts"
                         Caption = 'Print Corrections Only';
                         ToolTip = 'Specifies if you want the report to show only the entries that have been reversed and their matching correcting entries.';
                     }
+                    field(AccTypeFilter; AccTypeFilter)
+                    {
+                        ApplicationArea = all;
+                        Caption = 'Account Type';
+                    }
                 }
             }
         }
@@ -330,14 +335,6 @@ report 50040 "Statement of GL Accounts"
     begin
         GLFilter := "G/L Account".GetFilters;
         GLDateFilter := "G/L Account".GetFilter("Date Filter");
-
-        MinGLAcc := "G/L Account".GetRangeMin("No.");
-        MaxGLAcc := "G/L Account".GetRangeMax("No.");
-
-        if MinGLAcc <> MaxGLAcc then
-            IsEndTotalGL := false
-        else
-            IsEndTotalGL := true;
 
         OnAfterOnPreReport("G/L Account");
         CompanyInfo.Get();
@@ -375,9 +372,7 @@ report 50040 "Statement of GL Accounts"
         TotalcreditAmount: Decimal;
         CompanyInfo: Record "Company Information";
         GLAccEndTotal: Code[20];
-        IsEndTotalGL: Boolean;
-        MaxGLAcc: Code[20];
-        MinGLAcc: Code[20];
+        AccTypeFilter: Option Posting,"End-Total";
 
     procedure InitializeRequest(NewPrintOnlyOnePerPage: Boolean; NewExcludeBalanceOnly: Boolean; NewPrintClosingEntries: Boolean; NewPrintReversedEntries: Boolean; NewPrintOnlyCorrections: Boolean)
     begin

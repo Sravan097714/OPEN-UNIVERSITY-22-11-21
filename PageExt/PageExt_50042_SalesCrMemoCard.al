@@ -10,10 +10,10 @@ pageextension 50042 SalesCrMemoCardExt extends "Sales Credit Memo"
         {
             Visible = false;
         }
-        modify("External Document No.")
-        {
-            Visible = false;
-        }
+        /*  modify("External Document No.")
+         {
+             Visible = false;
+         } */
         modify("Salesperson Code")
         {
             Visible = false;

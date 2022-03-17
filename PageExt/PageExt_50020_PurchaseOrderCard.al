@@ -252,6 +252,17 @@ pageextension 50020 PurchOrderCardExt extends "Purchase Order"
 
         }
 
+        modify("Pay-to Name")
+        {
+            Visible = true;
+            Editable = false;
+        }
+        moveafter("Prices Including VAT"; "Pay-to Name")
+        addbefore("Pay-to Name")
+        {
+            field("Pay-to Vendor No."; "Pay-to Vendor No.") { ApplicationArea = all; Editable = false; }
+        }
+
         addafter(PurchLines)
         {
             group(Earmarking)

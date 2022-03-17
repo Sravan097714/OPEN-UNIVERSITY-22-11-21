@@ -858,7 +858,7 @@ page 50020 "Sales Invoice OU Portal"
             group("Foreign Trade")
             {
                 Caption = 'Foreign Trade';
-                Visible = false;
+                Visible = true;
                 field("Transaction Specification"; "Transaction Specification")
                 {
                     ApplicationArea = BasicEU;

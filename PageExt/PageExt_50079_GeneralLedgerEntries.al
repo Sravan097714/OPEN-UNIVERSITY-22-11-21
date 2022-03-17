@@ -120,6 +120,10 @@ pageextension 50079 GeneralLedgerEntries extends "General Ledger Entries"
             field("Purch Rcpt No."; Rec."Purch Rcpt No.") { ApplicationArea = all; }
             field(Remitter; Rec.Remitter) { ApplicationArea = all; }
             field(Purpose; Rec.Purpose) { ApplicationArea = all; }
+            field(Reason; Reason)
+            {
+                ApplicationArea = all;
+            }
         }
 
         addafter(Description)

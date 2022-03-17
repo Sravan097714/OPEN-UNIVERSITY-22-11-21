@@ -13,6 +13,7 @@ report 50096 "Purchase Register Consolidated"
             begin
                 "Purchase Header".SetFilter("Order Date", gtextDate);
                 "Purchase Header".SetRange("Document Type", "Document Type"::Order);
+                "Purchase Header".SetRange(Claim, false);
                 ExcelBuf.DeleteAll(false);
                 MakeExcelDataHeader1();
             end;
@@ -66,7 +67,9 @@ report 50096 "Purchase Register Consolidated"
             RequestFilterFields = "No.";
             trigger OnPreDataItem()
             begin
-                "Purch. Inv. Header".SetFilter("Posting Date", gtextDate);
+                // "Purch. Inv. Header".SetFilter("Posting Date", gtextDate);
+                "Purch. Inv. Header".SetFilter("Order Date", gtextDate);
+                "Purch. Inv. Header".SetRange(Claim, false);
                 //ExcelBuf.DeleteAll(false);
                 //ExcelBuf.SelectOrAddSheet('Posted Purchase Invoices');
 

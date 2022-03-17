@@ -25,13 +25,15 @@ report 50073 "Payment through Bank Transfer"
             column(Chairman; grecPurchPayableSetup."Bulk Bank Transfer – Chaiman") { }
             column(DirectorGeneral; grecPurchPayableSetup."Bank Trans – Director General") { }
             column(Enc; grecPurchPayableSetup."Bulk Bank Transfer – enc.") { }
+            column(CompanyInfo_Picture; CompanyInfo.Picture) { }
+            column(CompanyInfo_Name; CompanyInfo.Name) { }
 
             dataitem("Vendor Ledger Entry"; "Vendor Ledger Entry")
             {
                 RequestFilterFields = "Document No.";
 
                 column(BankLetterFor; BankLetterFor) { }
-                column(CompanyInfo_Picture; CompanyInfo.Picture) { }
+
                 column(Footer1; CompanyInfo.TAN) { }
                 column(Footer2; CompanyInfo.BRN) { }
                 column(Footer3; CompanyInfo."Payer Name") { }
@@ -85,6 +87,7 @@ report 50073 "Payment through Bank Transfer"
                 column(BankLetterSignTitle; Signature[3]) { }
                 column(BankLetterSignTitle1; Signature[4]) { }
                 column(bankaccnum; bankaccnum) { }
+                column(Remitter; RemitterGVar) { }
                 dataitem("Detailed Vendor Ledg. Entry"; "Detailed Vendor Ledg. Entry")
                 {
                     DataItemLink = "Vendor Ledger Entry No." = field("Entry No.");
@@ -222,6 +225,14 @@ report 50073 "Payment through Bank Transfer"
                 trigger OnAfterGetRecord()
                 begin
                     if BankAccount.Get("Bal. Account No.") then bankaccnum := BankAccount."Bank Account No.";
+
+                    if gtextPurposeofTransfer = '' then
+                        gtextPurposeofTransfer := "Vendor Ledger Entry".Purpose;
+                    if Remitter = '' then
+                        RemitterGVar := 'OPEN UNIVERSITY OF MAURITIUS'
+                    else
+                        RemitterGVar := Remitter;
+
                     /* sumamount += amount;
 
                     "Vendor Ledger Entry".CALCFIELDS(Amount);
@@ -411,5 +422,6 @@ report 50073 "Payment through Bank Transfer"
         PrevDocumentNo: Code[20];
         VendorLedgerEntry: Record "Vendor Ledger Entry";
         PurchInvHeader: Record "Purch. Inv. Header";
+        RemitterGVar: Text;
 }
 

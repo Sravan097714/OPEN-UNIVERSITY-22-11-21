@@ -1358,21 +1358,19 @@ report 50021 "Check Laser printer"
             END;
         END;
 
-        //AddToNoText(NoText,NoTextIndex,PrintExponent,Text028);
-        //AddToNoText(NoText,NoTextIndex,PrintExponent,FORMAT(No * 100) + '/100');
-        AddToNoText(NoText, NoTextIndex, PrintExponent, '');//RCTSB2B1.03 31Oct2019
+        IF (CurrencyCode = '') and (No <> 0) THEN
+            AddToNoText(NoText, NoTextIndex, PrintExponent, GenLedSetup."Local Currency Description" + '')
+        else
+            if (CurrencyCode = '') and (No = 0) then
+                AddToNoText(NoText, NoTextIndex, PrintExponent, GenLedSetup."Local Currency Description" + ' ONLY')
+            else
+                AddToNoText(NoText, NoTextIndex, PrintExponent, '');
 
         TensDec := (No * 100) DIV 10;
         OnesDec := (No * 100) MOD 10;
 
         //KTM11/02/22
-        IF No = 0 THEN begin
-            IF CurrencyCode = '' THEN
-                AddToNoText(NoText, NoTextIndex, PrintExponent, GenLedSetup."Local Currency Description" + ' ONLY')
-            else
-                AddToNoText(NoText, NoTextIndex, PrintExponent, ' ONLY');
-        END ELSE BEGIN
-            // AddToNoText(NoText, NoTextIndex, PrintExponent, ' and Cents');
+        IF No <> 0 THEN begin
             AddToNoText(NoText, NoTextIndex, PrintExponent, Text028);//RCTSB2B1.03 31Oct2019
             IF TensDec >= 2 THEN BEGIN
                 AddToNoText(NoText, NoTextIndex, PrintExponent, TensText[TensDec]);
@@ -1382,23 +1380,12 @@ report 50021 "Check Laser printer"
                 IF (TensDec * 10 + OnesDec) > 0 THEN
                     AddToNoText(NoText, NoTextIndex, PrintExponent, OnesText[TensDec * 10 + OnesDec]);
 
-            IF CurrencyCode = '' THEN
-                AddToNoText(NoText, NoTextIndex, PrintExponent, GenLedSetup."Local Currency Description" + 'ONLY')
-            else
-                AddToNoText(NoText, NoTextIndex, PrintExponent, 'CENTS ONLY');//RCTSB2B1.03 31Oct2019
+            /*IF CurrencyCode = '' THEN
+                AddToNoText(NoText, NoTextIndex, PrintExponent, GenLedSetup."Local Currency Description" + ' ONLY')
+            else*/
+            AddToNoText(NoText, NoTextIndex, PrintExponent, ' CENTS ONLY');//RCTSB2B1.03 31Oct2019
         END;
         //END KTM11/02/22
-
-        /*
-        
-        IF No <> 0 THEN
-           AddToNoText(NoText,NoTextIndex,PrintExponent, ' and Cents ' + FORMAT(No * 100))
-        ELSE
-           AddToNoText(NoText,NoTextIndex,PrintExponent, ' ONLY') ;
-        
-        IF CurrencyCode <> '' THEN
-          AddToNoText(NoText,NoTextIndex,PrintExponent,CurrencyCode);
-        */
     end;
 
     local procedure AddToNoText(var NoText: array[2] of Text[60]; var NoTextIndex: Integer; var PrintExponent: Boolean; AddText: Text[30])

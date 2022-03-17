@@ -29,6 +29,7 @@ pageextension 50070 FALedgerEntriesExt extends "FA Ledger Entries"
         modify("Reason Code")
         {
             Visible = true;
+            Editable = false;
             ApplicationArea = All;
         }
         modify("User ID")

@@ -7,25 +7,10 @@ report 50115 "Spend Analysis Report"
 
     dataset
     {
-        dataitem("Purchase Header"; "Purchase Header")
+        dataitem(Integer; Integer)
         {
-            column(No_; "No.")
-            {
-
-            }
-            column(Buy_from_Vendor_Name; "Buy-from Vendor Name")
-            {
-
-            }
-            column(Order_Date; format("Order Date"))
-            {
-
-            }
-            column(Posting_Date; format("Posting Date"))
-            {
-
-            }
-            column(Category_of_Successful_Bidder; "Category of Successful Bidder")
+            DataItemTableView = SORTING(Number);
+            column(SNNo; SNNo)
             {
 
             }
@@ -41,6 +26,22 @@ report 50115 "Spend Analysis Report"
             {
 
             }
+            column(VendorName2; VendorName2)
+            {
+
+            }
+            column(ItemDescrption; ItemDescrption)
+            {
+
+            }
+            column(POCategoryDescrption; POCategoryDescrption)
+            {
+
+            }
+            column(CategoryofSucfulbidderDescrption; CategoryofSucfulbidderDescrption)
+            {
+
+            }
             column(FromDate; format(FromDate))
             {
 
@@ -53,254 +54,218 @@ report 50115 "Spend Analysis Report"
             {
 
             }
-            dataitem("Purchase Line"; "Purchase Line")
+            column(OrderNo; OrderNo)
             {
-                DataItemLink = "Document Type" = field("Document Type"), "Document No." = field("No.");
-                DataItemTableView = where(Type = const(Item));
-                column(SNNo; SNNo)
-                {
 
-                }
-                column(PurchLineNo_; "No.")
-                {
-
-                }
-                column(Description; Description)
-                {
-
-                }
-                column(AmountGvar; AmountGvar)
-                {
-
-                }
-                trigger OnPreDataItem()
-                begin
-                    if ItemNo <> '' then
-                        SetRange("No.", ItemNo);
-                end;
-
-                trigger OnAfterGetRecord()
-                begin
-                    SNNo += 1;
-                    if VAT then
-                        AmountGvar := round("Line Amount Excluding VAT")
-                    else
-                        AmountGvar := round("Line Amount");
-                end;
             }
+            column(OrderDate; format(OrderDate))
+            {
+
+            }
+            column(PostingDate; format(PostingDate))
+            {
+
+            }
+            column(VendorName; VendorName)
+            {
+
+            }
+            column(CategoryofSucbidder; CategoryofSucbidder)
+            {
+
+            }
+            column(Description; Description)
+            {
+
+            }
+            column(AmountGvar; Round(AmountGvar))
+            {
+
+            }
+
+
             trigger OnPreDataItem()
+            var
+                Item: Record Item;
+                Vendor: Record Vendor;
             begin
                 Clear(SNNo);
                 if FromDate = 0D then
                     Error('From Date Must have value');
                 if ToDate = 0D then
                     Error('To Date Must have value');
-                SetRange("Order Date", FromDate, ToDate);
+
+                NewCategories.Reset();
+                NewCategories.SetRange("Table Name", 'Purchase Header');
+                NewCategories.SetRange("Field Name", 'PO Category');
+                NewCategories.SetRange(Code, POCategory);
+                if NewCategories.FindFirst() then
+                    POCategoryDescrption := NewCategories.Description;
+
+                NewCategories.Reset();
+                NewCategories.SetRange("Table Name", 'Purchase Header');
+                NewCategories.SetRange("Field Name", 'Category of Successful Bidder');
+                NewCategories.SetRange(Code, CategoryofSuccessfulbidder);
+                if NewCategories.FindFirst() then
+                    CategoryofSucfulbidderDescrption := NewCategories.Description;
+
+                if Item.Get(ItemNo) then
+                    ItemDescrption := Item.Description;
+
+                if Vendor.Get(VendorNo) then
+                    VendorName2 := Vendor.Name;
+
+                PurchaseHeader.Reset();
+                PurchaseHeader.SetRange("Order Date", FromDate, ToDate);
                 if VendorNo <> '' then
-                    SetRange("Buy-from Vendor No.", VendorNo);
+                    PurchaseHeader.SetRange("Buy-from Vendor No.", VendorNo);
                 if POCategory <> '' then
-                    SetRange("PO Category", POCategory);
+                    PurchaseHeader.SetRange("PO Category", POCategory);
                 if CategoryofSuccessfulbidder <> '' then
-                    SetRange("Category of Successful Bidder", CategoryofSuccessfulbidder);
+                    PurchaseHeader.SetRange("Category of Successful Bidder", CategoryofSuccessfulbidder);
+                if PurchaseHeader.FindSet() then
+                    repeat
+                        PurchaseLine.Reset();
+                        PurchaseLine.SetRange("Document Type", PurchaseHeader."Document Type");
+                        PurchaseLine.SetRange("Document No.", PurchaseHeader."No.");
+                        //PurchaseLine.SetRange(Type, PurchaseLine.Type::Item);
+                        if ItemNo <> '' then
+                            PurchaseLine.SetRange("No.", ItemNo)
+                        else
+                            PurchaseLine.SetFilter("No.", '<>%1', '');
+                        if PurchaseLine.FindSet() then
+                            repeat
+                                PurchaseLine2.get(PurchaseLine."Document Type", PurchaseLine."Document No.", PurchaseLine."Line No.");
+                                PurchaseLine2.Mark(true);
+                            until PurchaseLine.Next() = 0;
+                    until PurchaseHeader.Next() = 0;
+
+
+                PurchInvHdr.Reset();
+                PurchInvHdr.SetRange("Order Date", FromDate, ToDate);
+                if VendorNo <> '' then
+                    PurchInvHdr.SetRange("Buy-from Vendor No.", VendorNo);
+                if POCategory <> '' then
+                    PurchInvHdr.SetRange("PO Category", POCategory);
+                if CategoryofSuccessfulbidder <> '' then
+                    PurchInvHdr.SetRange("Category of Successful Bidder", CategoryofSuccessfulbidder);
+                if PurchInvHdr.FindSet() then
+                    repeat
+                        PurchInvLine.Reset();
+                        PurchInvLine.SetRange("Document No.", PurchInvHdr."No.");
+                        //PurchInvLine.SetRange(Type, PurchInvLine.Type::Item);
+                        if ItemNo <> '' then
+                            PurchInvLine.SetRange("No.", ItemNo)
+                        else
+                            PurchInvLine.SetFilter("No.", '<>%1', '');
+                        if PurchInvLine.FindSet() then
+                            repeat
+                                PurchInvLine2.get(PurchInvLine."Document No.", PurchInvLine."Line No.");
+                                PurchInvLine2.Mark(true);
+                            until PurchInvLine.Next() = 0;
+                    until PurchInvHdr.Next() = 0;
+
+
+
+
+                PurchaseHeaderArc.Reset();
+                PurchaseHeaderArc.SetRange("Order Date", FromDate, ToDate);
+                if VendorNo <> '' then
+                    PurchaseHeaderArc.SetRange("Buy-from Vendor No.", VendorNo);
+                if POCategory <> '' then
+                    PurchaseHeaderArc.SetRange("PO Category", POCategory);
+                if CategoryofSuccessfulbidder <> '' then
+                    PurchaseHeaderArc.SetRange("Category of Successful Bidder", CategoryofSuccessfulbidder);
+                PurchaseHeaderArc.SetFilter("Vendor Order No.", '<>%1', '');
+                PurchaseHeaderArc.SetFilter("Cancelled By", '<>%1', '');
+                if PurchaseHeaderArc.FindSet() then
+                    repeat
+                        PurchaseLineArc.Reset();
+                        PurchaseLineArc.SetRange("Document Type", PurchaseHeaderArc."Document Type");
+                        PurchaseLineArc.SetRange("Document No.", PurchaseHeaderArc."No.");
+                        PurchaseLineArc.SetRange("Doc. No. Occurrence", PurchaseHeaderArc."Doc. No. Occurrence");
+                        PurchaseLineArc.SetRange("Version No.", PurchaseHeaderArc."Version No.");
+                        //PurchaseLineArc.SetRange(Type, PurchaseLineArc.Type::Item);
+                        if ItemNo <> '' then
+                            PurchaseLineArc.SetRange("No.", ItemNo)
+                        else
+                            PurchaseLineArc.SetFilter("No.", '<>%1', '');
+                        if PurchaseLineArc.FindSet() then
+                            repeat
+                                PurchaseLineArc2.get(PurchaseLineArc."Document Type", PurchaseLineArc."Document No.", PurchaseLineArc."Doc. No. Occurrence", PurchaseLineArc."Version No.", PurchaseLineArc."Line No.");
+                                PurchaseLineArc2.Mark(true);
+                            until PurchaseLine.Next() = 0;
+                    until PurchaseHeaderArc.Next() = 0;
+                PurchaseLine2.MarkedOnly(true);
+                PurchInvLine2.MarkedOnly(true);
+                PurchaseLineArc2.MarkedOnly(true);
+                PurchArcCount := PurchaseLineArc2.Count;
+                PurchCount := PurchaseLine2.Count;
+                PurchInvCount := PurchInvLine2.Count;
+                SetRange(Number, 1, PurchaseLine2.Count + PurchInvLine2.Count + PurchaseLineArc2.Count);
             end;
 
-
-        }
-        dataitem("Purch. Inv. Header"; "Purch. Inv. Header")
-        {
-            column(Order_No_; "Order No.")
-            {
-
-            }
-            column(Buy_from_Vendor_Name_PurchInvHdr; "Buy-from Vendor Name")
-            {
-
-            }
-            column(Order_Date_PurchInvHdr; format("Order Date"))
-            {
-
-            }
-            column(Posting_Date_PurchInvHdr; format("Posting Date"))
-            {
-
-            }
-            column(Category_of_Successful_Bidder_PurchInvHdr; "Category of Successful Bidder")
-            {
-
-            }
-            column(VendorNo_PurchInvHdr; VendorNo)
-            {
-
-            }
-            column(ItemNo_PurchInvHdr; ItemNo)
-            {
-
-            }
-            column(POCategory_PurchInvHdr; POCategory)
-            {
-
-            }
-            column(FromDate_PurchInvHdr; format(FromDate))
-            {
-
-            }
-            column(ToDate_PurchInvHdr; format(ToDate))
-            {
-
-            }
-            column(CategoryofSuccessfulbidder_PurchInvHdr; CategoryofSuccessfulbidder)
-            {
-
-            }
-            dataitem("Purch. Inv. Line"; "Purch. Inv. Line")
-            {
-                DataItemLink = "Document No." = field("No.");
-                DataItemTableView = where(Type = const(Item));
-                column(SNNo__PurchInvHdr; SNNo)
-                {
-
-                }
-                column(PurchLineNo__PurchInvHdr; "No.")
-                {
-
-                }
-                column(Description_PurchInvHdr; Description)
-                {
-
-                }
-                column(AmountGvar_PurchInvHdr; AmountGvar)
-                {
-
-                }
-                trigger OnPreDataItem()
-                begin
-                    if ItemNo <> '' then
-                        SetRange("No.", ItemNo);
-                end;
-
-                trigger OnAfterGetRecord()
-                begin
-                    SNNo += 1;
-                    if VAT then
-                        AmountGvar := round("Line Amount Excluding VAT")
-                    else
-                        AmountGvar := round("Line Amount");
-                end;
-            }
-            trigger OnPreDataItem()
+            trigger OnAfterGetRecord()
             begin
-                Clear(SNNo);
-                if FromDate = 0D then
-                    Error('From Date Must have value');
-                if ToDate = 0D then
-                    Error('To Date Must have value');
-                SetRange("Order Date", FromDate, ToDate);
-                if VendorNo <> '' then
-                    SetRange("Buy-from Vendor No.", VendorNo);
-                if POCategory <> '' then
-                    SetRange("PO Category", POCategory);
-                if CategoryofSuccessfulbidder <> '' then
-                    SetRange("Category of Successful Bidder", CategoryofSuccessfulbidder);
-            end;
-
-
-        }
-        dataitem("Purchase Header Archive"; "Purchase Header Archive")
-        {
-            DataItemTableView = where("Vendor Order No." = filter(<> ''), "Cancelled By" = filter(<> ''));
-            column(No_PurchHdrArc; "No.")
-            {
-
-            }
-            column(Buy_from_Vendor_Name_PurchHdrArc; "Buy-from Vendor Name")
-            {
-
-            }
-            column(Order_Date_PurchHdrArc; format("Order Date"))
-            {
-
-            }
-            column(Posting_Date_PurchHdrArc; format("Posting Date"))
-            {
-
-            }
-            column(Category_of_Successful_Bidder_PurchHdrArc; "Category of Successful Bidder")
-            {
-
-            }
-            column(VendorNo_PurchHdrArc; VendorNo)
-            {
-
-            }
-            column(ItemNo_PurchHdrArc; ItemNo)
-            {
-
-            }
-            column(POCategory_PurchHdrArc; POCategory)
-            {
-
-            }
-            column(FromDate_PurchHdrArc; format(FromDate))
-            {
-
-            }
-            column(ToDate_PurchHdrArc; format(ToDate))
-            {
-
-            }
-            column(CategoryofSuccessfulbidder_PurchHdrArc; CategoryofSuccessfulbidder)
-            {
-
-            }
-            dataitem("Purchase Line Archive"; "Purchase Line Archive")
-            {
-                DataItemLink = "Document No." = field("No."), "Document Type" = field("Document Type"), "Doc. No. Occurrence" = field("Doc. No. Occurrence"), "Version No." = field("Version No.");
-                DataItemTableView = where(Type = const(Item));
-                column(SNNo__PurchHdrArc; SNNo)
-                {
-
-                }
-                column(PurchLineNo__PurchHdrArc; "No.")
-                {
-
-                }
-                column(Description_PurchHdrArc; Description)
-                {
-
-                }
-                column(AmountGvar_PurchHdrArc; AmountGvar)
-                {
-
-                }
-                trigger OnPreDataItem()
-                begin
-                    if ItemNo <> '' then
-                        SetRange("No.", ItemNo);
+                if Number = 1 then begin
+                    if PurchaseLine2.FindFirst() then;
+                    if PurchInvLine2.FindFirst() then;
+                    if PurchaseLineArc2.FindFirst() then;
                 end;
+                if (PurchArcCount = 0) and (PurchCount = 0) and (PurchInvCount = 0) then
+                    CurrReport.Break();
+                SNNo += 1;
+                if PurchCount <> 0 then begin
+                    Description := PurchaseLine2.Description;
+                    // if PurchaseLine2.VAT then
+                    //     AmountGvar := PurchaseLine2."Line Amount Excluding VAT"
+                    // else
+                    //     AmountGvar := PurchaseLine2."Line Amount";
+                    AmountGvar := PurchaseLine2."Line Amount";//
 
-                trigger OnAfterGetRecord()
-                begin
-                    SNNo += 1;
-                    AmountGvar := round("Line Amount");
+                    PurchaseHeader2.get(PurchaseLine2."Document Type", PurchaseLine2."Document No.");
+                    OrderDate := PurchaseHeader2."Order Date";
+                    PostingDate := PurchaseHeader2."Posting Date";
+                    VendorName := PurchaseHeader2."Buy-from Vendor Name";
+                    OrderNo := PurchaseHeader2."No.";
+                    CategoryofSucbidder := PurchaseHeader2."Category of Successful Bidder";
+                    PurchaseLine2.Next();
                 end;
-            }
-            trigger OnPreDataItem()
-            begin
-                Clear(SNNo);
-                if FromDate = 0D then
-                    Error('From Date Must have value');
-                if ToDate = 0D then
-                    Error('To Date Must have value');
-                SetRange("Order Date", FromDate, ToDate);
-                if VendorNo <> '' then
-                    SetRange("Buy-from Vendor No.", VendorNo);
-                if POCategory <> '' then
-                    SetRange("PO Category", POCategory);
-                if CategoryofSuccessfulbidder <> '' then
-                    SetRange("Category of Successful Bidder", CategoryofSuccessfulbidder);
+                if (PurchCount = 0) and (PurchInvCount <> 0) then begin
+                    Description := PurchInvLine2.Description;
+                    // if PurchInvLine2.VAT then
+                    //     AmountGvar := PurchInvLine2."Line Amount Excluding VAT"
+                    // else
+                    //     AmountGvar := PurchInvLine2."Line Amount";
+                    amountGvar := PurchInvLine2."Line Amount";
+
+                    PurchInvHdr2.get(PurchInvLine2."Document No.");
+                    OrderDate := PurchInvHdr2."Order Date";
+                    PostingDate := PurchInvHdr2."Posting Date";
+                    VendorName := PurchInvHdr2."Buy-from Vendor Name";
+                    OrderNo := PurchInvHdr2."Order No.";
+                    CategoryofSucbidder := PurchInvHdr2."Category of Successful Bidder";
+                    PurchInvLine2.Next();
+                end;
+                if (PurchCount = 0) and (PurchInvCount = 0) and (PurchArcCount <> 0) then begin
+
+                    Description := PurchaseLineArc2.Description;
+                    AmountGvar := PurchaseLineArc2."Line Amount";
+                    PurchaseHeaderArc2.get(PurchaseLineArc2."Document Type", PurchaseLineArc2."Document No.", PurchaseLineArc2."Doc. No. Occurrence", PurchaseLineArc2."Version No.");
+                    OrderDate := PurchaseHeaderArc2."Order Date";
+                    PostingDate := PurchaseHeaderArc2."Posting Date";
+                    VendorName := PurchaseHeaderArc2."Buy-from Vendor Name";
+                    OrderNo := PurchaseHeaderArc2."No.";
+                    CategoryofSucbidder := PurchaseHeaderArc2."Category of Successful Bidder";
+                    PurchaseLineArc2.Next();
+                end;
+                if (PurchCount = 0) and (PurchInvCount = 0) and (PurchArcCount <> 0) then
+                    PurchArcCount -= 1;
+                if (PurchCount = 0) and (PurchInvCount <> 0) then
+                    PurchInvCount -= 1;
+                if (PurchCount <> 0) then
+                    PurchCount -= 1;
             end;
-
-
         }
     }
 
@@ -412,4 +377,33 @@ report 50115 "Spend Analysis Report"
         CategoryofSuccessfulbidder: Code[20];
         AmountGvar: Decimal;
         SNNo: Integer;
+        PurchaseHeader: Record "Purchase Header";
+        PurchaseLine: Record "Purchase Line";
+
+        PurchInvHdr: Record "Purch. Inv. Header";
+        PurchInvLine: Record "Purch. Inv. Line";
+        PurchaseHeaderArc: Record "Purchase Header Archive";
+        PurchaseLineArc: Record "Purchase Line Archive";
+        PurchaseHeader2: Record "Purchase Header";
+        PurchaseLine2: Record "Purchase Line";
+
+        PurchInvHdr2: Record "Purch. Inv. Header";
+        PurchInvLine2: Record "Purch. Inv. Line";
+        PurchaseHeaderArc2: Record "Purchase Header Archive";
+        PurchaseLineArc2: Record "Purchase Line Archive";
+        OrderDate: Date;
+        OrderNo: Code[20];
+        PostingDate: Date;
+        Description: Text;
+        VendorName: Text;
+        CategoryofSucbidder: Code[20];
+        PurchCount: Integer;
+        PurchInvCount: Integer;
+        PurchArcCount: Integer;
+        ItemDescrption: Text;
+        POCategoryDescrption: Text;
+        CategoryofSucfulbidderDescrption: Text;
+        NewCategories: Record "New Categories";
+        VendorName2: Text;
+
 }

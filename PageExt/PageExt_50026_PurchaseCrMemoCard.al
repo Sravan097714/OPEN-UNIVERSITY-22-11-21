@@ -108,6 +108,17 @@ pageextension 50026 PurchCrMemoCardExt extends "Purchase Credit Memo"
             }
             field(BRN; BRN) { ApplicationArea = All; }
         }
+        modify("Pay-to Name")
+        {
+            Visible = true;
+            Editable = false;
+            ApplicationArea = all;
+        }
+        moveafter("Applies-to ID"; "Pay-to Name")
+        addbefore("Pay-to Name")
+        {
+            field("Pay-to Vendor No."; "Pay-to Vendor No.") { ApplicationArea = all; Editable = false; }
+        }
         addlast(FactBoxes)
         {
             part("Purchase Line Details"; 9100)

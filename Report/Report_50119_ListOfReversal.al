@@ -1,7 +1,7 @@
-report 50103 "AP - Payroll GL Entries"
+report 50119 "List Of Reversals"
 {
     DefaultLayout = RDLC;
-    RDLCLayout = 'Report\Layout\AP-Payroll GLRegister.rdl';
+    RDLCLayout = 'Report\Layout\ListOfReversals.rdl';
     //Caption = 'G/L Register';
     PreviewMode = PrintLayout;
     UsageCategory = ReportsAndAnalysis;
@@ -14,7 +14,7 @@ report 50103 "AP - Payroll GL Entries"
             DataItemTableView = SORTING("No.");
             PrintOnlyIfDetail = true;
             RequestFilterFields = "Creation Date", "Source Code", "User ID";
-            column(COMPANYNAME; CompanyInfo.Name)
+            column(COMPANYNAME; COMPANYPROPERTY.DISPLAYNAME)
             {
             }
             column(ShowLines; ShowDetails)
@@ -127,6 +127,7 @@ report 50103 "AP - Payroll GL Entries"
                 column(G_L_Entry_Amount_Control41Caption; G_L_Entry_Amount_Control41CaptionLbl)
                 {
                 }
+                column(User_ID; "User ID") { }
                 dataitem("Purch. Inv. Line"; "Purch. Inv. Line")
                 {
                     DataItemLink = "Document No." = FIELD("Document No."),
@@ -236,8 +237,6 @@ report 50103 "AP - Payroll GL Entries"
                 begin
                     SETRANGE("Entry No.", "G/L Register"."From Entry No.", "G/L Register"."To Entry No.");
                     //CurrReport.CREATETOTALS(Amount);
-                    if "G/L Register"."Source Code" = 'GENJNL' then
-                        SetRange("Journal Batch Name", 'PAYROLL');
                 end;
             }
 
@@ -274,7 +273,7 @@ report 50103 "AP - Payroll GL Entries"
                             GLReg: Record "G/L Register";
                         begin
                             GLReg.Reset();
-                            GLReg.SetFilter("Source Code", '%1|%2|%3', 'PAYMENTJNL', 'PURCHASES', 'GENJNL');
+                            GLReg.SetRange("Source Code", 'REVERSAL');
                             if Page.RunModal(0, GLReg) = Action::LookupOK then
                                 NoGVar := GLReg."No.";
                         end;
@@ -295,7 +294,6 @@ report 50103 "AP - Payroll GL Entries"
     trigger OnPreReport()
     begin
         GLRegFilter := "G/L Register".GETFILTERS;
-        CompanyInfo.Get();
     end;
 
     var
@@ -316,7 +314,6 @@ report 50103 "AP - Payroll GL Entries"
         DetailedVATAmount: Decimal;
 
         NoGVar: Integer;
-        CompanyInfo: Record "Company Information";
 
     local procedure PopulateRecFromPurchInvLine(PurchInvLine: Record 123; CurrancyFactor: Decimal; PricesInclVAT: Boolean)
     begin

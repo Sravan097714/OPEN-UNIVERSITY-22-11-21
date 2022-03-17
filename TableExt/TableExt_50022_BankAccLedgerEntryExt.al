@@ -81,5 +81,10 @@ tableextension 50022 BankAccLedgerEntryExt extends "Bank Account Ledger Entry"
         {
             DataClassification = ToBeClassified;
         }
+        field(50040; Reason; Text[200])
+        {
+            DataClassification = ToBeClassified;
+            Editable = false;
+        }
     }
 }

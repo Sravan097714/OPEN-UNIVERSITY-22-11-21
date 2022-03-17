@@ -146,7 +146,7 @@ pageextension 50039 SalesInvoiceCardExt extends "Sales Invoice"
         }
         modify("Foreign Trade")
         {
-            Visible = false;
+            Visible = true;
         }
         modify("Bill-to Contact No.")
         {

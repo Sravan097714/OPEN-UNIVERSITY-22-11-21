@@ -25,6 +25,7 @@ report 50109 "Payment through Bank Trans. OC"
             column(Chairman; grecPurchPayableSetup."Bulk Bank Transfer – Chaiman") { }
             column(DirectorGeneral; grecPurchPayableSetup."Bank Trans – Director General") { }
             column(Enc; grecPurchPayableSetup."Bulk Bank Transfer – enc.") { }
+            column(CompanyInfo_Name; CompanyInfo.Name) { }
 
             dataitem("Vendor Ledger Entry"; "Vendor Ledger Entry")
             {

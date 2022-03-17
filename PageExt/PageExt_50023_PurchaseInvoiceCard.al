@@ -168,7 +168,16 @@ pageextension 50023 PurchInvoiceCardExt extends "Purchase Invoice"
             }
             field(BRN; BRN) { ApplicationArea = All; }
         }
-
+        modify("Pay-to Name")
+        {
+            Visible = true;
+            Editable = false;
+        }
+        moveafter("VAT Bus. Posting Group"; "Pay-to Name")
+        addbefore("Pay-to Name")
+        {
+            field("Pay-to Vendor No."; "Pay-to Vendor No.") { ApplicationArea = all; Editable = false; }
+        }
         addafter(PurchLines)
         {
             group(Earmarking)

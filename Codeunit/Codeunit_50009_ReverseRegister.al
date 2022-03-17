@@ -4,14 +4,16 @@ codeunit 50009 ReverseRegister
 
     var
         UserPostingDate: Date;
+        ReasonTxtGlobal: Text[200];
         Text001: Text;
         GLRegisterInput: Report GLRegisterInput;
         gtextCertificateNo: Text[250];
         gtextReason: Text[250];
 
-    procedure gfuncGetUserRevervePostingDate(UserInputDate: Date)
+    procedure gfuncGetUserRevervePostingDate(UserInputDate: Date; ReasonTxtLocal: Text[200])
     begin
         UserPostingDate := UserInputDate;
+        ReasonTxtGlobal := ReasonTxtLocal;
     end;
 
     procedure gfuncSetCertificateNo(CertificateNo: Text[250])
@@ -49,6 +51,7 @@ codeunit 50009 ReverseRegister
     local procedure UpdatePostingDate(VAR GLEntry: Record "G/L Entry"; GenJnlLine: Record "Gen. Journal Line"; GLEntry2: Record "G/L Entry")
     begin
         GLEntry."Posting Date" := UserPostingDate;
+        GLEntry.Reason := ReasonTxtGlobal;
     end;
 
 
@@ -77,6 +80,7 @@ codeunit 50009 ReverseRegister
     local procedure UpdatePostingDate4(VAR NewBankAccLedgEntry: Record "Bank Account Ledger Entry"; BankAccLedgEntry: Record "Bank Account Ledger Entry")
     begin
         NewBankAccLedgEntry."Posting Date" := UserPostingDate;
+        NewBankAccLedgEntry.Reason := ReasonTxtGlobal;
     end;
 
 

@@ -127,6 +127,15 @@ pageextension 50011 FixedAssetCardExt extends "Fixed Asset Card"
             }
             field("Insurance Type"; "Insurance Type") { ApplicationArea = All; }
             field("Date of Purchase"; "Date of Purchase") { ApplicationArea = All; }
+            field("Write Off"; "Write Off")
+            {
+                ApplicationArea = All;
+            }
+            field("Reason for Write Off"; "Reason for Write Off")
+            {
+                ApplicationArea = all;
+                MultiLine = true;
+            }
         }
 
     }

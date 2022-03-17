@@ -18,6 +18,8 @@ tableextension 50028 FixedAssetExt extends "Fixed Asset"
         field(50010; "Details of Donation"; Text[250]) { }
         field(50011; "Insurance Details"; Text[250]) { }
         field(50012; "Date of Purchase"; Date) { }
+        field(50013; "Write Off"; Boolean) { }
+        field(50014; "Reason for Write Off"; Text[200]) { }
     }
 
     trigger OnInsert()

@@ -375,7 +375,7 @@ pageextension 50024 PurchaseInvoiceSubformExt extends "Purch. Invoice Subform"
 
                             grecPurchLine2."Line No." := grecPurchLine."Line No." + 500;
 
-                            grecPurchLine2.Validate("No.", grecPurchaseAndPayables."PAYE Claims");
+                            grecPurchLine2.Validate("No.", grecPurchaseAndPayables."PAYE Payroll");
                             grecPurchLine2.Validate(Quantity, -1);
 
                             if grecPurchLine.VAT then

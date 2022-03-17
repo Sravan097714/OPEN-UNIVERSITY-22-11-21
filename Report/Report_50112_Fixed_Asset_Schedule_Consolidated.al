@@ -4,7 +4,7 @@ report 50112 "FA Schedule Consolidated"
     DefaultLayout = RDLC;
     RDLCLayout = 'Report\Layout\FixedAssetScheduleConsolidated.rdl';
     UsageCategory = ReportsAndAnalysis;
-    ApplicationArea = All;
+    ApplicationArea = All;   
 
 
     dataset

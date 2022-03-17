@@ -34,6 +34,14 @@ pageextension 50066 FixedAssetGLJournal extends "Fixed Asset G/L Journal"
             Visible = true;
             ApplicationArea = All;
         } */
+
+        modify("Reason Code")
+        {
+            Editable = true;
+            Visible = true;
+            ApplicationArea = All;
+        }
+
         modify("Shortcut Dimension 1 Code")
         {
             Visible = false;
