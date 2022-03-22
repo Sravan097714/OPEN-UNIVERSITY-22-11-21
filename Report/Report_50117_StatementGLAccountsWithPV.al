@@ -211,6 +211,7 @@ report 50117 "Statement of GL Accounts PV"
                         end;
                         TotalDebitAmount += "Debit Amount";
                         TotalcreditAmount += "Credit Amount";
+
                         VendorLedgerEntry2.Reset();
                         VendorLedgerEntry2.SetRange("Document No.", "Document No.");
                         VendorLedgerEntry2.SetRange("Vendor No.", "Source No.");
@@ -218,7 +219,7 @@ report 50117 "Statement of GL Accounts PV"
                         if VendorLedgerEntry2.FindFirst() then begin
                             DtldVendLedgEntry.Reset();
                             DtldVendLedgEntry.SetRange("Vendor Ledger Entry No.", VendorLedgerEntry2."Entry No.");
-                            DtldVendLedgEntry.SetRange(Unapplied, false);
+                            //DtldVendLedgEntry.SetRange(Unapplied, false);
                             if DtldVendLedgEntry.FindSet() then
                                 repeat
                                     IF DtldVendLedgEntry."Vendor Ledger Entry No." = DtldVendLedgEntry."Applied Vend. Ledger Entry No." THEN BEGIN
@@ -226,7 +227,7 @@ report 50117 "Statement of GL Accounts PV"
                                         DtldVendLedgEntry2.SETCURRENTKEY("Applied Vend. Ledger Entry No.", "Entry Type");
                                         DtldVendLedgEntry2.SETRANGE("Applied Vend. Ledger Entry No.", DtldVendLedgEntry."Applied Vend. Ledger Entry No.");
                                         DtldVendLedgEntry2.SETRANGE("Entry Type", DtldVendLedgEntry2."Entry Type"::Application);
-                                        DtldVendLedgEntry2.SETRANGE(Unapplied, FALSE);
+                                        //DtldVendLedgEntry2.SetRange(Unapplied, false);
                                         IF DtldVendLedgEntry2.FIND('-') THEN
                                             REPEAT
                                                 IF DtldVendLedgEntry2."Vendor Ledger Entry No." <>
@@ -246,6 +247,15 @@ report 50117 "Statement of GL Accounts PV"
                                     END;
                                 until DtldVendLedgEntry.Next() = 0;
                         end;
+                        /*
+                        if VendorLedgerEntry2."Closed by Entry No." <> 0 then begin
+                            VendorLedgerEntry.SetCurrentKey("Closed by Entry No.");
+                            VendorLedgerEntry.SetRange("Closed by Entry No.", VendorLedgerEntry2."Entry No.");
+                            if VendorLedgerEntry.Find('-') then
+                                VendorLedgerEntry.Mark(true);
+                        end;
+                        */
+
                         VendorLedgerEntry.MarkedOnly(true);
                         VendorLedgerEntry.SetRange("Document Type", VendorLedgerEntry."Document Type"::Payment);
                         if VendorLedgerEntry.FindFirst() then begin

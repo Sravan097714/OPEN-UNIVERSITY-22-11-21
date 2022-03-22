@@ -10,7 +10,7 @@ page 50019 "Sales Invoice List OU Portal"
     QueryCategory = 'Sales Invoice List';
     RefreshOnActivate = true;
     SourceTable = "Sales Header";
-    SourceTableView = WHERE("Document Type" = CONST(Invoice), "From OU Portal" = filter(TRUE));
+    SourceTableView = WHERE("Document Type" = CONST(Invoice), "From OU Portal" = filter(TRUE), "Gov Grant" = filter(false));
     UsageCategory = Lists;
 
     layout

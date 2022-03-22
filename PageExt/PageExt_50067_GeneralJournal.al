@@ -44,6 +44,10 @@ pageextension 50067 GeneralJournal extends "General Journal"
             Visible = true;
             ApplicationArea = All;
         }
+        addafter(Amount)
+        {
+            field("Posting Group"; "Posting Group") { ApplicationArea = all; }
+        }
         modify(Amount)
         {
             Visible = true;
