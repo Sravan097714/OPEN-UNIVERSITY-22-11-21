@@ -2,6 +2,16 @@ pageextension 50129 AccountantRoleCenterExt extends "Accountant Role Center"
 {
     layout
     {
+
+        addafter(Control76)
+        {
+            part(ControlRetention; "Retention Due")
+            {
+                ApplicationArea = Basic, Suite;
+            }
+        }
+
+
     }
 
     actions

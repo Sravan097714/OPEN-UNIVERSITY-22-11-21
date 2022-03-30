@@ -1,7 +1,7 @@
 page 50033 "Print Remittance Voucher"
 {
     ApplicationArea = All;
-    //Caption = 'Vendor Ledger Entries';
+    Caption = 'Print Remittance Voucher for Tutor';
     DataCaptionFields = "Vendor No.";
     DeleteAllowed = false;
     InsertAllowed = false;

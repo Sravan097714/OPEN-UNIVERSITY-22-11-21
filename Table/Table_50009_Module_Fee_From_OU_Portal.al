@@ -88,6 +88,12 @@ table 50009 "Module Fee From OU Portal"
         field(72; "Module ID 6"; Code[20]) { }
         field(73; "Customer ID"; Code[20]) { }
         field(74; "Address 2"; text[50]) { }
+        field(75; "Module 1 Credit"; Decimal) { }
+        field(76; "Module 2 Credit"; Decimal) { }
+        field(77; "Module 3 Credit"; Decimal) { }
+        field(78; "Module 4 Credit"; Decimal) { }
+        field(79; "Module 5 Credit"; Decimal) { }
+        field(80; "Module 6 Credit"; Decimal) { }
     }
 
     keys

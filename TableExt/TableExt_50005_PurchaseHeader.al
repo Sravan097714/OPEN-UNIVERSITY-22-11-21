@@ -106,6 +106,15 @@ tableextension 50005 PurchHeaderExt extends "Purchase Header"
         {
             Editable = false;
         }
+        field(50045; "Supplier Invoice Date"; date)
+        {
+            DataClassification = ToBeClassified;
+        }
+        field(50046; "Original PO Number"; Code[20])
+        {
+        }
+        field(50047; "Retention Due Date"; Date) { }
+
 
         modify("Buy-from Vendor No.")
         {

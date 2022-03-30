@@ -30,5 +30,6 @@ tableextension 50040 PurchInvLineExt extends "Purch. Inv. Line"
         field(50013; "TDS Account No."; Code[20]) { }
         field(50014; "Earmark ID"; Text[25]) { }
         field(50015; "Date Earmarked"; Date) { }
+        field(50016; "Original Amount"; Decimal) { }
     }
 }

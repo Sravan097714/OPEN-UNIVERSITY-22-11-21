@@ -47,5 +47,6 @@ tableextension 50019 UserSetupExt extends "User Setup"
         }
         field(50019; "Validate Purchase Orders"; Boolean) { }
         field(50020; "Clear Validated Purchase Order"; Boolean) { }
+        field(50021; "Edit PO Original Amount"; Boolean) { }
     }
 }

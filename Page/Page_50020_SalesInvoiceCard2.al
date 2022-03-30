@@ -295,12 +295,25 @@ page 50020 "Sales Invoice OU Portal"
                     caption = 'Debtor Account';
                     ApplicationArea = All;
                 }
-                field("Gov Grant"; "Gov Grant") { ApplicationArea = All; }
-                field(Instalment; Instalment) { ApplicationArea = All; }
+                field("Gov Grant"; "Gov Grant")
+                {
+                    ApplicationArea = All;
+                    editable = false;//ktm
+                }
+                field(Instalment; Instalment)
+                {
+                    ApplicationArea = All;
+                    editable = false;//ktm
+                }
+                field("Bank Code"; "Bank Code")
+                {
+                    ApplicationArea = all;//ktm
+                }
                 field("Portal Payment Mode"; "Portal Payment Mode") { ApplicationArea = All; }
                 field("MyT Money Ref"; "MyT Money Ref") { ApplicationArea = All; }
                 field("Payment Amount"; "Payment Amount") { ApplicationArea = All; }
                 field("Payment Date"; "Payment Date") { ApplicationArea = All; }
+
                 field(Remark; Remark) { ApplicationArea = All; }
                 field(Amount; Amount) { ApplicationArea = all; }
                 field("Amount Tendered"; Rec."Amount Tendered") { ApplicationArea = all; }
@@ -503,7 +516,7 @@ page 50020 "Sales Invoice OU Portal"
             {
                 Caption = 'Billing';
                 Enabled = "Sell-to Customer No." <> '';
-                Visible = true;
+                Visible = False;//ktm
                 group(Control34)
                 {
                     ShowCaption = false;

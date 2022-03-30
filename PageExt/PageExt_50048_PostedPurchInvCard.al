@@ -112,7 +112,26 @@ pageextension 50048 PostedPurchInvCardExt extends "Posted Purchase Invoice"
                 ApplicationArea = All;
             }
         }
+        addafter("Vendor Invoice No.")
+        {
+            field("Supplier Invoice Date"; "Supplier Invoice Date")
+            {
+                ApplicationArea = all;
+                Editable = false;
+            }
+            field("Original PO Number"; "Original PO Number")
+            {
+                ApplicationArea = all;
+                Editable = false;
 
+            }
+            field("Retention Due Date"; "Retention Due Date")
+            {
+                ApplicationArea = all;
+                Editable = false;
+            }
+
+        }
         addlast(General)
         {
             field("Created By"; Rec."Created By")

@@ -6,5 +6,6 @@ tableextension 50041 SalesLineExt extends "Sales Line"
         field(50001; Instalment; Boolean) { Editable = false; }
         field(50002; "Original Amount"; Decimal) { }
         field(50003; "Module Code"; Code[20]) { Editable = false; }
+        field(50004; "Module Credit"; Decimal) { }
     }
 }

@@ -41,6 +41,7 @@ report 50068 "Return Procurement Activities"
 
             trigger OnAfterGetRecord()
             begin
+
                 if "Contract Amount Approved (Rs)" >= 100000 then
                     gdecAbove100 += "Contract Amount Approved (Rs)"
                 else
@@ -52,11 +53,14 @@ report 50068 "Return Procurement Activities"
                         gintSMEVendor += 1;
                     end;
                 end;
+
+
             end;
 
             trigger OnPreDataItem()
             begin
-                SetRange("Document Date", gdateStartDate, gdateEndDate);
+                SetRange("Order Date", gdateStartDate, gdateEndDate);//ktm
+
             end;
         }
 

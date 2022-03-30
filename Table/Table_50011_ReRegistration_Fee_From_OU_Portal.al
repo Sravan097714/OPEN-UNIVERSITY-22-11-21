@@ -50,6 +50,7 @@ table 50011 "ReRegistration Fee OU Portal"
         field(66; "Module ID"; Code[20]) { }
         field(67; "Customer ID"; Code[20]) { }
         field(68; "Address 2"; text[50]) { }
+        field(69; Credit; Decimal) { }
     }
 
     keys

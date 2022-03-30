@@ -74,5 +74,13 @@ tableextension 50010 PurchInvHeaderExt extends "Purch. Inv. Header"
         field(50042; "Request Dated"; date) { }
         field(50043; "Validated By"; Text[50]) { }
         field(50044; "Validated On"; DateTime) { }
+        field(50045; "Supplier Invoice Date"; date)
+        {
+            DataClassification = ToBeClassified;
+        }
+        field(50046; "Original PO Number"; Code[20])
+        {
+        }
+        field(50047; "Retention Due Date"; Date) { }
     }
 }

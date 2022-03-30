@@ -18,12 +18,16 @@ pageextension 50040 SalesInvoiceSubformExt extends "Sales Invoice Subform"
         }
         modify("Location Code")
         {
-            Visible = true;
+            Visible = false;//ktm
         }
         modify("Line Discount Amount")
         {
-            Visible = true;
+            Visible = false;//ktm
             ApplicationArea = All;
+        }
+        modify("Line Discount %")
+        {
+            Visible = false;//ktm
         }
         modify("Tax Area Code")
         {
@@ -55,9 +59,18 @@ pageextension 50040 SalesInvoiceSubformExt extends "Sales Invoice Subform"
         {
             Visible = false;
         }
+        modify("Shortcut Dimension 1 Code")
+        {
+            Visible = false;//ktm
+        }
+
+        modify("Shortcut Dimension 2 Code")
+        {
+            Visible = false;//ktm
+        }
         modify("VAT Prod. Posting Group")
         {
-            Visible = true;
+            Visible = false;//ktm
             ApplicationArea = All;
         }
 
@@ -66,9 +79,19 @@ pageextension 50040 SalesInvoiceSubformExt extends "Sales Invoice Subform"
             field("Gen. Prod. Posting Group"; Rec."Gen. Prod. Posting Group")
             {
                 ApplicationArea = all;
+                Visible = false;//ktm
                 Caption = 'Income Account';
             }
         }
+        addbefore(Description)
+        {
+            field("Module Credit"; Rec."Module Credit")
+            {
+                ApplicationArea = all;
+                Editable = false;
+            }
+        }
+
         addafter(Description)
         {
             field("Description 2"; "Description 2")
@@ -81,6 +104,7 @@ pageextension 50040 SalesInvoiceSubformExt extends "Sales Invoice Subform"
             field("Common Module Code"; "Common Module Code")
             {
                 ApplicationArea = All;
+                Editable = false;//ktm
             }
             field("Module Code"; "Module Code")
             {

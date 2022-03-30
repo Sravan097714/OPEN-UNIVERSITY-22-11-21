@@ -81,6 +81,13 @@ pageextension 50049 PostedPurchInvSubformExt extends "Posted Purch. Invoice Subf
         {
             field("Line No."; "Line No.") { Editable = false; }
         }
+        addbefore(Quantity)
+        {
+            field("Original Amount"; "Original Amount")
+            {
+                ApplicationArea = all;
+            }
+        }
 
         addlast(Control1)
         {

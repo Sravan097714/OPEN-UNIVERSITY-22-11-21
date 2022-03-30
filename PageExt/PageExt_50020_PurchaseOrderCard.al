@@ -263,6 +263,24 @@ pageextension 50020 PurchOrderCardExt extends "Purchase Order"
             field("Pay-to Vendor No."; "Pay-to Vendor No.") { ApplicationArea = all; Editable = false; }
         }
 
+        addafter("Vendor Invoice No.")
+        {
+            field("Supplier Invoice Date"; "Supplier Invoice Date")
+            {
+                ApplicationArea = all;
+            }
+            field("Original PO Number"; "Original PO Number")
+            {
+                ApplicationArea = all;
+            }
+            field("Retention Due Date"; "Retention Due Date")
+            {
+                ApplicationArea = all;
+            }
+
+        }
+
+
         addafter(PurchLines)
         {
             group(Earmarking)
