@@ -24,6 +24,13 @@ tableextension 50024 VendLedgerEntryExt extends "Vendor Ledger Entry"
         {
             DataClassification = ToBeClassified;
         }
+        field(50013; "Vendor Category FlowField"; Text[50])
+        {
+            ObsoleteState = Removed;
+            ObsoleteReason = 'No Longer needed';
+            FieldClass = FlowField;
+            CalcFormula = lookup(Vendor."Vendor Category" where("No." = field("Vendor No.")));//ktm
+        }
     }
 
     trigger OnInsert()

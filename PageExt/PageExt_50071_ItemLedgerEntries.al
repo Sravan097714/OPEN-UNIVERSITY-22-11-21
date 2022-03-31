@@ -20,12 +20,16 @@ pageextension 50071 ItemLedgerEntries extends "Item Ledger Entries"
 
         addlast(Control1)
         {
+            field("Source No."; "Source No.") { }
+            field("Source Type"; "Source Type") { }
+            field("Source Name"; "Source Name") { }
             field("Requested By"; "Requested By")
             {
                 ApplicationArea = ALl;
             }
             field(Module; Module) { ApplicationArea = All; }
             field("Vendor No."; "Vendor No.") { ApplicationArea = All; }
+            field("PO Number"; "PO Number") { Caption = 'PO Number'; ApplicationArea = All; }
         }
     }
 }

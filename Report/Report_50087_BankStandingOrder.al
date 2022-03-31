@@ -14,8 +14,8 @@ report 50087 "Print Learner Copy"
             column(Address_2; "Address 2") { }
             column(Current_Savings_Account_no_; "Current_Savings Account no.") { }
             column(Total_Fee_for_Installments; "Total Fee for Installments") { }
-            column(From_Month; "From Month") { }
-            column(To_Month; "To Month") { }
+            column(From_Month; format("From Month")) { }
+            column(To_Month; format("To Month")) { }
             column(Full_Name_of_Applicant; "Full Name of Applicant") { }
             column(National_Identity_No_; "National Identity No.") { }
         }

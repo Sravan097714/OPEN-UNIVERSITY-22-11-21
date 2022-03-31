@@ -23,6 +23,7 @@ table 50018 "Bank Standing Orders"
                     gpageCustList.LookupMode(true);
                     if gpageCustList.RunModal() = Action::LookupOK then begin
                         gpageCustList.GetRecord(grecCustomer);
+                        "Customer No." := grecCustomer."No.";
                         "Full Name of Applicant" := grecCustomer.Name;
                         Address := grecCustomer.Address;
                         City := grecCustomer.City;
@@ -55,7 +56,7 @@ table 50018 "Bank Standing Orders"
         {
             OptionMembers = "1","2";
         }
-        field(10; "No. of Module"; text[2]) { }
+        field(10; "No. of Module"; Integer) { }
 
         field(11; "Total Fee per Installment"; Decimal) { }
         field(12; "Currency Code"; Code[10])
@@ -106,8 +107,38 @@ table 50018 "Bank Standing Orders"
             var
                 salesinvheaderrec: Record "Sales Invoice Header";
             begin
-                if Page.RunModal(Page::"Posted Sales Invoices", salesinvheaderrec) = Action::LookupOK then
-                    "Invoice Number" := salesinvheaderrec."No.";
+                salesinvheaderrec.Reset();
+                salesinvheaderrec.SetRange("Sell-to Customer No.", "Customer No.");
+                if Page.RunModal(Page::"Posted Sales Invoices", salesinvheaderrec) = Action::LookupOK then begin
+                    Validate("Invoice Number", salesinvheaderrec."No.");
+                end;
+            end;
+
+            trigger OnValidate()
+            var
+                SIH: Record "Sales Invoice Header";
+                SIL: Record "Sales Invoice Line";
+                DimensionLRec: Record "Dimension Value";
+                GLSetup: Record "General Ledger Setup";
+            begin
+                GLSetup.Get();
+                if not SIH.Get("Invoice Number") then begin
+                    Clear(Programme);
+                    Clear(Intake);
+                    Clear("No. of Module");
+                end else begin
+                    SIL.Reset();
+                    SIL.SetRange("Document No.", SIH."No.");
+                    SIL.SetRange(Type, SIL.Type::Item);
+                    SIL.SetFilter(Quantity, '<>%1', 0);
+                    SIL.SetFilter("Gen. Prod. Posting Group", 'MODULE');
+                    if DimensionLRec.Get(GLSetup."Global Dimension 1 Code", SIH."Shortcut Dimension 1 Code") then
+                        Programme := DimensionLRec.Name;
+                    if DimensionLRec.Get(GLSetup."Global Dimension 2 Code", SIH."Shortcut Dimension 2 Code") then
+                        Intake := DimensionLRec.Name;
+                    "No. of Module" := SIL.Count;
+                end;
+
             end;
         }
         field(29; "Archived"; Boolean)
@@ -128,6 +159,10 @@ table 50018 "Bank Standing Orders"
                 end;
             end;
         }
+        field(31; "Customer No."; Code[20])
+        {
+            DataClassification = ToBeClassified;
+        }
 
     }
 
@@ -144,13 +179,17 @@ table 50018 "Bank Standing Orders"
         grecCustomer: Record "Dimension Value";
         grecSalesReceivableSetup: Record "Sales & Receivables Setup";
         NoSeriesMgt: Codeunit NoSeriesManagement;
+        GLSetup: Record "General Ledger Setup";
 
 
     trigger OnInsert()
     begin
         grecSalesReceivableSetup.Get;
-        //"Name of Bank 2" := 'State Bank of Mauritius Ltd';
-        //"Account to Credit" := '61025100004526';
+        GLSetup.Get();
+        GLSetup.TestField("Name of Bank");
+        GLSetup.TestField("Account to Credit");
+        "Name of Bank 2" := GLSetup."Name of Bank";
+        "Account to Credit" := GLSetup."Account to Credit";
         "Bank Standing Order No." := NoSeriesMgt.GetNextNo(grecSalesReceivableSetup."Bank Standing Order Nos.", Today, TRUE);
         "Created By" := UserId;
         Date := Today;

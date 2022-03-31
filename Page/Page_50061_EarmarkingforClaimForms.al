@@ -27,6 +27,16 @@ page 50061 "Earmarking for Claim Forms"
                 field("Remaining Amount Earmarked"; "Remaining Amount Earmarked") { ApplicationArea = All; }
                 field(Description; Description) { ApplicationArea = All; }
                 field(Active; Active) { ApplicationArea = All; }
+                field("Date From"; Rec."Date From")
+                {
+                    ToolTip = 'Specifies the value of the Date From field.';
+                    ApplicationArea = All;
+                }
+                field("Date To"; Rec."Date To")
+                {
+                    ToolTip = 'Specifies the value of the Date To field.';
+                    ApplicationArea = All;
+                }
             }
         }
     }

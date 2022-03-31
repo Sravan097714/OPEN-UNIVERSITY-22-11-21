@@ -150,6 +150,14 @@ pageextension 50021 PurchaseOrderSubformExt extends "Purchase Order Subform"
                 ApplicationArea = All;
             }
         }
+        addbefore(Quantity)
+        {
+            field("Original Amount"; "Original Amount")
+            {
+                ApplicationArea = all;//ktm
+                Editable = POEditable;
+            }
+        }
 
         movefirst(Control1; "Line No.")
         moveafter("Gen. Prod. Posting Group"; "VAT Prod. Posting Group")
@@ -497,9 +505,15 @@ pageextension 50021 PurchaseOrderSubformExt extends "Purchase Order Subform"
     end;
 
     trigger OnOpenPage()
+    var
+        UserSetup: Record "User Setup";
     begin
         if grecUserSetup.Get(UserId) then
             gboolEditable := grecUserSetup."Edit GL Account Budget Purch";
+        POEditable := false;
+        if UserSetup.Get(UserId) then
+            if UserSetup."Edit PO Original Amount" then
+                POEditable := true;
     end;
 
     trigger OnAfterGetCurrRecord()
@@ -517,4 +531,5 @@ pageextension 50021 PurchaseOrderSubformExt extends "Purchase Order Subform"
         DocumentTotals: Codeunit "Document Totals";
         Currency: Record Currency;
         PurchasePosting: Codeunit "Purchase Posting";
+        POEditable: Boolean;
 }

@@ -11,6 +11,7 @@ report 50096 "Purchase Register Consolidated"
             RequestFilterFields = "No.";
             trigger OnPreDataItem()
             begin
+                "Purchase Header".SetCurrentKey(Status);
                 "Purchase Header".SetFilter("Order Date", gtextDate);
                 "Purchase Header".SetRange("Document Type", "Document Type"::Order);
                 "Purchase Header".SetRange(Claim, false);
@@ -48,6 +49,8 @@ report 50096 "Purchase Register Consolidated"
                 ExcelBuf.AddColumn('', FALSE, '', TRUE, FALSE, FALSE, '', ExcelBuf."Cell Type"::Text);
                 ExcelBuf.AddColumn('', FALSE, '', TRUE, FALSE, FALSE, '', ExcelBuf."Cell Type"::Text);
                 ExcelBuf.AddColumn('', FALSE, '', TRUE, FALSE, FALSE, '', ExcelBuf."Cell Type"::Text);
+                ExcelBuf.AddColumn("Vendor Invoice No.", false, '', false, FALSE, FALSE, '', ExcelBuf."Cell Type"::Text);
+                ExcelBuf.AddColumn("Supplier Invoice Date", FALSE, '', false, FALSE, FALSE, '', ExcelBuf."Cell Type"::Text);
                 ExcelBuf.AddColumn('Open', FALSE, '', false, FALSE, FALSE, '', ExcelBuf."Cell Type"::Text);
             end;
 
@@ -89,6 +92,8 @@ report 50096 "Purchase Register Consolidated"
                     grecPurchInvLine.CalcSums("Line Amount");
                     EarMaskedAmount := grecPurchInvLine."Line Amount";
                 end;
+                if ("Vendor Posting Group" = 'PAYROLL') or ("Order No." = '') then
+                    CurrReport.Skip();
                 ExcelBuf.NewRow;
                 ExcelBuf.AddColumn("Order Date", FALSE, '', FALSE, FALSE, FALSE, '', ExcelBuf."Cell Type"::Text);
                 ExcelBuf.AddColumn("Order No.", FALSE, '', FALSE, FALSE, FALSE, '', ExcelBuf."Cell Type"::Text);
@@ -135,7 +140,9 @@ report 50096 "Purchase Register Consolidated"
                     ExcelBuf.AddColumn('', FALSE, '', FALSE, FALSE, FALSE, '', ExcelBuf."Cell Type"::Text);
                 end;
 
-                ExcelBuf.AddColumn('', FALSE, '', TRUE, FALSE, FALSE, '', ExcelBuf."Cell Type"::Text);
+                ExcelBuf.AddColumn('', FALSE, '', false, FALSE, FALSE, '', ExcelBuf."Cell Type"::Text);
+                ExcelBuf.AddColumn("Vendor Invoice No.", FALSE, '', false, FALSE, FALSE, '', ExcelBuf."Cell Type"::Text);
+                ExcelBuf.AddColumn("Supplier Invoice Date", FALSE, '', false, FALSE, FALSE, '', ExcelBuf."Cell Type"::Text);
                 ExcelBuf.AddColumn('Invoiced', FALSE, '', false, FALSE, FALSE, '', ExcelBuf."Cell Type"::Text);
 
             end;
@@ -154,6 +161,7 @@ report 50096 "Purchase Register Consolidated"
             trigger OnPreDataItem()
             begin
                 "Purchase Header Archive".SetFilter("Order Date", gtextDate);
+                "Purchase Header Archive".SetRange(Claim, false);
                 //ExcelBuf.DeleteAll(false);
                 //ExcelBuf.SelectOrAddSheet('Closed Purchase Orders');
                 //MakeExcelDataHeader3();
@@ -181,9 +189,11 @@ report 50096 "Purchase Register Consolidated"
                 ExcelBuf.AddColumn("Amount Including VAT", FALSE, '', FALSE, FALSE, FALSE, '', ExcelBuf."Cell Type"::Number);
                 ExcelBuf.AddColumn('', FALSE, '', FALSE, FALSE, FALSE, '', ExcelBuf."Cell Type"::Text);
                 ExcelBuf.AddColumn('', FALSE, '', FALSE, FALSE, FALSE, '', ExcelBuf."Cell Type"::Text);
-                ExcelBuf.AddColumn("Vendor Order No.", FALSE, '', FALSE, FALSE, FALSE, '', ExcelBuf."Cell Type"::Text);
-                ExcelBuf.AddColumn('', FALSE, '', TRUE, FALSE, FALSE, '', ExcelBuf."Cell Type"::Text);
-                ExcelBuf.AddColumn('', FALSE, '', TRUE, FALSE, FALSE, '', ExcelBuf."Cell Type"::Text);
+                ExcelBuf.AddColumn('', FALSE, '', FALSE, FALSE, FALSE, '', ExcelBuf."Cell Type"::Text);
+                ExcelBuf.AddColumn('', FALSE, '', false, FALSE, FALSE, '', ExcelBuf."Cell Type"::Text);
+                ExcelBuf.AddColumn("Vendor Order No.", FALSE, '', false, FALSE, FALSE, '', ExcelBuf."Cell Type"::Text);
+                ExcelBuf.AddColumn("Vendor Invoice No.", FALSE, '', false, FALSE, FALSE, '', ExcelBuf."Cell Type"::Text);
+                ExcelBuf.AddColumn("Supplier Invoice Date", FALSE, '', false, FALSE, FALSE, '', ExcelBuf."Cell Type"::Text);
                 ExcelBuf.AddColumn('Cancelled', FALSE, '', false, FALSE, FALSE, '', ExcelBuf."Cell Type"::Text);
             end;
 
@@ -259,6 +269,8 @@ report 50096 "Purchase Register Consolidated"
         ExcelBuf.AddColumn('Payment Date', FALSE, '', TRUE, FALSE, FALSE, '', ExcelBuf."Cell Type"::Text);
         ExcelBuf.AddColumn('Payment PV No.', FALSE, '', TRUE, FALSE, FALSE, '', ExcelBuf."Cell Type"::Text);
         ExcelBuf.AddColumn('Remarks', FALSE, '', TRUE, FALSE, FALSE, '', ExcelBuf."Cell Type"::Text);
+        ExcelBuf.AddColumn('Vendor Invoice No', FALSE, '', TRUE, FALSE, FALSE, '', ExcelBuf."Cell Type"::Text);
+        ExcelBuf.AddColumn('Supplier Invoice Date', FALSE, '', TRUE, FALSE, FALSE, '', ExcelBuf."Cell Type"::Text);
         ExcelBuf.AddColumn('Status', FALSE, '', TRUE, FALSE, FALSE, '', ExcelBuf."Cell Type"::Text);
     end;
 

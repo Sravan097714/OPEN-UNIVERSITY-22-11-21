@@ -43,6 +43,14 @@ tableextension 50020 ItemTblExt extends Item
         }
         field(50013; "Date Created"; DateTime) { Editable = false; }
         field(50014; "Created By"; Text[50]) { Editable = false; }
+        field(50015; Obsolete; Boolean)
+        {
+            DataClassification = ToBeClassified;
+        }
+        field(50016; "Dormant Period"; DateFormula)
+        {
+            DataClassification = ToBeClassified;
+        }
     }
 
     trigger OnInsert()

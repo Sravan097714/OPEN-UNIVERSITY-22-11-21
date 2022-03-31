@@ -54,7 +54,7 @@ table 50023 "Archived Bank Standing Orders"
         {
             OptionMembers = "1","2";
         }
-        field(10; "No. of Module"; text[2]) { }
+        field(10; "No. of Module"; Integer) { }
 
         field(11; "Total Fee per Installment"; Decimal) { }
         field(12; "Currency Code"; Code[10])
@@ -124,6 +124,7 @@ table 50023 "Archived Bank Standing Orders"
         }
         field(51; "Archieved DateTime"; DateTime)
         {
+            Caption = 'Archived On';
             DataClassification = ToBeClassified;
         }
 

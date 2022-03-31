@@ -218,9 +218,6 @@ report 50004 "Official Receipt Reprint"
                     CustArray[1] := "Bank Account Ledger Entry".Payee;
                 if CustArray[1] = '' then
                     CustArray[1] := "Bank Account Ledger Entry"."Student Name";
-                If "Bal. Account Type" = "Bal. Account Type"::Customer then begin
-                    CustArray[1] := '';
-                end;
                 //End KTM11/02/22
 
                 IF "Bal. Account Type" IN

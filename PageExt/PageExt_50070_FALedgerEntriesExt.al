@@ -84,6 +84,8 @@ pageextension 50070 FALedgerEntriesExt extends "FA Ledger Entries"
             field("FA Revaluation"; "FA Revaluation") { ApplicationArea = all; }
             field("FA Supplier No."; "FA Supplier No.") { ApplicationArea = all; }
             field("Purch Rcpt No."; Rec."Purch Rcpt No.") { ApplicationArea = all; }
+            field("FA Location Code"; "FA Location Code") { ApplicationArea = all; }
+
         }
         addafter(Description)
         {

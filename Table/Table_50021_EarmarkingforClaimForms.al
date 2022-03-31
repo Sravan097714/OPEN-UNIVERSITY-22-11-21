@@ -1,7 +1,7 @@
 table 50021 "Earmarking Claim Forms Table"
 {
     DataClassification = ToBeClassified;
-
+    LookupPageId = "Earmarking for Claim Forms";
     fields
     {
         field(1; "Entry No."; Integer) { AutoIncrement = true; }
@@ -57,6 +57,15 @@ table 50021 "Earmarking Claim Forms Table"
         field(8; Active; Boolean) { }
         field(9; "G/L Description"; Text[100]) { }
         field(10; "Remaining Amount Earmarked"; Decimal) { }
+
+        field(15; "Date From"; Date)
+        {
+            DataClassification = ToBeClassified;
+        }
+        field(16; "Date To"; Date)
+        {
+            DataClassification = ToBeClassified;
+        }
     }
 
     keys

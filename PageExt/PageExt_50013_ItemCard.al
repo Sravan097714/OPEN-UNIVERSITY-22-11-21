@@ -349,17 +349,20 @@ pageextension 50013 ItemCard extends "Item Card"
             {
                 ApplicationArea = All;
                 Editable = false;
+                Visible = false;
             }
             field("Prevent Negative Inventory"; "Prevent Negative Inventory")
             {
                 ApplicationArea = All;
                 Editable = false;
+                Visible = false;
             }
             field("Item Type"; "Item Type") { ApplicationArea = All; }
-            field(Module; Module) { ApplicationArea = All; }
+            field(Module; Module) { ApplicationArea = All; Visible = false; }
             field("Date Created"; "Date Created") { ApplicationArea = All; }
             field("Created By"; "Created By") { ApplicationArea = All; }
         }
+        modify("Include Inventory") { Visible = false; }
 
         moveafter("Prevent Negative Inventory"; "Include Inventory")
 
@@ -373,6 +376,8 @@ pageextension 50013 ItemCard extends "Item Card"
         addafter("Item Category Code")
         {
             field("Product Group Code 2"; "Product Group Code 2") { ApplicationArea = All; }
+            field(Obsolete; Obsolete) { ApplicationArea = all; }
+            field("Dormant Period"; "Dormant Period") { ApplicationArea = all; }
         }
         modify("Item Category Code")
         {

@@ -25,11 +25,14 @@ report 50086 "Print Finance Copy"
             column(Name_of_Bank; "Name of Bank") { }
             column(Address_2; "Address 2") { }
             column(Current_Savings_Account_no_; "Current_Savings Account no.") { }
-            column(From_Month; "From Month") { }
-            column(To_Month; "To Month") { }
+            column(From_Month; format("From Month")) { }
+            column(To_Month; format("To Month")) { }
             column(National_Identity_No_; "National Identity No.") { }
             column(Bank_Standing_Order_No_; "Bank Standing Order No.") { }
             column(Invoice_Number; "Invoice Number") { }
+            column(NoofInstallments_BankStandingOrders; "No. of Installments")
+            {
+            }
         }
     }
 

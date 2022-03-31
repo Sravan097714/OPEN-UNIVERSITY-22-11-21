@@ -77,6 +77,10 @@ report 50123 "List of Direct Debit Payments"
             {
 
             }
+            column(RecCount; RecCount)
+            {
+
+            }
             trigger OnAfterGetRecord()
             begin
                 AmountVar := 0;
@@ -84,7 +88,18 @@ report 50123 "List of Direct Debit Payments"
                     AmountVar := -amount
                 else
                     AmountVar := amount;
+                RecCount += 1
+
             end;
+
+            // trigger OnPostDataItem()
+            // begin
+            //     TempBackLedgerEntry.CopyFilters("Bank Account Ledger Entry");
+            //     if TempBackLedgerEntry.Find('-') then
+            //         repeat
+            //             RecCount += 1
+            //         until TempBackLedgerEntry.Next() = 0;
+            // end;
 
         }
     }
@@ -133,6 +148,7 @@ report 50123 "List of Direct Debit Payments"
             UserName := UserRec."Full Name";
         if UserName = '' then
             UserName := UserId;
+
     end;
 
     var
@@ -145,5 +161,7 @@ report 50123 "List of Direct Debit Payments"
         AccountTypeLbl: Label 'Account Type';
         AccountNolbl: Label 'Account No.';
         BalAccountNoLbl: Label 'Bal. Account No.';
+        RecCount: Integer;
+        TempBackLedgerEntry: Record "Bank Account Ledger Entry" temporary;
 
 }

@@ -1,5 +1,6 @@
 page 50063 "Archived Bank Standing Orders"
 {
+    Caption = 'Bank Standing Order List Archived';
     PageType = List;
     ApplicationArea = All;
     UsageCategory = Lists;
@@ -45,31 +46,5 @@ page 50063 "Archived Bank Standing Orders"
             }
         }
 
-    }
-    actions
-    {
-        area(Processing)
-        {
-            /* action("Archive Bank Standing Order")
-            {
-                ApplicationArea = All;
-                Promoted = true;
-                PromotedCategory = Process;
-                PromotedIsBig = true;
-                Image = BankContact;
-
-                trigger OnAction()
-                var
-                    Bankstandingorderrec: Record "Bank Standing Orders";
-                    ArchivedBankStandingOrderrec: Record "Archived Bank Standing Orders";
-                begin
-                    ArchivedBankStandingOrderrec.Init();
-                    ArchivedBankStandingOrderrec.TransferFields(Rec);
-                    ArchivedBankStandingOrderrec.Insert(true);
-                    Rec.Archived := true;
-                    Rec.Modify();
-                end;
-            } */
-        }
     }
 }

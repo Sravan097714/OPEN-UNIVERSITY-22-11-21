@@ -116,7 +116,10 @@ pageextension 50024 PurchaseInvoiceSubformExt extends "Purch. Invoice Subform"
                     grecPurchPayableSetup: Record "Purchases & Payables Setup";
                     gtextCounter: Text;
                     grecPurchHeader: Record "Purchase Header";
+                    EarMarkedList: Page "Earmarking for Claim Forms";
+                    EarMarkedClaimTable: Record "Earmarking Claim Forms Table";
                 begin
+                    /*
                     clear(gpageGLAccount);
                     grecGLAccount.Reset();
                     grecGLAccount.SetRange("Account Type", grecGLAccount."Account Type"::Posting);
@@ -157,10 +160,29 @@ pageextension 50024 PurchaseInvoiceSubformExt extends "Purch. Invoice Subform"
                             end;
                         end;
                     end;
+                    */
+                    EarMarkedList.LookupMode(true);
+                    if EarMarkedList.RunModal() = Action::LookupOK then begin
+                        EarMarkedList.GetRecord(EarMarkedClaimTable);
+                        "G/L Account for Budget" := EarMarkedClaimTable."G/L Account Earmarked";
+                        "Earmark ID" := EarMarkedClaimTable."Earmark ID";
+                        "Date Earmarked" := EarMarkedClaimTable."Date Earmarked";
+                    end;
+
+                end;
+
+                trigger OnValidate()
+                begin
+                    if "G/L Account for Budget" = '' then begin
+                        Clear("Earmark ID");
+                        Clear("Date Earmarked");
+                    end;
+                    if "G/L Account for Budget" <> '' then
+                        Error('You can enter GL Account for Budget manually.');
                 end;
             }
-            field("Earmark ID"; "Earmark ID") { ApplicationArea = All; }
-            field("Date Earmarked"; "Date Earmarked") { ApplicationArea = All; }
+            field("Earmark ID"; "Earmark ID") { ApplicationArea = All; Editable = false; }
+            field("Date Earmarked"; "Date Earmarked") { ApplicationArea = All; Editable = false; }
             field("VAT Amount Input"; "VAT Amount Input") { ApplicationArea = All; }
             field("Line Amount Excluding VAT"; "Line Amount Excluding VAT") { ApplicationArea = All; }
 

@@ -49,47 +49,10 @@ page 50065 "Archived Bank Standing Order"
                         {
                             ApplicationArea = All;
 
-                            trigger OnLookup(var Text: Text): Boolean
-                            var
-                                grecDimension: Record "Dimension Value";
-                                gpageDimensionList: Page "Dimension Value List";
-                            begin
-                                Clear(gpageDimensionList);
-                                grecDimension.Reset();
-                                grecDimension.SetRange("Dimension Code", 'Programmes');
-                                if grecDimension.FindFirst() then begin
-                                    gpageDimensionList.SetRecord(grecDimension);
-                                    gpageDimensionList.SetTableView(grecDimension);
-                                    gpageDimensionList.LookupMode(true);
-                                    if gpageDimensionList.RunModal() = Action::LookupOK then begin
-                                        gpageDimensionList.GetRecord(grecDimension);
-                                        Rec.Programme := grecDimension."Name 2";
-                                    end;
-                                end;
-                            end;
                         }
                         field(Intake; Intake)
                         {
                             ApplicationArea = All;
-
-                            trigger OnLookup(var Text: Text): Boolean
-                            var
-                                grecDimension: Record "Dimension Value";
-                                gpageDimensionList: Page "Dimension Value List";
-                            begin
-                                Clear(gpageDimensionList);
-                                grecDimension.Reset();
-                                grecDimension.SetRange("Dimension Code", 'Intake');
-                                if grecDimension.FindFirst() then begin
-                                    gpageDimensionList.SetRecord(grecDimension);
-                                    gpageDimensionList.SetTableView(grecDimension);
-                                    gpageDimensionList.LookupMode(true);
-                                    if gpageDimensionList.RunModal() = Action::LookupOK then begin
-                                        gpageDimensionList.GetRecord(grecDimension);
-                                        Rec.Intake := grecDimension.Name;
-                                    end;
-                                end;
-                            end;
                         }
 
                         field(" "; '') { ApplicationArea = All; }
@@ -134,7 +97,7 @@ page 50065 "Archived Bank Standing Order"
                     GridLayout = Rows;
                     group("            ")
                     {
-                        field("Bank Code"; "Bank Code") { ApplicationArea = All; }
+                        field("Bank Code"; "Bank Code") { ApplicationArea = All; Visible = false; }
                         field("Name of Bank 2"; "Name of Bank 2") { ApplicationArea = All; }
                         field("Account to Credit"; "Account to Credit") { ApplicationArea = All; }
                     }

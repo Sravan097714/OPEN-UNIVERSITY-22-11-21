@@ -38,6 +38,10 @@ tableextension 50036 ItemJnlLineExt extends "Item Journal Line"
         {
             TableRelation = Vendor where("Vendor Category" = filter('<> TUTOR'));
         }
+        field(50005; "Source Name"; Text[250])
+        {
+            DataClassification = ToBeClassified;
+        }
     }
 
     trigger OnInsert()
