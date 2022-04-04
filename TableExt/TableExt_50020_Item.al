@@ -51,6 +51,11 @@ tableextension 50020 ItemTblExt extends Item
         {
             DataClassification = ToBeClassified;
         }
+        field(50017; "Reason for Obsolete"; Text[250])
+        {
+
+            DataClassification = ToBeClassified;
+        }
     }
 
     trigger OnInsert()

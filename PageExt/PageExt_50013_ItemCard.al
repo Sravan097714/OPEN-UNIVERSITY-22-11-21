@@ -261,6 +261,7 @@ pageextension 50013 ItemCard extends "Item Card"
         {
             Visible = false;
         }
+
         modify("Minimum Order Quantity")
         {
             Visible = true;
@@ -377,6 +378,11 @@ pageextension 50013 ItemCard extends "Item Card"
         {
             field("Product Group Code 2"; "Product Group Code 2") { ApplicationArea = All; }
             field(Obsolete; Obsolete) { ApplicationArea = all; }
+            field("Reason for Obsolete"; "Reason for Obsolete")
+            {
+                ApplicationArea = all;
+                MultiLine = true;
+            }
             field("Dormant Period"; "Dormant Period") { ApplicationArea = all; }
         }
         modify("Item Category Code")
