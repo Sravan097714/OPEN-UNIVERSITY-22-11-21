@@ -536,8 +536,18 @@
                                   <Style />
                                 </TextRun>
                                 <TextRun>
-                                  <Value>=First(Fields!Total_Fee_for_Installments.Value, "DataSet_Result")</Value>
+                                  <Value>=First(Fields!AmountText.Value, "DataSet_Result")</Value>
                                   <Style />
+                                </TextRun>
+                                <TextRun>
+                                  <Value> Rs</Value>
+                                  <Style />
+                                </TextRun>
+                                <TextRun>
+                                  <Value>=First(Fields!Total_Fee_for_Installments.Value, "DataSet_Result")</Value>
+                                  <Style>
+                                    <Format>#,0.00</Format>
+                                  </Style>
                                 </TextRun>
                                 <TextRun>
                                   <Value> on the </Value>
@@ -916,7 +926,7 @@
             </TablixRowHierarchy>
             <Top>0.155in</Top>
             <Height>5.5in</Height>
-            <Width>7.01041in</Width>
+            <Width>7.01042in</Width>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -927,7 +937,7 @@
         <Height>5.655in</Height>
         <Style />
       </Body>
-      <Width>7.01041in</Width>
+      <Width>7.01042in</Width>
       <Page>
         <LeftMargin>0.5in</LeftMargin>
         <TopMargin>0.5in</TopMargin>
@@ -988,6 +998,9 @@ End Function
         </Field>
         <Field Name="Current_Savings_Account_no_">
           <DataField>Current_Savings_Account_no_</DataField>
+        </Field>
+        <Field Name="AmountText">
+          <DataField>AmountText</DataField>
         </Field>
         <Field Name="Total_Fee_for_Installments">
           <DataField>Total_Fee_for_Installments</DataField>

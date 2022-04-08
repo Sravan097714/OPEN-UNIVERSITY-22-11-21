@@ -1319,7 +1319,7 @@ report 50021 "Check Laser printer"
 
 
         IF CurrencyCode <> '' THEN
-            AddToNoText(NoText, NoTextIndex, PrintExponent, CurrencyCode); */
+            AddToNoText(NoText, NoTextIndex, PrintExponent, CurrencyCode); 
 
         CLEAR(NoText);
         NoTextIndex := 1;
@@ -1382,10 +1382,72 @@ report 50021 "Check Laser printer"
 
             /*IF CurrencyCode = '' THEN
                 AddToNoText(NoText, NoTextIndex, PrintExponent, GenLedSetup."Local Currency Description" + ' ONLY')
-            else*/
+            else
             AddToNoText(NoText, NoTextIndex, PrintExponent, ' CENTS ONLY');//RCTSB2B1.03 31Oct2019
         END;
         //END KTM11/02/22
+        */
+
+        CLEAR(NoText);
+        NoTextIndex := 1;
+        NoText[1] := '****';
+
+        IF No < 1 THEN
+            AddToNoText(NoText, NoTextIndex, PrintExponent, Text026)
+        ELSE BEGIN
+            FOR Exponent := 4 DOWNTO 1 DO BEGIN
+                PrintExponent := FALSE;
+                Ones := No DIV POWER(1000, Exponent - 1);
+                Hundreds := Ones DIV 100;
+                Tens := (Ones MOD 100) DIV 10;
+                Ones := Ones MOD 10;
+                IF Hundreds > 0 THEN BEGIN
+                    AddToNoText(NoText, NoTextIndex, PrintExponent, OnesText[Hundreds]);
+                    AddToNoText(NoText, NoTextIndex, PrintExponent, Text027);
+                    //>>RCTSB2B1.03 31Oct2019
+                    if (Tens >= 2) or ((Tens * 10 + Ones) > 0) then
+                        AddToNoText(NoText, NoTextIndex, PrintExponent, Text028);
+                    //<<RCTSB2B1.03 31Oct2019
+                END;
+                IF Tens >= 2 THEN BEGIN
+                    AddToNoText(NoText, NoTextIndex, PrintExponent, TensText[Tens]);
+                    IF Ones > 0 THEN
+                        AddToNoText(NoText, NoTextIndex, PrintExponent, OnesText[Ones]);
+                END ELSE
+                    IF (Tens * 10 + Ones) > 0 THEN
+                        AddToNoText(NoText, NoTextIndex, PrintExponent, OnesText[Tens * 10 + Ones]);
+                IF PrintExponent AND (Exponent > 1) THEN
+                    AddToNoText(NoText, NoTextIndex, PrintExponent, ExponentText[Exponent]);
+
+                No := No - (Hundreds * 100 + Tens * 10 + Ones) * POWER(1000, Exponent - 1);
+                //>>RCTSB2B1.03 31Oct2019
+                if (Exponent = 2) and ((Tens * 10 + Ones) > 0) and (No > 0) then
+                    AddToNoText(NoText, NoTextIndex, PrintExponent, Text028);
+                //<<RCTSB2B1.03 31Oct2019                
+            END;
+        END;
+
+        AddToNoText(NoText, NoTextIndex, PrintExponent, '');//RCTSB2B1.03 31Oct2019
+
+        TensDec := (No * 100) DIV 10;
+        OnesDec := (No * 100) MOD 10;
+
+        //Message(format(OnesDec));
+
+        IF No = 0 THEN
+            AddToNoText(NoText, NoTextIndex, PrintExponent, ' ONLY')
+        ELSE BEGIN
+            // AddToNoText(NoText, NoTextIndex, PrintExponent, ' and Cents');
+            AddToNoText(NoText, NoTextIndex, PrintExponent, Text028);//RCTSB2B1.03 31Oct2019
+            IF TensDec >= 2 THEN BEGIN
+                AddToNoText(NoText, NoTextIndex, PrintExponent, TensText[TensDec]);
+                IF OnesDec > 0 THEN
+                    AddToNoText(NoText, NoTextIndex, PrintExponent, OnesText[OnesDec]);
+            END ELSE
+                IF (TensDec * 10 + OnesDec) > 0 THEN
+                    AddToNoText(NoText, NoTextIndex, PrintExponent, OnesText[TensDec * 10 + OnesDec]);
+            AddToNoText(NoText, NoTextIndex, PrintExponent, 'CENTS ONLY');//RCTSB2B1.03 31Oct2019
+        END;
     end;
 
     local procedure AddToNoText(var NoText: array[2] of Text[60]; var NoTextIndex: Integer; var PrintExponent: Boolean; AddText: Text[30])

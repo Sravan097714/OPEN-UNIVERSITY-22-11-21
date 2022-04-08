@@ -32,6 +32,7 @@ page 50045 "Bank Standing Order"
                         field(Country; Country) { ApplicationArea = All; }
                         field("National Identity No."; "National Identity No.") { ApplicationArea = All; }
                         field("Invoice Number"; "Invoice Number") { ApplicationArea = all; }
+                        field("Processed by"; "Processed by") { ApplicationArea = All; }
                     }
                 }
             }

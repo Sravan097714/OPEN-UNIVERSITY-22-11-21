@@ -532,12 +532,38 @@
                                   </Style>
                                 </TextRun>
                                 <TextRun>
-                                  <Value> with the sum of Rupees </Value>
+                                  <Value> with the sum of Rupees</Value>
                                   <Style />
                                 </TextRun>
                                 <TextRun>
+                                  <Value xml:space="preserve"> </Value>
+                                  <Style>
+                                    <FontWeight>Bold</FontWeight>
+                                  </Style>
+                                </TextRun>
+                                <TextRun>
+                                  <Value>=First(Fields!AmountText.Value, "DataSet_Result")</Value>
+                                  <Style>
+                                    <FontWeight>Normal</FontWeight>
+                                  </Style>
+                                </TextRun>
+                                <TextRun>
+                                  <Value xml:space="preserve"> </Value>
+                                  <Style>
+                                    <FontWeight>Bold</FontWeight>
+                                  </Style>
+                                </TextRun>
+                                <TextRun>
+                                  <Value>Rs</Value>
+                                  <Style>
+                                    <FontWeight>Normal</FontWeight>
+                                  </Style>
+                                </TextRun>
+                                <TextRun>
                                   <Value>=First(Fields!Total_Fee_for_Installments.Value, "DataSet_Result")</Value>
-                                  <Style />
+                                  <Style>
+                                    <Format>#,0.00</Format>
+                                  </Style>
                                 </TextRun>
                                 <TextRun>
                                   <Value> on the </Value>
@@ -842,7 +868,6 @@
                           </Style>
                         </Textbox>
                         <ColSpan>2</ColSpan>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell />
@@ -987,6 +1012,9 @@ End Function
         </Field>
         <Field Name="Current_Savings_Account_no_">
           <DataField>Current_Savings_Account_no_</DataField>
+        </Field>
+        <Field Name="AmountText">
+          <DataField>AmountText</DataField>
         </Field>
         <Field Name="Total_Fee_for_Installments">
           <DataField>Total_Fee_for_Installments</DataField>

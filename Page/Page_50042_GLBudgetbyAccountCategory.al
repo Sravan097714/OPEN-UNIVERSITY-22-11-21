@@ -15,60 +15,23 @@ page 50042 "G/L Budget by Account Category"
                 {
                     ApplicationArea = All;
                     TableRelation = "G/L Budget Name";
-
-                    /*trigger OnLookup(var Text: Text): Boolean
-                    var
-                        grecBudgetCategory: Record "Budget Category";
-                        grecGLBudgetByAccCategory: Record "G/L Budget by Account Category";
-                    begin
-                        if gtextBudgetName <> '' then begin
-                            grecBudgetCategory.Reset();
-                            grecBudgetCategory.SetRange("Budget Category Code");
-                            if grecBudgetCategory.FindFirst() then begin
-                                repeat
-                                    grecGLBudgetByAccCategory.Init();
-                                    grecGLBudgetByAccCategory."Budget Name" := gtextBudgetName;
-                                    grecGLBudgetByAccCategory."Budget Category" := grecBudgetCategory."Budget Category Code";
-                                    grecGLBudgetByAccCategory.Description := grecBudgetCategory.Description;
-                                    grecGLBudgetByAccCategory.Insert;
-                                until grecBudgetCategory.Next = 0;
-                            end;
-                        end;
-                    end;*/
-
                     trigger OnValidate()
                     var
                         grecBudgetCategory: Record "Budget Category";
                         grecGLBudgetByAccCategory: Record "G/L Budget by Account Category";
                         grecGLBudgetByAccCategory2: Record "G/L Budget by Account Category";
+                        BudgetByAccount: record "G/L Budget by Account Category";
                         EntryNo: Integer;
                     begin
                         if gtextBudgetName <> '' then begin
-                            grecGLBudgetByAccCategory2.Reset();
-                            if grecGLBudgetByAccCategory2.FindLast() then
-                                EntryNo := grecGLBudgetByAccCategory2."Entry No." + 1
-                            else
-                                EntryNo := 1;
-                            grecBudgetCategory.Reset();
-                            grecBudgetCategory.SetRange("Budget Category Code");
-                            if grecBudgetCategory.FindFirst() then begin
-                                repeat
-                                    grecGLBudgetByAccCategory2.Reset();
-                                    grecGLBudgetByAccCategory2.SetRange("Budget Name", gtextBudgetName);
-                                    grecGLBudgetByAccCategory2.SetRange("Budget Category", grecBudgetCategory."Budget Category Code");
-                                    if not grecGLBudgetByAccCategory2.FindFirst() then begin
-                                        grecGLBudgetByAccCategory.Init();
-                                        grecGLBudgetByAccCategory."Entry No." := EntryNo;
-                                        grecGLBudgetByAccCategory."Budget Name" := gtextBudgetName;
-                                        grecGLBudgetByAccCategory."Budget Category" := grecBudgetCategory."Budget Category Code";
-                                        grecGLBudgetByAccCategory.Description := grecBudgetCategory.Description;
-                                        grecGLBudgetByAccCategory.Insert();
-                                        EntryNo += 1;
-                                    end;
-                                until grecBudgetCategory.Next = 0;
-                            end;
+                            //ktm
+                            Clear(gdateDateFrom);
+                            Clear(gdateDateTo);
+
+                            SetRange("Budget Name", gtextBudgetName);
+                            CurrPage.Update(false);
+                            CurrPage.Editable(true);
                         end;
-                        CurrPage.Update(true);
                     end;
                 }
                 field("Date From"; gdateDateFrom)
@@ -76,7 +39,8 @@ page 50042 "G/L Budget by Account Category"
                     ApplicationArea = All;
                     trigger OnValidate()
                     begin
-                        CurrPage.Update(true);
+
+                        //CurrPage.Update(true);
                     end;
                 }
                 field("Date To"; gdateDateTo)
@@ -84,7 +48,7 @@ page 50042 "G/L Budget by Account Category"
                     ApplicationArea = All;
                     trigger OnValidate()
                     begin
-                        CurrPage.Update(true);
+                        //CurrPage.Update(true);
                     end;
                 }
                 field("Budget Column to Use"; genumBudgetToUse)
@@ -116,27 +80,125 @@ page 50042 "G/L Budget by Account Category"
                     end;
                 }
                 field(Description; Description) { ApplicationArea = All; }
-                field("Original Budgeted Amt for Year"; "Original Budgeted Amt for Year") { ApplicationArea = All; }
-                field("Revised Amount for Year (1)"; "Revised Amount for Year (1)") { ApplicationArea = All; }
-                field("Revised Amount for Year (2)"; "Revised Amount for Year (2)") { ApplicationArea = All; }
-                field("Revised Amount for Year (3)"; "Revised Amount for Year (3)") { ApplicationArea = All; }
-                field("Revised Amount for Year (4)"; "Revised Amount for Year (4)") { ApplicationArea = All; }
-                field("Revised Amount for Year (5)"; "Revised Amount for Year (5)") { ApplicationArea = All; }
-                field("Revised Amount for Year (6)"; "Revised Amount for Year (6)") { ApplicationArea = All; }
-                field("Final Budgeted Amount for Year"; "Final Budgeted Amount for Year") { ApplicationArea = All; }
-                field("Plan Budget for Curr. Year+ 1"; "Plan Budget for Curr. Year 1") { ApplicationArea = All; }
-                field("Plan Budget for Curr. Year+ 2"; "Plan Budget for Curr. Year 2") { ApplicationArea = All; }
-                field("Plan Budget for Curr. Year+ 3"; "Plan Budget for Curr. Year 3") { ApplicationArea = All; }
+                field("Original Budgeted Amt for Year"; "Original Budgeted Amt for Year")
+                {
+                    ApplicationArea = All;
+                    trigger OnValidate()
+                    begin
+                        CurrPage.Update(true);
+                    end;
+
+                }
+                field("Revised Amount for Year (1)"; "Revised Amount for Year (1)")
+                {
+                    ApplicationArea = All;
+                    trigger OnValidate()
+                    begin
+                        CurrPage.Update(true);
+                    end;
+
+                }
+                field("Revised Amount for Year (2)"; "Revised Amount for Year (2)")
+                {
+                    ApplicationArea = All;
+                    trigger OnValidate()
+                    begin
+                        CurrPage.Update(true);
+                    end;
+
+                }
+                field("Revised Amount for Year (3)"; "Revised Amount for Year (3)")
+                {
+                    ApplicationArea = All;
+                    trigger OnValidate()
+                    begin
+                        CurrPage.Update(true);
+                    end;
+                }
+                field("Revised Amount for Year (4)"; "Revised Amount for Year (4)")
+                {
+                    ApplicationArea = All;
+                    trigger OnValidate()
+                    begin
+                        CurrPage.Update(true);
+                    end;
+                }
+                field("Revised Amount for Year (5)"; "Revised Amount for Year (5)")
+                {
+                    ApplicationArea = All;
+                    trigger OnValidate()
+                    begin
+                        CurrPage.Update(true);
+                    end;
+                }
+                field("Revised Amount for Year (6)"; "Revised Amount for Year (6)")
+                {
+                    ApplicationArea = All;
+                    trigger OnValidate()
+                    begin
+                        CurrPage.Update(true);
+                    end;
+                }
+                field("Final Budgeted Amount for Year"; "Final Budgeted Amount for Year")
+                {
+                    ApplicationArea = All;
+                    trigger OnValidate()
+                    begin
+                        CurrPage.Update(true);
+                    end;
+                }
+                field("Plan Budget for Curr. Year+ 1"; "Plan Budget for Curr. Year 1")
+                {
+                    ApplicationArea = All;
+                    trigger OnValidate()
+                    begin
+                        CurrPage.Update(true);
+                    end;
+                }
+                field("Plan Budget for Curr. Year+ 2"; "Plan Budget for Curr. Year 2")
+                {
+                    ApplicationArea = All;
+                    trigger OnValidate()
+                    begin
+                        CurrPage.Update(true);
+                    end;
+                }
+                field("Plan Budget for Curr. Year+ 3"; "Plan Budget for Curr. Year 3")
+                {
+                    ApplicationArea = All;
+                    trigger OnValidate()
+                    begin
+                        CurrPage.Update(true);
+                    end;
+                }
                 field("Actual Amount used for Year"; gdecActualAmt)
                 {
                     ApplicationArea = All;
 
                     trigger OnDrillDown()
+                    var
+                        GLEntryRec: Record "G/L Entry";
                     begin
-                        grecGLEntry.Reset();
-                        grecGLEntry.SetRange("Posting Date", gdateDateFrom, gdateDateTo);
-                        grecGLEntry.SetRange("Budget Category", "Budget Category");
-                        if grecGLEntry.FindSet then;
+
+                        // grecGLEntry.Reset();
+                        // grecGLEntry.SetRange("Posting Date", gdateDateFrom, gdateDateTo);
+                        // grecGLEntry.SetRange("Budget Category", "Budget Category");
+                        // if grecGLEntry.FindSet then;
+                        GLAccount.Reset();
+                        GLAccount.SetRange("Budget Category", "Budget Category");
+                        if GLAccount.Find('-') then begin
+                            repeat
+                                grecGLEntry.Reset();
+                                grecGLEntry.SetRange("Posting Date", gdateDateFrom, gdateDateTo);
+                                grecGLEntry.SetRange("G/L Account No.", GLAccount."No.");
+                                if grecGLEntry.FindSet then begin
+                                    repeat
+                                        grecGLEntry.Mark(true);
+                                    until grecGLEntry.Next = 0;
+                                end;
+                            until GLAccount.Next() = 0;
+                        end;
+                        grecGLEntry.MarkedOnly(true);
                         gpageGLEntry.SetTableView(grecGLEntry);
                         gpageGLEntry.Run();
                     end;
@@ -154,6 +216,8 @@ page 50042 "G/L Budget by Account Category"
                             repeat
                                 grecEarmarkingClaim.Reset();
                                 grecEarmarkingClaim.SetRange("G/L Account Earmarked", GLAccount."No.");
+                                grecEarmarkingClaim.SetRange("Date From", gdateDateFrom);
+                                grecEarmarkingClaim.SetRange("Date To", gdateDateTo);
                                 grecEarmarkingClaim.SetRange(Active, true);
                                 if grecEarmarkingClaim.FindSet() then
                                     repeat
@@ -223,170 +287,234 @@ page 50042 "G/L Budget by Account Category"
             }
         }
     }
+    trigger OnOpenPage()
+    var
+        BudgetByAccount: record "G/L Budget by Account Category";
+    begin
+        BudgetByAccount.setfilter("Budget Category", '=%1', '');
+        if BudgetByAccount.FindSet() then begin
+            repeat
+                BudgetByAccount.Delete();
+            until BudgetByAccount.Next() = 0;
+        end;
+    end;
 
     trigger OnInsertRecord(BelowxRec: Boolean): Boolean
     begin
+
         "Budget Name" := gtextBudgetName;
     end;
 
     trigger OnAfterGetRecord()
+    var
+        gdecActualAmtLocal: Decimal;
     begin
         SetRange("Budget Name", gtextBudgetName);
         SetFilter("Budget Category", '<>%1', '');
         Clear(gdecActualAmt);
+        Clear(gdecActualAmtLocal);
         Clear(gdecBudgetedAmtUsed);
         Clear(gdecRemainingAmt);
 
-        grecGLEntry.Reset();
-        grecGLEntry.SetRange("Posting Date", gdateDateFrom, gdateDateTo);
-        grecGLEntry.SetRange("Budget Category", "Budget Category");
-        if grecGLEntry.FindSet then begin
-            repeat
-                gdecActualAmt += grecGLEntry.Amount;
-            until grecGLEntry.Next = 0;
+        if "Budget Category" <> '' then begin
+
+            //D
+            GLAccount.Reset();
+            GLAccount.SetRange("Budget Category", "Budget Category");
+            if GLAccount.Find('-') then begin
+                repeat
+                    grecGLEntry.Reset();
+                    grecGLEntry.SetRange("Posting Date", gdateDateFrom, gdateDateTo);
+                    grecGLEntry.SetRange("G/L Account No.", GLAccount."No.");
+                    if grecGLEntry.FindSet then begin
+                        repeat
+                            gdecActualAmtLocal += grecGLEntry.Amount;
+                        until grecGLEntry.Next = 0;
+                    end;
+
+                    gdecActualAmt += gdecActualAmtLocal;
+                until GLAccount.Next() = 0;
+            end;
+
+
+            //E
+            grecPurchHeader.Reset();
+            grecPurchHeader.SetCurrentKey("Document Type", "No.");
+            grecPurchHeader.SetRange("Document Type", grecPurchHeader."Document Type"::Order);
+            grecPurchHeader.SetRange("Order Date", gdateDateFrom, gdateDateTo);
+            grecPurchHeader.SetRange(Status, grecPurchHeader.Status::Released);
+            if grecPurchHeader.Findset() then begin
+                repeat
+                    grecPurchLine.Reset();
+                    grecPurchLine.SetCurrentKey("Document Type", "Document No.", "Line No.");
+                    grecPurchLine.SetRange("Document No.", grecPurchHeader."No.");
+                    grecPurchLine.SetRange("Budget Category", "Budget Category");
+                    if grecPurchLine.FindFirst() then begin
+                        repeat
+                            gdecBudgetedAmtUsed += grecPurchLine.Amount;
+                        until grecPurchLine.Next = 0;
+                    end;
+                until grecPurchHeader.Next = 0;
+            end;
+
+
+
+            //F
+            Clear(ActiveRemainingAmountEarmarked);
+            GLAccount.Reset();
+            GLAccount.SetRange("Budget Category", "Budget Category");
+            if GLAccount.FindSet() then
+                repeat
+                    grecEarmarkingClaim.Reset();
+                    grecEarmarkingClaim.SetRange("G/L Account Earmarked", GLAccount."No.");
+                    grecEarmarkingClaim.SetRange("Date From", gdateDateFrom);
+                    grecEarmarkingClaim.SetRange("Date To", gdateDateTo);
+                    grecEarmarkingClaim.SetRange(Active, true);
+                    if grecEarmarkingClaim.FindSet() then begin
+                        grecEarmarkingClaim.CalcSums("Remaining Amount Earmarked");
+                        ActiveRemainingAmountEarmarked += grecEarmarkingClaim."Remaining Amount Earmarked";
+                    end;
+                until GLAccount.Next() = 0;
+
+            // -(ActiveRemainingAmountEarmarked+gdecBudgetedAmtUsed+gdecActualAmt)
+            //G
+            case genumBudgetToUse of
+                genumBudgetToUse::"Original Budgeted Amount for the Year":
+                    gdecRemainingAmt := "Original Budgeted Amt for Year" - (ActiveRemainingAmountEarmarked + gdecBudgetedAmtUsed + gdecActualAmt);
+
+                genumBudgetToUse::"Revised Amount for the Year (1)":
+                    gdecRemainingAmt := "Revised Amount for Year (1)" - (ActiveRemainingAmountEarmarked + gdecBudgetedAmtUsed + gdecActualAmt);
+
+                genumBudgetToUse::"Revised Amount for the Year (2)":
+                    gdecRemainingAmt := "Revised Amount for Year (2)" - (ActiveRemainingAmountEarmarked + gdecBudgetedAmtUsed + gdecActualAmt);
+
+                genumBudgetToUse::"Revised Amount for the Year (3)":
+                    gdecRemainingAmt := "Revised Amount for Year (3)" - (ActiveRemainingAmountEarmarked + gdecBudgetedAmtUsed + gdecActualAmt);
+
+                genumBudgetToUse::"Revised Amount for the Year (4)":
+                    gdecRemainingAmt := "Revised Amount for Year (4)" - (ActiveRemainingAmountEarmarked + gdecBudgetedAmtUsed + gdecActualAmt);
+
+                genumBudgetToUse::"Revised Amount for the Year (5)":
+                    gdecRemainingAmt := "Revised Amount for Year (5)" - (ActiveRemainingAmountEarmarked + gdecBudgetedAmtUsed + gdecActualAmt);
+
+                genumBudgetToUse::"Revised Amount for the Year (6)":
+                    gdecRemainingAmt := "Revised Amount for Year (6)" - (ActiveRemainingAmountEarmarked + gdecBudgetedAmtUsed + gdecActualAmt);
+
+                genumBudgetToUse::"Final Budgeted Amount for the Year":
+                    gdecRemainingAmt := "Final Budgeted Amount for Year" - (ActiveRemainingAmountEarmarked + gdecBudgetedAmtUsed + gdecActualAmt);
+            end;
+
+
         end;
-
-
-        grecPurchHeader.Reset();
-        grecPurchHeader.SetCurrentKey("Document Type", "No.");
-        grecPurchHeader.SetRange("Document Type", grecPurchHeader."Document Type"::Order);
-        grecPurchHeader.SetRange(Status, grecPurchHeader.Status::Released);
-        if grecPurchHeader.FindFirst() then begin
-            repeat
-                grecPurchLine.Reset();
-                grecPurchLine.SetCurrentKey("Document Type", "Document No.", "Line No.");
-                grecPurchLine.SetRange("Document No.", grecPurchHeader."No.");
-                grecPurchLine.SetRange("Budget Category", "Budget Category");
-                if grecPurchLine.FindFirst() then begin
-                    repeat
-                        gdecBudgetedAmtUsed += grecPurchLine.Amount;
-                    until grecPurchLine.Next = 0;
-                end;
-            until grecPurchHeader.Next = 0;
-        end;
-
-
-        case genumBudgetToUse of
-            genumBudgetToUse::"Original Budgeted Amount for the Year":
-                gdecRemainingAmt := "Original Budgeted Amt for Year";
-
-            genumBudgetToUse::"Revised Amount for the Year (1)":
-                gdecRemainingAmt := "Revised Amount for Year (1)";
-
-            genumBudgetToUse::"Revised Amount for the Year (2)":
-                gdecRemainingAmt := "Revised Amount for Year (2)";
-
-            genumBudgetToUse::"Revised Amount for the Year (3)":
-                gdecRemainingAmt := "Revised Amount for Year (3)";
-
-            genumBudgetToUse::"Revised Amount for the Year (4)":
-                gdecRemainingAmt := "Revised Amount for Year (4)";
-
-            genumBudgetToUse::"Revised Amount for the Year (5)":
-                gdecRemainingAmt := "Revised Amount for Year (5)";
-
-            genumBudgetToUse::"Revised Amount for the Year (6)":
-                gdecRemainingAmt := "Revised Amount for Year (6)";
-
-            genumBudgetToUse::"Final Budgeted Amount for the Year":
-                gdecRemainingAmt := "Final Budgeted Amount for Year";
-        end;
-
-        gdecRemainingAmt -= gdecActualAmt;
-        gdecRemainingAmt -= gdecBudgetedAmtUsed;
-
-        Clear(ActiveRemainingAmountEarmarked);
-        GLAccount.Reset();
-        GLAccount.SetRange("Budget Category", "Budget Category");
-        if GLAccount.FindSet() then
-            repeat
-                grecEarmarkingClaim.Reset();
-                grecEarmarkingClaim.SetRange("G/L Account Earmarked", GLAccount."No.");
-                grecEarmarkingClaim.SetRange(Active, true);
-                if grecEarmarkingClaim.FindSet() then begin
-                    grecEarmarkingClaim.CalcSums("Remaining Amount Earmarked");
-                    ActiveRemainingAmountEarmarked += grecEarmarkingClaim."Remaining Amount Earmarked";
-                end;
-            until GLAccount.Next() = 0;
-
     end;
 
     trigger OnAfterGetCurrRecord()
+    var
+        gdecActualAmtLocal: Decimal;
     begin
+        SetRange("Budget Name", gtextBudgetName);
+        SetFilter("Budget Category", '<>%1', '');
         Clear(gdecActualAmt);
+        Clear(gdecActualAmtLocal);
         Clear(gdecBudgetedAmtUsed);
         Clear(gdecRemainingAmt);
 
-        grecGLEntry.Reset();
-        grecGLEntry.SetRange("Posting Date", gdateDateFrom, gdateDateTo);
-        grecGLEntry.SetRange("Budget Category", "Budget Category");
-        if grecGLEntry.FindSet then begin
-            repeat
-                gdecActualAmt += grecGLEntry.Amount;
-            until grecGLEntry.Next = 0;
+        if "Budget Category" <> '' then begin
+
+            //D
+            GLAccount.Reset();
+            GLAccount.SetRange("Budget Category", "Budget Category");
+            if GLAccount.Find('-') then begin
+                repeat
+                    grecGLEntry.Reset();
+                    grecGLEntry.SetRange("Posting Date", gdateDateFrom, gdateDateTo);
+                    grecGLEntry.SetRange("G/L Account No.", GLAccount."No.");
+                    if grecGLEntry.FindSet then begin
+                        repeat
+                            gdecActualAmtLocal += grecGLEntry.Amount;
+                        until grecGLEntry.Next = 0;
+                    end;
+
+                    gdecActualAmt += gdecActualAmtLocal;
+                until GLAccount.Next() = 0;
+            end;
+
+
+            //E
+            grecPurchHeader.Reset();
+            grecPurchHeader.SetCurrentKey("Document Type", "No.");
+            grecPurchHeader.SetRange("Document Type", grecPurchHeader."Document Type"::Order);
+            grecPurchHeader.SetRange("Order Date", gdateDateFrom, gdateDateTo);
+            grecPurchHeader.SetRange(Status, grecPurchHeader.Status::Released);
+            if grecPurchHeader.Findset() then begin
+                repeat
+                    grecPurchLine.Reset();
+                    grecPurchLine.SetCurrentKey("Document Type", "Document No.", "Line No.");
+                    grecPurchLine.SetRange("Document No.", grecPurchHeader."No.");
+                    grecPurchLine.SetRange("Budget Category", "Budget Category");
+                    if grecPurchLine.FindFirst() then begin
+                        repeat
+                            gdecBudgetedAmtUsed += grecPurchLine.Amount;
+                        until grecPurchLine.Next = 0;
+                    end;
+                until grecPurchHeader.Next = 0;
+            end;
+
+
+
+            //F
+            Clear(ActiveRemainingAmountEarmarked);
+            GLAccount.Reset();
+            GLAccount.SetRange("Budget Category", "Budget Category");
+            if GLAccount.FindSet() then
+                repeat
+                    grecEarmarkingClaim.Reset();
+                    grecEarmarkingClaim.SetRange("G/L Account Earmarked", GLAccount."No.");
+                    grecEarmarkingClaim.SetRange("Date From", gdateDateFrom);
+                    grecEarmarkingClaim.SetRange("Date To", gdateDateTo);
+                    grecEarmarkingClaim.SetRange(Active, true);
+                    if grecEarmarkingClaim.FindSet() then begin
+                        grecEarmarkingClaim.CalcSums("Remaining Amount Earmarked");
+                        ActiveRemainingAmountEarmarked += grecEarmarkingClaim."Remaining Amount Earmarked";
+                    end;
+                until GLAccount.Next() = 0;
+
+            // -(ActiveRemainingAmountEarmarked+gdecBudgetedAmtUsed+gdecActualAmt)
+            //G
+            case genumBudgetToUse of
+                genumBudgetToUse::"Original Budgeted Amount for the Year":
+                    gdecRemainingAmt := "Original Budgeted Amt for Year" - (ActiveRemainingAmountEarmarked + gdecBudgetedAmtUsed + gdecActualAmt);
+
+                genumBudgetToUse::"Revised Amount for the Year (1)":
+                    gdecRemainingAmt := "Revised Amount for Year (1)" - (ActiveRemainingAmountEarmarked + gdecBudgetedAmtUsed + gdecActualAmt);
+
+                genumBudgetToUse::"Revised Amount for the Year (2)":
+                    gdecRemainingAmt := "Revised Amount for Year (2)" - (ActiveRemainingAmountEarmarked + gdecBudgetedAmtUsed + gdecActualAmt);
+
+                genumBudgetToUse::"Revised Amount for the Year (3)":
+                    gdecRemainingAmt := "Revised Amount for Year (3)" - (ActiveRemainingAmountEarmarked + gdecBudgetedAmtUsed + gdecActualAmt);
+
+                genumBudgetToUse::"Revised Amount for the Year (4)":
+                    gdecRemainingAmt := "Revised Amount for Year (4)" - (ActiveRemainingAmountEarmarked + gdecBudgetedAmtUsed + gdecActualAmt);
+
+                genumBudgetToUse::"Revised Amount for the Year (5)":
+                    gdecRemainingAmt := "Revised Amount for Year (5)" - (ActiveRemainingAmountEarmarked + gdecBudgetedAmtUsed + gdecActualAmt);
+
+                genumBudgetToUse::"Revised Amount for the Year (6)":
+                    gdecRemainingAmt := "Revised Amount for Year (6)" - (ActiveRemainingAmountEarmarked + gdecBudgetedAmtUsed + gdecActualAmt);
+
+                genumBudgetToUse::"Final Budgeted Amount for the Year":
+                    gdecRemainingAmt := "Final Budgeted Amount for Year" - (ActiveRemainingAmountEarmarked + gdecBudgetedAmtUsed + gdecActualAmt);
+            end;
+
+
         end;
 
+    end;
 
-        grecPurchHeader.Reset();
-        grecPurchHeader.SetCurrentKey("Document Type", "No.");
-        grecPurchHeader.SetRange("Document Type", grecPurchHeader."Document Type"::Order);
-        grecPurchHeader.SetRange(Status, grecPurchHeader.Status::Released);
-        if grecPurchHeader.FindFirst() then begin
-            repeat
-                grecPurchLine.Reset();
-                grecPurchLine.SetCurrentKey("Document Type", "Document No.", "Line No.");
-                grecPurchLine.SetRange("Document No.", grecPurchHeader."No.");
-                grecPurchLine.SetRange("Budget Category", "Budget Category");
-                if grecPurchLine.FindFirst() then begin
-                    repeat
-                        gdecBudgetedAmtUsed += grecPurchLine.Amount;
-                    until grecPurchLine.Next = 0;
-                end;
-            until grecPurchHeader.Next = 0;
-        end;
-
-
-        case genumBudgetToUse of
-            genumBudgetToUse::"Original Budgeted Amount for the Year":
-                gdecRemainingAmt := "Original Budgeted Amt for Year";
-
-            genumBudgetToUse::"Revised Amount for the Year (1)":
-                gdecRemainingAmt := "Revised Amount for Year (1)";
-
-            genumBudgetToUse::"Revised Amount for the Year (2)":
-                gdecRemainingAmt := "Revised Amount for Year (2)";
-
-            genumBudgetToUse::"Revised Amount for the Year (3)":
-                gdecRemainingAmt := "Revised Amount for Year (3)";
-
-            genumBudgetToUse::"Revised Amount for the Year (4)":
-                gdecRemainingAmt := "Revised Amount for Year (4)";
-
-            genumBudgetToUse::"Revised Amount for the Year (5)":
-                gdecRemainingAmt := "Revised Amount for Year (5)";
-
-            genumBudgetToUse::"Revised Amount for the Year (6)":
-                gdecRemainingAmt := "Revised Amount for Year (6)";
-
-            genumBudgetToUse::"Final Budgeted Amount for the Year":
-                gdecRemainingAmt := "Final Budgeted Amount for Year";
-        end;
-
-        gdecRemainingAmt -= gdecActualAmt;
-        gdecRemainingAmt -= gdecBudgetedAmtUsed;
-        Clear(ActiveRemainingAmountEarmarked);
-        GLAccount.Reset();
-        GLAccount.SetRange("Budget Category", "Budget Category");
-        if GLAccount.FindSet() then
-            repeat
-                grecEarmarkingClaim.Reset();
-                grecEarmarkingClaim.SetRange("G/L Account Earmarked", GLAccount."No.");
-                grecEarmarkingClaim.SetRange(Active, true);
-                if grecEarmarkingClaim.FindSet() then begin
-                    grecEarmarkingClaim.CalcSums("Remaining Amount Earmarked");
-                    ActiveRemainingAmountEarmarked += grecEarmarkingClaim."Remaining Amount Earmarked";
-                end;
-            until GLAccount.Next() = 0;
+    trigger OnClosePage()
+    begin
+        CurrPage.Update();
     end;
 
 

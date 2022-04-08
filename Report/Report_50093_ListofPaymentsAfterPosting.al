@@ -21,6 +21,9 @@ report 50093 "List of Payments After Posting"
             column(Bank_Account_No_; "Bank Account No.") { }
             column(gtextDateFilter; gtextDateFilter) { }
             column(RecordCount; RecordCount) { }
+            column(AddressPrint; AddressPrint) { }
+            column(PayeeAddress; PayeeAddress) { }
+
 
             trigger OnPreDataItem()
             begin
@@ -37,6 +40,7 @@ report 50093 "List of Payments After Posting"
             begin
                 RecordCount += 1;
                 Clear(gtextBankName);
+                Clear(PayeeAddress);
                 if grecBankAccount.get("Bank Account No.") then
                     gtextBankName := grecBankAccount.Name;
 
@@ -50,11 +54,8 @@ report 50093 "List of Payments After Posting"
                     if grecvendorledgerentry.FindFirst then begin
                         grecvendorrec.Get(grecvendorledgerentry."Vendor No.");
                         payeenamevar := grecvendorrec.Name;
+                        PayeeAddress := grecvendorrec.Address + ' ' + grecvendorrec."Address 2";
                     end;
-
-
-
-
 
                 end;
 
@@ -80,18 +81,31 @@ report 50093 "List of Payments After Posting"
                         ApplicationArea = All;
                         TableRelation = "G/L Register"."No." where("Source Code" = filter('PAYMENTJNL'));
                     }
+                    field(Address; AddressPrint)
+                    {
+                        ApplicationArea = All;
+
+                    }
+
                 }
             }
         }
+        trigger OnOpenPage()
+        begin
+            AddressPrint := false
+        end;
     }
 
     trigger OnPreReport()
     begin
         grecCompanyInfo.get;
+
     end;
 
     var
         gtextDateFilter: Text;
+        AddressPrint: Boolean;
+        PayeeAddress: Text;
         gtextBankName: Text;
         grecBankAccount: Record "Bank Account";
         grecCompanyInfo: Record "Company Information";

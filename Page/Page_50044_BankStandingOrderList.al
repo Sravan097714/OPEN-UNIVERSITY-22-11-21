@@ -37,6 +37,7 @@ page 50044 "Bank Standing Order List"
                 field("To Month"; "To Month") { ApplicationArea = All; }
                 field("Name of Bank 2"; "Name of Bank 2") { ApplicationArea = All; }
                 field("Account to Credit"; "Account to Credit") { ApplicationArea = All; }
+                field("Processed by"; "Processed by") { ApplicationArea = all; }
             }
         }
     }

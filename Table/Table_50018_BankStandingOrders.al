@@ -163,6 +163,13 @@ table 50018 "Bank Standing Orders"
         {
             DataClassification = ToBeClassified;
         }
+        field(32; "Processed by"; Option)
+        {
+            OptionMembers = " ",Learner,University;
+            OptionCaption = ' ,Learner, University';
+
+        }
+
 
     }
 

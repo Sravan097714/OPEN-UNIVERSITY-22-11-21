@@ -20,6 +20,8 @@ report 50016 "Sales Invoice"
             column(Salesperson_Code; SalesPurchPerson.Name) { }
             column(VATText; VATText) { }
             column(Our_Ref; "Our Ref") { }
+            column(Amount; Amount) { }
+            column(Amount_Including_VAT; "Amount Including VAT") { }
             column(Your_Ref; "Your Ref") { }
             column(VatDisplay; VatDisplay) { }
             column(SignatureName; grecSalesReceivableSetup."Sales Invoice Signature Name") { }
@@ -224,6 +226,35 @@ report 50016 "Sales Invoice"
                                 SalesShipmentBuffer.SETRANGE("Document No.", "Sales Invoice Line"."Document No.");
                                 SalesShipmentBuffer.SETRANGE("Line No.", "Sales Invoice Line"."Line No.");
                                 SETRANGE(Number, 1, SalesShipmentBuffer.COUNT());
+                            end;
+                        }
+                        dataitem("Dimension Set Entry"; "Dimension Set Entry")
+                        {
+                            DataItemTableView = SORTING("Dimension Set ID", "Dimension Code") ORDER(Ascending);
+                            DataItemLink = "Dimension Set ID" = FIELD("Dimension Set ID");
+                            DataItemLinkReference = "Sales Invoice Line";
+                            CalcFields = "Dimension Value Name";
+
+
+                            column(Dimension_CodeLBL; Dimension_CodeLBL) { }
+                            column(Dimension_Value_CodeLBL; Dimension_Value_CodeLBL) { }
+                            column(Dimension_Value_NameLBL; Dimension_Value_NameLBL) { }
+
+                            column(Dimension_Code; "Dimension Code") { }
+                            column(Dimension_Value_Code; "Dimension Value Code") { }
+                            column(Dimension_Value_Name; "Dimension Value Name") { }
+                            column(DimensionName2; DimensionName2) { }
+                            trigger OnAfterGetRecord()
+                            var
+                                DimensionValueLRec: Record "Dimension Value";
+                            begin
+                                If not DimensionValueLRec.Get("Dimension Code", "Dimension Value Code") then
+                                    Clear(DimensionName2);
+
+                                if DimensionValueLRec."Name 2" <> '' then
+                                    DimensionName2 := DimensionValueLRec."Name 2"
+                                else
+                                    DimensionName2 := DimensionValueLRec.Name;
                             end;
                         }
                         dataitem("Item Ledger Entry"; "Item Ledger Entry")
@@ -450,6 +481,7 @@ report 50016 "Sales Invoice"
             var
                 grecSalesInvLine: Record "Sales Invoice Line";
             begin
+                CalcFields(Amount, "Amount Including VAT");
 
                 CLEAR(CurrCode);
                 CLEAR(BRNText);
@@ -640,6 +672,7 @@ report 50016 "Sales Invoice"
         VATNoText: Text[30];
         VatAmount: Decimal;
         ReferenceText: Text[30];
+        DimensionName2: Text;
         TotalText: Text[50];
         TotalExclVATText: Text[50];
         TotalInclVATText: Text[50];
@@ -709,6 +742,10 @@ report 50016 "Sales Invoice"
         DISCOUNT_CaptionLbl: Label 'DISCOUNT';
         NET_PRICE_CaptionLbl: Label 'NET PRICE';
         VAT_CaptionLbl: Label 'VAT';
+        Dimension_CodeLBL: Label 'Dimension Code';
+        Dimension_Value_CodeLBL: Label 'Dimension Value Code';
+        Dimension_Value_NameLBL: Label 'Dimension Value Name';
+
         AMOUNT_INV_CaptionLbl: Label 'AMOUNT INC VAT';
         Delivered_By_CaptionLbl: Label 'Delivered By:';
         Received_by_CaptionLbl: Label 'Received by:';

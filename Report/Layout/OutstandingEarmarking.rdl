@@ -321,7 +321,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!No_.Value &amp; " - " &amp; Fields!GLName.Value</Value>
+                                  <Value>=Fields!G_L_Account_for_Budget.Value &amp; " - " &amp; Fields!GLName.Value</Value>
                                   <Style>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -695,7 +695,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>="Total per G/L Account " &amp; Fields!No_.Value</Value>
+                                  <Value>="Total per G/L Account " &amp; Fields!G_L_Account_for_Budget.Value</Value>
                                   <Style>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -1257,9 +1257,9 @@
               <TablixMembers>
                 <TablixMember />
                 <TablixMember>
-                  <Group Name="No_">
+                  <Group Name="GLAccountBudget_">
                     <GroupExpressions>
-                      <GroupExpression>=Fields!No_.Value</GroupExpression>
+                      <GroupExpression>=Fields!G_L_Account_for_Budget.Value</GroupExpression>
                     </GroupExpressions>
                   </Group>
                   <SortExpressions>
@@ -1557,6 +1557,9 @@ End Function
         </Field>
         <Field Name="Document_Type">
           <DataField>Document_Type</DataField>
+        </Field>
+        <Field Name="G_L_Account_for_Budget">
+          <DataField>G_L_Account_for_Budget</DataField>
         </Field>
         <Field Name="No_">
           <DataField>No_</DataField>

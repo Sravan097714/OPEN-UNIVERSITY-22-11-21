@@ -1383,8 +1383,23 @@ page 50048 "Claim Form"
                     ToolTip = 'Finalize the document or journal by posting the amounts and quantities to the related accounts in your company books.';
 
                     trigger OnAction()
+                    var
+                        PurchaseLineRec: record "Purchase Line";
                     begin
+                        //ktm
                         VerifyTotal;
+                        with PurchaseLineRec do begin
+                            SetFilter("Document No.", "No.");
+                            SETRANGE("Document Type", "Document Type"::Invoice);
+                            if Find('-') then begin
+                                repeat
+                                    if ("Earmark ID" = '') or ("Date Earmarked" = 0D) and ("G/L Account for Budget" <> '') then begin
+                                        Message('Please select the %1 for line %2', FieldCaption("G/L Account for Budget"), "Line No.");
+                                        exit;
+                                    end;
+                                until next() = 0;
+                            end
+                        end;
                         PostDocument(CODEUNIT::"Purch.-Post (Yes/No)", "Navigate After Posting"::"Posted Document");
                     end;
                 }
@@ -1430,8 +1445,23 @@ page 50048 "Claim Form"
                     Visible = NOT IsOfficeAddin;
 
                     trigger OnAction()
+                    var
+                        PurchaseLineRec: record "Purchase Line";
                     begin
                         VerifyTotal;
+                        //ktm
+                        with PurchaseLineRec do begin
+                            SetFilter("Document No.", "No.");
+                            SETRANGE("Document Type", "Document Type"::Invoice);
+                            if Find('-') then begin
+                                repeat
+                                    if ("Earmark ID" = '') or ("Date Earmarked" = 0D) and ("G/L Account for Budget" <> '') then begin
+                                        Message('Please select the %1 for line %2', FieldCaption("G/L Account for Budget"), "Line No.");
+                                        exit;
+                                    end;
+                                until next() = 0;
+                            end
+                        end;
                         PostDocument(CODEUNIT::"Purch.-Post + Print", "Navigate After Posting"::"Do Nothing");
                     end;
                 }

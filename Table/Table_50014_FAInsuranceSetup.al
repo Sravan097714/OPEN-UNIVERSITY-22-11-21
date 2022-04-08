@@ -22,6 +22,10 @@ table 50014 "FA Insurance Setup"
             TableRelation = "FA Class".Code;
             DataClassification = ToBeClassified;
         }
+        field(7; "Insurance Amount"; Decimal)
+        {
+            DataClassification = ToBeClassified;
+        }
     }
 
     keys

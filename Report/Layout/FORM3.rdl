@@ -277,7 +277,9 @@
                                 </TextRun>
                                 <TextRun>
                                   <Value>=First(Fields!Total_Fee_per_Installment.Value, "DataSet_Result")</Value>
-                                  <Style />
+                                  <Style>
+                                    <Format>#,0.00</Format>
+                                  </Style>
                                 </TextRun>
                                 <TextRun>
                                   <Value>     Total fee for </Value>
@@ -293,7 +295,9 @@
                                 </TextRun>
                                 <TextRun>
                                   <Value>=First(Fields!Total_Fee_for_Installments.Value, "DataSet_Result")</Value>
-                                  <Style />
+                                  <Style>
+                                    <Format>#,0.00</Format>
+                                  </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style />
@@ -338,7 +342,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>* Note: Payment may be made either in full ot in eight **consecutive equal monthly instalments. the first instalment must be paid at the finance section, Reduit and the remaining once by the eay of a bank standing order as per standing order form below. Payment at the cash counter should be in the form of cash (exact amount to be tendered, please) or banker's cheque.</Value>
+                                  <Value>* Note: Payment may be made either in full ot in eight **consecutive equal monthly instalments. the first instalment must be paid at the finance section, Reduit and the remaining ones by the eay of a bank standing order as per standing order form below. Payment at the cash counter should be in the form of cash (exact amount to be tendered, please) or banker's cheque.</Value>
                                   <Style />
                                 </TextRun>
                               </TextRuns>
@@ -886,8 +890,18 @@
                                   <Style />
                                 </TextRun>
                                 <TextRun>
-                                  <Value>=First(Fields!Total_Fee_for_Installments.Value, "DataSet_Result")</Value>
+                                  <Value>=First(Fields!DescriptionLine1.Value, "DataSet_Result") &amp; First(Fields!DescriptionLine2.Value, "DataSet_Result")</Value>
                                   <Style />
+                                </TextRun>
+                                <TextRun>
+                                  <Value> Rs</Value>
+                                  <Style />
+                                </TextRun>
+                                <TextRun>
+                                  <Value>=First(Fields!Total_Fee_for_Installments.Value, "DataSet_Result")</Value>
+                                  <Style>
+                                    <Format>#,0.00</Format>
+                                  </Style>
                                 </TextRun>
                                 <TextRun>
                                   <Value> on the </Value>
@@ -1310,42 +1324,6 @@
                     <TablixCell />
                   </TablixCells>
                 </TablixRow>
-                <TablixRow>
-                  <Height>0.0625in</Height>
-                  <TablixCells>
-                    <TablixCell>
-                      <CellContents>
-                        <Textbox Name="Textbox2">
-                          <CanGrow>true</CanGrow>
-                          <KeepTogether>true</KeepTogether>
-                          <Paragraphs>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value />
-                                  <Style />
-                                </TextRun>
-                              </TextRuns>
-                              <Style />
-                            </Paragraph>
-                          </Paragraphs>
-                          <rd:DefaultName>Textbox2</rd:DefaultName>
-                          <Style>
-                            <Border>
-                              <Style>None</Style>
-                            </Border>
-                            <PaddingLeft>2pt</PaddingLeft>
-                            <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
-                            <PaddingBottom>2pt</PaddingBottom>
-                          </Style>
-                        </Textbox>
-                        <ColSpan>2</ColSpan>
-                      </CellContents>
-                    </TablixCell>
-                    <TablixCell />
-                  </TablixCells>
-                </TablixRow>
               </TablixRows>
             </TablixBody>
             <TablixColumnHierarchy>
@@ -1356,88 +1334,35 @@
             </TablixColumnHierarchy>
             <TablixRowHierarchy>
               <TablixMembers>
-                <TablixMember>
-                  <KeepWithGroup>After</KeepWithGroup>
-                </TablixMember>
-                <TablixMember>
-                  <KeepWithGroup>After</KeepWithGroup>
-                </TablixMember>
-                <TablixMember>
-                  <KeepWithGroup>After</KeepWithGroup>
-                </TablixMember>
-                <TablixMember>
-                  <KeepWithGroup>After</KeepWithGroup>
-                </TablixMember>
-                <TablixMember>
-                  <KeepWithGroup>After</KeepWithGroup>
-                </TablixMember>
-                <TablixMember>
-                  <KeepWithGroup>After</KeepWithGroup>
-                </TablixMember>
-                <TablixMember>
-                  <KeepWithGroup>After</KeepWithGroup>
-                </TablixMember>
-                <TablixMember>
-                  <KeepWithGroup>After</KeepWithGroup>
-                </TablixMember>
-                <TablixMember>
-                  <KeepWithGroup>After</KeepWithGroup>
-                </TablixMember>
-                <TablixMember>
-                  <KeepWithGroup>After</KeepWithGroup>
-                </TablixMember>
-                <TablixMember>
-                  <KeepWithGroup>After</KeepWithGroup>
-                </TablixMember>
-                <TablixMember>
-                  <KeepWithGroup>After</KeepWithGroup>
-                </TablixMember>
-                <TablixMember>
-                  <KeepWithGroup>After</KeepWithGroup>
-                </TablixMember>
-                <TablixMember>
-                  <KeepWithGroup>After</KeepWithGroup>
-                </TablixMember>
-                <TablixMember>
-                  <KeepWithGroup>After</KeepWithGroup>
-                </TablixMember>
-                <TablixMember>
-                  <KeepWithGroup>After</KeepWithGroup>
-                </TablixMember>
-                <TablixMember>
-                  <KeepWithGroup>After</KeepWithGroup>
-                </TablixMember>
-                <TablixMember>
-                  <KeepWithGroup>After</KeepWithGroup>
-                </TablixMember>
-                <TablixMember>
-                  <KeepWithGroup>After</KeepWithGroup>
-                </TablixMember>
-                <TablixMember>
-                  <KeepWithGroup>After</KeepWithGroup>
-                </TablixMember>
-                <TablixMember>
-                  <KeepWithGroup>After</KeepWithGroup>
-                </TablixMember>
-                <TablixMember>
-                  <KeepWithGroup>After</KeepWithGroup>
-                </TablixMember>
-                <TablixMember>
-                  <KeepWithGroup>After</KeepWithGroup>
-                </TablixMember>
-                <TablixMember>
-                  <KeepWithGroup>After</KeepWithGroup>
-                </TablixMember>
-                <TablixMember>
-                  <KeepWithGroup>After</KeepWithGroup>
-                </TablixMember>
-                <TablixMember>
-                  <Group Name="Details" />
-                </TablixMember>
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
               </TablixMembers>
             </TablixRowHierarchy>
             <Top>0.155in</Top>
-            <Height>9.23959in</Height>
+            <Height>9.17709in</Height>
             <Width>7.38417in</Width>
             <Style>
               <Border>
@@ -1446,13 +1371,13 @@
             </Style>
           </Tablix>
         </ReportItems>
-        <Height>9.39459in</Height>
+        <Height>9.33209in</Height>
         <Style />
       </Body>
       <Width>7.39583in</Width>
       <Page>
         <PageHeader>
-          <Height>0.77556in</Height>
+          <Height>0.92556in</Height>
           <PrintOnFirstPage>true</PrintOnFirstPage>
           <PrintOnLastPage>true</PrintOnLastPage>
           <ReportItems>
@@ -1463,7 +1388,7 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=First(Fields!grecCompanyInfo.Value, "DataSet_Result")</Value>
+                      <Value>=First(Fields!grecCompanyInfo_Name.Value, "DataSet_Result")</Value>
                       <Style>
                         <FontWeight>Bold</FontWeight>
                       </Style>
@@ -1502,6 +1427,19 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
+                      <Value />
+                      <Style>
+                        <FontWeight>Bold</FontWeight>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Center</TextAlign>
+                  </Style>
+                </Paragraph>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
                       <Value>(When Payment is done at Open University Finance Section Reduit)</Value>
                       <Style>
                         <FontWeight>Bold</FontWeight>
@@ -1514,7 +1452,7 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox7</rd:DefaultName>
-              <Height>0.77556in</Height>
+              <Height>0.85612in</Height>
               <Width>7.39583in</Width>
               <Style>
                 <Border>
@@ -1615,8 +1553,8 @@ End Function
         <Field Name="Date">
           <DataField>Date</DataField>
         </Field>
-        <Field Name="grecCompanyInfo">
-          <DataField>grecCompanyInfo</DataField>
+        <Field Name="grecCompanyInfo_Name">
+          <DataField>grecCompanyInfo_Name</DataField>
         </Field>
         <Field Name="Full_Name_of_Applicant">
           <DataField>Full_Name_of_Applicant</DataField>
@@ -1650,6 +1588,15 @@ End Function
         </Field>
         <Field Name="Total_Fee_per_InstallmentFormat">
           <DataField>Total_Fee_per_InstallmentFormat</DataField>
+        </Field>
+        <Field Name="DescriptionLine1">
+          <DataField>DescriptionLine1</DataField>
+        </Field>
+        <Field Name="DescriptionLine2">
+          <DataField>DescriptionLine2</DataField>
+        </Field>
+        <Field Name="AmountText">
+          <DataField>AmountText</DataField>
         </Field>
         <Field Name="Total_Fee_for_Installments">
           <DataField>Total_Fee_for_Installments</DataField>

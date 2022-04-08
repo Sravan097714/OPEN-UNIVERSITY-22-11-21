@@ -15,6 +15,13 @@ page 50049 "Claim Subform"
         {
             repeater(PurchDetailLine)
             {
+                field("Line No."; "Line No.")
+                {
+                    ApplicationArea = Basic, Suite;
+                    Editable = false;
+                    ToolTip = 'Specifies the line''s number.';
+                }
+
                 field(Type; Type)
                 {
                     ApplicationArea = Advanced;
@@ -932,13 +939,7 @@ page 50049 "Claim Subform"
                     ToolTip = 'Specifies the document number.';
                     Visible = false;
                 }
-                field("Line No."; "Line No.")
-                {
-                    ApplicationArea = Basic, Suite;
-                    Editable = false;
-                    ToolTip = 'Specifies the line''s number.';
-                    Visible = false;
-                }
+
             }
             group(Control39)
             {

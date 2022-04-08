@@ -118,6 +118,12 @@ table 50023 "Archived Bank Standing Orders"
             TableRelation = "Bank Details"."Bank Code";
             DataClassification = ToBeClassified;
         }
+        field(32; "Processed by"; Option)
+        {
+            OptionMembers = ,Learner,University;
+            OptionCaption = ' ,Learner, University';
+
+        }
         field(50; "Archieved By"; Code[50])
         {
             DataClassification = ToBeClassified;

@@ -43,6 +43,7 @@ page 50063 "Archived Bank Standing Orders"
                 field(Archived; Archived) { ApplicationArea = all; }
                 field("Archieved By"; Rec."Archieved By") { ApplicationArea = all; }
                 field("Archieved DateTime"; Rec."Archieved DateTime") { ApplicationArea = all; }
+                field("Processed by"; "Processed by") { ApplicationArea = all; }
             }
         }
 

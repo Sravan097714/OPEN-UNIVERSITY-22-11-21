@@ -11,6 +11,7 @@ report 50057 "Fixed Asset Insurance Report"
         {
             RequestFilterFields = "Insurance Type", "FA Class Code";
             column(CompanyName; grecCompanyInfo.Name) { }
+            column(InsuranceTypeFilter; InsuranceTypeFilter) { }
             column(No_; "No.") { }
             column(Description; Description) { }
             column(DateofPurchase; format(gdatePostingDate)) { }
@@ -87,6 +88,19 @@ report 50057 "Fixed Asset Insurance Report"
                     end;
                 end;
 
+                //KTM
+                if gdecAmount = 0 then begin
+                    grecFAInsuranceSetup.Reset();
+                    grecFAInsuranceSetup.SetCurrentKey("Entry No.");
+                    //grecFAInsuranceSetup.SetRange("FA Posting Group", "FA Posting Group");
+                    grecFAInsuranceSetup.SetRange("FA Class Code", "FA Class Code");
+                    grecFAInsuranceSetup.SetRange("Insurance Type", "Insurance Type");
+                    if grecFAInsuranceSetup.FindLast() then begin
+                        if grecFAInsuranceSetup."Insurance Amount" > 1 then
+                            gdecAmount := grecFAInsuranceSetup."Insurance Amount"
+                    end;
+                end;
+                //end ktm
             end;
         }
     }
@@ -128,11 +142,14 @@ report 50057 "Fixed Asset Insurance Report"
 
         gdateInitialStartDate := gdateStartDate;
         gdateInitialEndDate := gdateEndDate;
+
+        InsuranceTypeFilter := "Fixed Asset".GetFilter("Insurance Type");
     end;
 
     var
         grecCompanyInfo: Record "Company Information";
         gdateUserEndDate: Date;
+        InsuranceTypeFilter: Text;
         grecFALedgerEntry: Record "FA Ledger Entry";
         gdatePostingDate: Date;
         gdecAcquisitionCost: Decimal;
