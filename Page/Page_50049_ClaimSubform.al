@@ -72,7 +72,7 @@ page 50049 "Claim Subform"
                         DeltaUpdateTotals();
 
                         if rec.Type = Rec.Type::"G/L Account" then begin
-                            Rec."G/L Account for Budget" := Rec."No.";
+                            //Rec."G/L Account for Budget" := Rec."No.";//ktm
                             Quantity := 1;
                         end;
                     end;

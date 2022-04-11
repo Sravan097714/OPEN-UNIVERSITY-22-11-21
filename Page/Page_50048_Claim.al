@@ -1388,14 +1388,18 @@ page 50048 "Claim Form"
                     begin
                         //ktm
                         VerifyTotal;
+                        PurchaseLineRec.reset;
                         with PurchaseLineRec do begin
-                            SetFilter("Document No.", "No.");
+                            SetFilter("Document No.", Rec."No.");
                             SETRANGE("Document Type", "Document Type"::Invoice);
                             if Find('-') then begin
                                 repeat
-                                    if ("Earmark ID" = '') or ("Date Earmarked" = 0D) and ("G/L Account for Budget" <> '') then begin
-                                        Message('Please select the %1 for line %2', FieldCaption("G/L Account for Budget"), "Line No.");
-                                        exit;
+                                    if (StrLen("G/L Account for Budget") <> 0) then begin
+                                        if ("Earmark ID" = '') or ("Date Earmarked" = 0D) then begin
+                                            Message('Please select the %1 for line %2', FieldCaption("G/L Account for Budget"), "Line No.");
+                                            exit;
+                                        end;
+
                                     end;
                                 until next() = 0;
                             end
@@ -1450,14 +1454,18 @@ page 50048 "Claim Form"
                     begin
                         VerifyTotal;
                         //ktm
+                        PurchaseLineRec.reset;
                         with PurchaseLineRec do begin
-                            SetFilter("Document No.", "No.");
+                            SetFilter("Document No.", Rec."No.");
                             SETRANGE("Document Type", "Document Type"::Invoice);
                             if Find('-') then begin
                                 repeat
-                                    if ("Earmark ID" = '') or ("Date Earmarked" = 0D) and ("G/L Account for Budget" <> '') then begin
-                                        Message('Please select the %1 for line %2', FieldCaption("G/L Account for Budget"), "Line No.");
-                                        exit;
+                                    if (StrLen("G/L Account for Budget") <> 0) then begin
+                                        if ("Earmark ID" = '') or ("Date Earmarked" = 0D) then begin
+                                            Message('Please select the %1 for line %2', FieldCaption("G/L Account for Budget"), "Line No.");
+                                            exit;
+                                        end;
+
                                     end;
                                 until next() = 0;
                             end
