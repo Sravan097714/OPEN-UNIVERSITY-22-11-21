@@ -3731,7 +3731,6 @@
                           </Style>
                         </Textbox>
                         <ColSpan>5</ColSpan>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell />
@@ -4089,11 +4088,6 @@
                       <Disabled>=(not Fields!PrintOnlyOnePerPage.Value)</Disabled>
                     </PageBreak>
                   </Group>
-                  <SortExpressions>
-                    <SortExpression>
-                      <Value>=Fields!No_GLAcc.Value</Value>
-                    </SortExpression>
-                  </SortExpressions>
                   <TablixMembers>
                     <TablixMember>
                       <KeepTogether>true</KeepTogether>

@@ -20545,6 +20545,9 @@ l6XdIf3Tz7mlMgPdpTbuwI/gSPOO+eFy2piK8qMvd5d/XovmXXxsKNKNVa32/ryP2Lopsciyxq6HcjDI
         <Field Name="Enc">
           <DataField>Enc</DataField>
         </Field>
+        <Field Name="CompanyInfo_Name">
+          <DataField>CompanyInfo_Name</DataField>
+        </Field>
         <Field Name="Vendor_No_">
           <DataField>Vendor_No_</DataField>
         </Field>

@@ -1,4 +1,4 @@
-table 50064 "Fixed Asset Inventories"
+table 50028 "Fixed Asset Inventories"
 {
 
     fields

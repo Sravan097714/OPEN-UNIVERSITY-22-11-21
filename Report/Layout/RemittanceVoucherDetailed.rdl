@@ -11,85 +11,6 @@
       <rd:DataSourceID>ff7c83b0-e3f2-4d59-a9e4-aa89ea5adbad</rd:DataSourceID>
     </DataSource>
   </DataSources>
-  <DataSets>
-    <DataSet Name="DataSet_Result">
-      <Query>
-        <DataSourceName>DataSource</DataSourceName>
-        <CommandText />
-      </Query>
-      <Fields>
-        <Field Name="CompanyName">
-          <DataField>CompanyName</DataField>
-        </Field>
-        <Field Name="CompanyAddress">
-          <DataField>CompanyAddress</DataField>
-        </Field>
-        <Field Name="CompanyPhone">
-          <DataField>CompanyPhone</DataField>
-        </Field>
-        <Field Name="Posting_Date">
-          <DataField>Posting_Date</DataField>
-        </Field>
-        <Field Name="PV_Number">
-          <DataField>PV_Number</DataField>
-        </Field>
-        <Field Name="Vendor_Name">
-          <DataField>Vendor_Name</DataField>
-        </Field>
-        <Field Name="gtextAddress">
-          <DataField>gtextAddress</DataField>
-        </Field>
-        <Field Name="Original_Amt___LCY_">
-          <DataField>Original_Amt___LCY_</DataField>
-        </Field>
-        <Field Name="Original_Amt___LCY_Format">
-          <DataField>Original_Amt___LCY_Format</DataField>
-        </Field>
-        <Field Name="gtextVendBankAcc">
-          <DataField>gtextVendBankAcc</DataField>
-        </Field>
-        <Field Name="gtextVendBank">
-          <DataField>gtextVendBank</DataField>
-        </Field>
-        <Field Name="vendorbankacc">
-          <DataField>vendorbankacc</DataField>
-        </Field>
-        <Field Name="vendorbank">
-          <DataField>vendorbank</DataField>
-        </Field>
-        <Field Name="Description">
-          <DataField>Description</DataField>
-        </Field>
-        <Field Name="gintEntryNo">
-          <DataField>gintEntryNo</DataField>
-        </Field>
-        <Field Name="Entry_No_">
-          <DataField>Entry_No_</DataField>
-        </Field>
-        <Field Name="Payment_Journal_No_">
-          <DataField>Payment_Journal_No_</DataField>
-        </Field>
-        <Field Name="Document_No_">
-          <DataField>Document_No_</DataField>
-        </Field>
-        <Field Name="Line_No_">
-          <DataField>Line_No_</DataField>
-        </Field>
-        <Field Name="Description1">
-          <DataField>Description1</DataField>
-        </Field>
-        <Field Name="PAYE1">
-          <DataField>PAYE1</DataField>
-        </Field>
-        <Field Name="PAYE1Format">
-          <DataField>PAYE1Format</DataField>
-        </Field>
-        <Field Name="gvendorinvno">
-          <DataField>gvendorinvno</DataField>
-        </Field>
-      </Fields>
-    </DataSet>
-  </DataSets>
   <ReportSections>
     <ReportSection>
       <Body>
@@ -1992,12 +1913,85 @@
       </Page>
     </ReportSection>
   </ReportSections>
-  <ReportParametersLayout>
-    <GridLayoutDefinition>
-      <NumberOfColumns>4</NumberOfColumns>
-      <NumberOfRows>2</NumberOfRows>
-    </GridLayoutDefinition>
-  </ReportParametersLayout>
   <rd:ReportUnitType>Cm</rd:ReportUnitType>
   <rd:ReportID>9fa24abb-b1bd-475b-b04e-d5061420eead</rd:ReportID>
+  <DataSets>
+    <DataSet Name="DataSet_Result">
+      <Fields>
+        <Field Name="CompanyName">
+          <DataField>CompanyName</DataField>
+        </Field>
+        <Field Name="CompanyAddress">
+          <DataField>CompanyAddress</DataField>
+        </Field>
+        <Field Name="CompanyPhone">
+          <DataField>CompanyPhone</DataField>
+        </Field>
+        <Field Name="Posting_Date">
+          <DataField>Posting_Date</DataField>
+        </Field>
+        <Field Name="PV_Number">
+          <DataField>PV_Number</DataField>
+        </Field>
+        <Field Name="Vendor_Name">
+          <DataField>Vendor_Name</DataField>
+        </Field>
+        <Field Name="gtextAddress">
+          <DataField>gtextAddress</DataField>
+        </Field>
+        <Field Name="Original_Amt___LCY_">
+          <DataField>Original_Amt___LCY_</DataField>
+        </Field>
+        <Field Name="Original_Amt___LCY_Format">
+          <DataField>Original_Amt___LCY_Format</DataField>
+        </Field>
+        <Field Name="gtextVendBankAcc">
+          <DataField>gtextVendBankAcc</DataField>
+        </Field>
+        <Field Name="gtextVendBank">
+          <DataField>gtextVendBank</DataField>
+        </Field>
+        <Field Name="vendorbankacc">
+          <DataField>vendorbankacc</DataField>
+        </Field>
+        <Field Name="vendorbank">
+          <DataField>vendorbank</DataField>
+        </Field>
+        <Field Name="Description">
+          <DataField>Description</DataField>
+        </Field>
+        <Field Name="gintEntryNo">
+          <DataField>gintEntryNo</DataField>
+        </Field>
+        <Field Name="Entry_No_">
+          <DataField>Entry_No_</DataField>
+        </Field>
+        <Field Name="Payment_Journal_No_">
+          <DataField>Payment_Journal_No_</DataField>
+        </Field>
+        <Field Name="Document_No_">
+          <DataField>Document_No_</DataField>
+        </Field>
+        <Field Name="Line_No_">
+          <DataField>Line_No_</DataField>
+        </Field>
+        <Field Name="Description1">
+          <DataField>Description1</DataField>
+        </Field>
+        <Field Name="PAYE1">
+          <DataField>PAYE1</DataField>
+        </Field>
+        <Field Name="PAYE1Format">
+          <DataField>PAYE1Format</DataField>
+        </Field>
+        <Field Name="gvendorinvno">
+          <DataField>gvendorinvno</DataField>
+        </Field>
+      </Fields>
+      <Query>
+        <DataSourceName>DataSource</DataSourceName>
+        <CommandText />
+      </Query>
+    </DataSet>
+  </DataSets>
 </Report>

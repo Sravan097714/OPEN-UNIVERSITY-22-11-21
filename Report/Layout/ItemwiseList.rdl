@@ -1376,14 +1376,14 @@
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="Textbox8">
+                        <Textbox Name="gdecBalanceBFTotal3">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!gdecBalanceBF1.Value + SUM(Fields!Item_Ledger_Entry_Quantity.Value)</Value>
+                                  <Value>=Sum(Fields!gdecBalanceBFTotal1.Value)</Value>
                                   <Style>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -1394,7 +1394,7 @@
                               </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>Textbox8</rd:DefaultName>
+                          <rd:DefaultName>gdecBalanceBFTotal1</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>None</Style>
@@ -1409,14 +1409,14 @@
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="Textbox9">
+                        <Textbox Name="gdecBalanceBFTotal4">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!gdecBalanceBF2.Value + SUM(Fields!gdecAmountAsIs.Value)</Value>
+                                  <Value>=Sum(Fields!gdecBalanceBFTotal2.Value)</Value>
                                   <Style>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>n2</Format>
@@ -1428,7 +1428,7 @@
                               </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>Textbox9</rd:DefaultName>
+                          <rd:DefaultName>gdecBalanceBFTotal2</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>None</Style>
@@ -1949,14 +1949,14 @@
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="Textbox58">
+                        <Textbox Name="gdecBalanceBFTotal7">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=SUM(Fields!gdecBalanceBF1.Value) + Sum(Fields!Item_Ledger_Entry_Quantity.Value)</Value>
+                                  <Value>=Sum(Fields!gdecBalanceBFTotal1.Value)</Value>
                                   <Style>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -1967,7 +1967,7 @@
                               </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>Textbox8</rd:DefaultName>
+                          <rd:DefaultName>gdecBalanceBFTotal1</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>None</Style>
@@ -1982,14 +1982,14 @@
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="Textbox59">
+                        <Textbox Name="gdecBalanceBFTotal8">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=SUM(Fields!gdecBalanceBF2.Value) + Sum(Fields!gdecAmountAsIs.Value)</Value>
+                                  <Value>=Sum(Fields!gdecBalanceBFTotal2.Value)</Value>
                                   <Style>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>n2</Format>
@@ -2001,7 +2001,7 @@
                               </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>Textbox9</rd:DefaultName>
+                          <rd:DefaultName>gdecBalanceBFTotal2</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>None</Style>
