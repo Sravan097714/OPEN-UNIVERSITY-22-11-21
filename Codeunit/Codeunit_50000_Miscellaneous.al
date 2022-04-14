@@ -20,8 +20,10 @@ codeunit 50000 Miscellaneous
     var
         grecVendor: Record Vendor;
     begin
-        if grecVendor.get(Vendor."No.") then
+        if grecVendor.get(Vendor."No.") then begin
             PurchaseHeader.BRN := grecVendor.BRN;
+            PurchaseHeader."Category of Successful Bidder" := grecVendor."Vendor Type";
+        end;
     end;
 
 
@@ -563,6 +565,161 @@ codeunit 50000 Miscellaneous
             GenJournalLine.TestField("FA Supplier No.");
     end;
 
+    [EventSubscriber(ObjectType::Table, Database::"Purchase Header", 'OnBeforeValidatePayToVendorNo', '', true, true)]
+    local procedure "Purchase Header_OnBeforeValidatePayToVendorNo"
+    (
+        var PurchaseHeader: Record "Purchase Header";
+        var xPurchaseHeader: Record "Purchase Header";
+        var Confirmed: Boolean;
+        var IsHandled: Boolean
+    )
+    begin
+        OldHideConfirmation := PurchaseHeader.GetHideValidationDialog();
+        if not OldHideConfirmation then
+            PurchaseHeader.SetHideValidationDialog(true);
+    end;
+
+
+    [EventSubscriber(ObjectType::Table, Database::"Purchase Header", 'OnValidatePayToVendorNoOnBeforeGetPayToVend', '', true, true)]
+    local procedure "Purchase Header_OnValidatePayToVendorNoOnBeforeGetPayToVend"(var PurchaseHeader: Record "Purchase Header")
+    begin
+        PurchaseHeader.SetHideValidationDialog(OldHideConfirmation);
+    end;
+
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Copy Document Mgt.", 'OnAfterCopySalesDocument', '', true, true)]
+    local procedure "Copy Document Mgt._OnAfterCopySalesDocument"
+    (
+        FromDocumentType: Option;
+        FromDocumentNo: Code[20];
+        var ToSalesHeader: Record "Sales Header";
+        FromDocOccurenceNo: Integer;
+        FromDocVersionNo: Integer;
+        IncludeHeader: Boolean;
+        RecalculateLines: Boolean;
+        MoveNegLines: Boolean
+    )
+    begin
+        if ToSalesHeader."Document Type" = ToSalesHeader."Document Type"::"Credit Memo" then begin
+            ToSalesHeader."Created By" := UserId;
+            ToSalesHeader.Modify();
+        end;
+    end;
+
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Copy Document Mgt.", 'OnAfterCopyPurchaseDocument', '', true, true)]
+    local procedure "Copy Document Mgt._OnAfterCopyPurchaseDocument"
+    (
+        FromDocumentType: Option;
+        FromDocumentNo: Code[20];
+        var ToPurchaseHeader: Record "Purchase Header";
+        FromDocOccurenceNo: Integer;
+        FromDocVersionNo: Integer;
+        IncludeHeader: Boolean;
+        RecalculateLines: Boolean;
+        MoveNegLines: Boolean
+    )
+    begin
+        if ToPurchaseHeader."Document Type" = ToPurchaseHeader."Document Type"::"Credit Memo" then begin
+            ToPurchaseHeader."Created By" := UserId;
+            ToPurchaseHeader.Modify();
+        end;
+
+    end;
+
+    [EventSubscriber(ObjectType::Table, Database::"Item Journal Line", 'OnAfterCopyItemJnlLineFromSalesLine', '', true, true)]
+    local procedure "Item Journal Line_OnAfterCopyItemJnlLineFromSalesLine"
+    (
+        var ItemJnlLine: Record "Item Journal Line";
+        SalesLine: Record "Sales Line"
+    )
+    begin
+        if ItemJnlLine."Source Type" = ItemJnlLine."Source Type"::Customer then
+            ItemJnlLine."Source Name" := SalesLine."Sell-to Customer No.";
+    end;
+
+    [EventSubscriber(ObjectType::Table, Database::"Item Journal Line", 'OnAfterCopyItemJnlLineFromPurchLine', '', true, true)]
+    local procedure "Item Journal Line_OnAfterCopyItemJnlLineFromPurchLine"
+    (
+        var ItemJnlLine: Record "Item Journal Line";
+        PurchLine: Record "Purchase Line"
+    )
+    var
+        VendorLRec: Record Vendor;
+    begin
+        if ItemJnlLine."Source Type" = ItemJnlLine."Source Type"::Vendor then
+            if VendorLRec.Get(PurchLine."Buy-from Vendor No.") then
+                ItemJnlLine."Source Name" := VendorLRec.Name;
+    end;
+
+    [EventSubscriber(ObjectType::Table, Database::"Item Journal Line", 'OnAfterCopyItemJnlLineFromServHeader', '', true, true)]
+    local procedure "Item Journal Line_OnAfterCopyItemJnlLineFromServHeader"
+    (
+        var ItemJnlLine: Record "Item Journal Line";
+        ServHeader: Record "Service Header"
+    )
+    begin
+        if ItemJnlLine."Source Type" = ItemJnlLine."Source Type"::Customer then
+            ItemJnlLine."Source Name" := ServHeader.Name;
+    end;
+
+
+    [EventSubscriber(ObjectType::Table, Database::"Item Journal Line", 'OnValidateItemNoOnBeforeValidateUnitOfmeasureCode', '', true, true)]
+    local procedure "Item Journal Line_OnValidateItemNoOnBeforeValidateUnitOfmeasureCode"
+    (
+        var ItemJournalLine: Record "Item Journal Line";
+        var Item: Record "Item";
+        CurrFieldNo: Integer
+    )
+    begin
+        if ItemJournalLine."Source Type" = ItemJournalLine."Source Type"::Item then
+            ItemJournalLine."Source Name" := Item.Description;
+    end;
+
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Item Jnl.-Post Line", 'OnBeforeInsertItemLedgEntry', '', true, true)]
+    local procedure "Item Jnl.-Post Line_OnBeforeInsertItemLedgEntry"
+    (
+        var ItemLedgerEntry: Record "Item Ledger Entry";
+        ItemJournalLine: Record "Item Journal Line";
+        TransferItem: Boolean;
+        OldItemLedgEntry: Record "Item Ledger Entry"
+    )
+    var
+        ItemLRec: Record Item;
+        VendorLRec: Record Vendor;
+        CustomerLRec: Record Customer;
+    begin
+        case ItemJournalLine."Source Type" of
+            ItemJournalLine."Source Type"::Customer:
+                begin
+                    if CustomerLRec.Get(ItemJournalLine."Source No.") then
+                        ItemJournalLine."Source Name" := CustomerLRec.Name;
+                end;
+            ItemJournalLine."Source Type"::Item:
+                begin
+                    if ItemLRec.Get(ItemJournalLine."Source No.") then
+                        ItemJournalLine."Source Name" := ItemLRec.Description;
+                end;
+            ItemJournalLine."Source Type"::Vendor:
+                begin
+                    if VendorLRec.Get(ItemJournalLine."Source No.") then
+                        ItemJournalLine."Source Name" := VendorLRec.Name;
+                end;
+        end;
+    end;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Item Jnl.-Post Line", 'OnAfterInitItemLedgEntry', '', true, true)]
+    local procedure "Item Jnl.-Post Line_OnAfterInitItemLedgEntry"
+    (
+        var NewItemLedgEntry: Record "Item Ledger Entry";
+        ItemJournalLine: Record "Item Journal Line";
+        var ItemLedgEntryNo: Integer
+    )
+    begin
+        NewItemLedgEntry."Source Name" := ItemJournalLine."Source Name";
+    end;
+
 
     var
         gtextPONumber: Text;
@@ -574,4 +731,5 @@ codeunit 50000 Miscellaneous
         Rem: Page Reminder;
 
         grecFixedAsset: Page "Fixed Asset Card";
+        OldHideConfirmation: Boolean;
 }

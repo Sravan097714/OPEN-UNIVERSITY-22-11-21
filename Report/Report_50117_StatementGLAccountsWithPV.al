@@ -105,7 +105,7 @@ report 50117 "Statement of GL Accounts PV"
                     column(CreditAmount_GLEntry; "Credit Amount")
                     {
                     }
-                    column(PostingDate_GLEntry; Format("Posting Date"))
+                    column(PostingDate_GLEntry; "Posting Date")
                     {
                     }
                     column(DocumentNo_GLEntry; "Document No.")
@@ -273,7 +273,7 @@ report 50117 "Statement of GL Accounts PV"
                         GLBalance := StartBalance;
 
                         OnAfterOnPreDataItemGLEntry("G/L Entry");
-                        SetCurrentKey("G/L Account No.", "Posting Date");
+                        SetCurrentKey("Posting Date");
                     end;
                 }
 
@@ -397,7 +397,7 @@ report 50117 "Statement of GL Accounts PV"
         PrintReversedEntries: Boolean;
         PageGroupNo: Integer;
         ClosingEntry: Boolean;
-        DetailTrialBalCaptionLbl: Label 'Statement of GL Accounts';
+        DetailTrialBalCaptionLbl: Label 'Statement of GL Accounts with PV';
         PageCaptionLbl: Label 'Page';
         BalanceCaptionLbl: Label 'This also includes general ledger accounts that only have a balance.';
         PeriodCaptionLbl: Label 'This report also includes closing entries within the period.';

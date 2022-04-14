@@ -15,10 +15,16 @@ report 50032 "Print Fixed Asset Barcode"
 
             trigger OnAfterGetRecord()
             begin
-                //cduBarcodeMgt.EncodeEAN13(gcodeFANo, 1, false, recTmpBlob1);
-                //cduBarcodeMgt.EncodeCode128(txcCode128, 1, false, recTmpBlob2);
-                cduBarcodeMgt.EncodeCode39("No.", 1, false, false, recTmpBlob1);
-                //cduBarcodeMgt.EncodeEAN8(txcEAN8, 1, true, recTmpBlob4);
+                // cduBarcodeMgt.EncodeEAN13("No.", 1, false, recTmpBlob1);//1
+                cduBarcodeMgt.EncodeCode128("No.", 1, false, recTmpBlob1);//2
+                //cduBarcodeMgt.EncodeCode39("No.", 1, false, false, recTmpBlob1);//3
+                //cduBarcodeMgt.EncodeEAN8(txcEAN8, 1, true, recTmpBlob4);//4
+
+
+                //cduBarcodeMgt.EncodeEAN13(gcodeFANo, 1, false, recTmpBlob1);//1
+                //cduBarcodeMgt.EncodeCode128(txcCode128, 1, false, recTmpBlob2);//2
+                //cduBarcodeMgt.EncodeCode39("No.", 1, false, false, recTmpBlob1);//3
+                //cduBarcodeMgt.EncodeEAN8(txcEAN8, 1, true, recTmpBlob4);//4
             end;
         }
     }

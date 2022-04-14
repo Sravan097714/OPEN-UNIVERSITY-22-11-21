@@ -16,6 +16,11 @@ report 50023 GLRegisterInput
                     {
                         ApplicationArea = All;
                     }
+                    field(Reason; Reason)
+                    {
+                        MultiLine = true;
+                        ShowMandatory = true;
+                    }
                 }
             }
         }
@@ -27,11 +32,12 @@ report 50023 GLRegisterInput
 
         trigger OnQueryClosePage(CloseAction: Action): Boolean
         begin
-            gcuReverseRegister.gfuncGetUserRevervePostingDate(gdateUserPostingDate);
+            gcuReverseRegister.gfuncGetUserRevervePostingDate(gdateUserPostingDate, Reason);
         end;
     }
 
     var
         gdateUserPostingDate: Date;
+        Reason: Text[200];
         gcuReverseRegister: Codeunit ReverseRegister;
 }

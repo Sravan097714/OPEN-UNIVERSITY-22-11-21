@@ -1,6 +1,7 @@
 page 50042 "G/L Budget by Account Category"
 {
     PageType = List;
+    AutoSplitKey = true;
     ApplicationArea = All;
     UsageCategory = Lists;
     SourceTable = "G/L Budget by Account Category";
@@ -11,6 +12,7 @@ page 50042 "G/L Budget by Account Category"
         {
             group(" ")
             {
+
                 field("Budget Name"; gtextBudgetName)
                 {
                     ApplicationArea = All;
@@ -71,6 +73,8 @@ page 50042 "G/L Budget by Account Category"
             }
             repeater(GroupName)
             {
+
+
                 field("Budget Category"; "Budget Category")
                 {
                     ApplicationArea = All;

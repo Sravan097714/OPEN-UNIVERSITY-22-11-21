@@ -1,4 +1,4 @@
-page 50076 "Retention Due"
+page 50073 "Retention Due"
 {
     Caption = 'Retentions Due';
     PageType = CardPart;

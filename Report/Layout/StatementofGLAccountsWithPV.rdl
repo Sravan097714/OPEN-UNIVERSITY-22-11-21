@@ -3202,6 +3202,7 @@
                                     <FontStyle>Normal</FontStyle>
                                     <FontFamily>Segoe UI</FontFamily>
                                     <FontSize>8pt</FontSize>
+                                    <Format>d</Format>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -3793,6 +3794,7 @@
                           </Style>
                         </Textbox>
                         <ColSpan>2</ColSpan>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell />
@@ -4417,11 +4419,6 @@
                       <Disabled>=(not Fields!PrintOnlyOnePerPage.Value)</Disabled>
                     </PageBreak>
                   </Group>
-                  <SortExpressions>
-                    <SortExpression>
-                      <Value>=Fields!No_GLAcc.Value</Value>
-                    </SortExpression>
-                  </SortExpressions>
                   <TablixMembers>
                     <TablixMember>
                       <KeepTogether>true</KeepTogether>
@@ -4438,11 +4435,6 @@
                           <GroupExpression>=Fields!EntryNo_GLEntry.Value</GroupExpression>
                         </GroupExpressions>
                       </Group>
-                      <SortExpressions>
-                        <SortExpression>
-                          <Value>=Fields!EntryNo_GLEntry.Value</Value>
-                        </SortExpression>
-                      </SortExpressions>
                       <TablixMembers>
                         <TablixMember>
                           <KeepWithGroup>After</KeepWithGroup>

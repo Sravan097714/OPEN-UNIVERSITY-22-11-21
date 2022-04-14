@@ -225,7 +225,8 @@ report 50030 "Import Module Fee OU Portal"
 
             Evaluate(grecModuleFromOUPortal."Phone No.", GetValueAtCell(RowNo, 57));
             Evaluate(grecModuleFromOUPortal."Mobile No.", GetValueAtCell(RowNo, 58));
-            Evaluate(grecModuleFromOUPortal.Address, GetValueAtCell(RowNo, 59));
+            Evaluate(grecModuleFromOUPortal.Address, copystr(GetValueAtCell(RowNo, 59), 1, MaxStrLen(grecModuleFromOUPortal.Address)));
+            Evaluate(grecModuleFromOUPortal."Address 2", copystr(GetValueAtCell(RowNo, 59), 101, MaxStrLen(grecModuleFromOUPortal."Address 2")));
             Evaluate(grecModuleFromOUPortal.Country, GetValueAtCell(RowNo, 60));
 
             if GetValueAtCell(RowNo, 61) = 'yes' then

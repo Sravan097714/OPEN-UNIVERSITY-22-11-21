@@ -10,7 +10,9 @@ report 50083 "G/L Budget Report"
     {
         dataitem(GLBudgetbyAccountCategory1; "G/L Budget by Account Category")
         {
-            DataItemTableView = sorting("Entry No.") where("Budget Category" = filter('RB01..RB08'));
+            // DataItemTableView = sorting("Entry No.") where("Budget Category" = filter('RB01..RB08'));
+            DataItemTableView = sorting("Entry No.");
+
             column(Budget_Category; "Budget Category") { }
             column(Description; Description) { }
             column(Original_Budgeted_Amt_for_Year; "Original Budgeted Amt for Year") { }

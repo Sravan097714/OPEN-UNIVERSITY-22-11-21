@@ -21,24 +21,38 @@ codeunit 50001 "Purchase Posting"
                             grecEarmarkClaim.Reset();
                             grecEarmarkClaim.SetRange("Earmark ID", PurchLine."Earmark ID");
                             if grecEarmarkClaim.FindFirst() then begin
-                                if grecEarmarkClaim."Remaining Amount Earmarked" <> PurchLine.Amount then begin
-                                    if Confirm('The amount being posted on line no. %1 for G/L Account No. %2 is not the same as Remaining Amount Earmarked. Should system save the amount difference?', true, PurchLine."Line No.", PurchLine."No.") then begin
-                                        if PurchLine."Amount Including VAT" <> 0 then
-                                            grecEarmarkClaim."Remaining Amount Earmarked" -= PurchLine."Amount Including VAT"
-                                        else
-                                            grecEarmarkClaim."Remaining Amount Earmarked" -= PurchLine.Amount;
-                                        grecEarmarkClaim.Active := true;
+                                if (PurchLine."Line Amount Excluding VAT" <> 0) then begin
+                                    if (grecEarmarkClaim."Remaining Amount Earmarked" <> PurchLine."Line Amount Excluding VAT") then begin
+                                        if Confirm('The amount being posted on line no. %1 for G/L Account No. %2 is not the same as Remaining Amount Earmarked. Should system save the amount difference?', true, PurchLine."Line No.", PurchLine."No.") then begin
+                                            grecEarmarkClaim."Remaining Amount Earmarked" -= PurchLine."Line Amount Excluding VAT";
+                                            grecEarmarkClaim.Active := true;
+                                            grecEarmarkClaim.Modify;
+                                        end else begin
+                                            grecEarmarkClaim."Remaining Amount Earmarked" := 0;
+                                            grecEarmarkClaim.Active := false;
+                                            grecEarmarkClaim.Modify;
+                                        end;
+                                    END else begin
+                                        grecEarmarkClaim."Remaining Amount Earmarked" := 0;
+                                        grecEarmarkClaim.Active := false;
                                         grecEarmarkClaim.Modify;
+                                    end;
+                                end else
+                                    if (grecEarmarkClaim."Remaining Amount Earmarked" <> PurchLine."Line Amount") then begin
+                                        if Confirm('The amount being posted on line no. %1 for G/L Account No. %2 is not the same as Remaining Amount Earmarked. Should system save the amount difference?', true, PurchLine."Line No.", PurchLine."No.") then begin
+                                            grecEarmarkClaim."Remaining Amount Earmarked" -= PurchLine."Line Amount";
+                                            grecEarmarkClaim.Active := true;
+                                            grecEarmarkClaim.Modify;
+                                        end else begin
+                                            grecEarmarkClaim."Remaining Amount Earmarked" := 0;
+                                            grecEarmarkClaim.Active := false;
+                                            grecEarmarkClaim.Modify;
+                                        end;
                                     end else begin
                                         grecEarmarkClaim."Remaining Amount Earmarked" := 0;
                                         grecEarmarkClaim.Active := false;
                                         grecEarmarkClaim.Modify;
                                     end;
-                                end else begin
-                                    grecEarmarkClaim."Remaining Amount Earmarked" := 0;
-                                    grecEarmarkClaim.Active := false;
-                                    grecEarmarkClaim.Modify;
-                                end;
                             end;
                         end;
                     end;
@@ -359,12 +373,14 @@ codeunit 50001 "Purchase Posting"
         GenJnlLine.VAT := InvoicePostBuffer.VAT;
         GenJnlLine."TDS Code" := InvoicePostBuffer."TDS Code";
         GenJnlLine."Retention Fee" := InvoicePostBuffer."Retention Fee";
+        GenJnlLine."Created By" := PurchHeader."Created By";
     end;
 
     [EventSubscriber(ObjectType::Codeunit, 90, 'OnBeforePostVendorEntry', '', false, false)]
     local procedure OnBeforePostVendorEntry(var GenJnlLine: Record "Gen. Journal Line"; var PurchHeader: Record "Purchase Header"; var TotalPurchLine: Record "Purchase Line"; var TotalPurchLineLCY: Record "Purchase Line"; PreviewMode: Boolean; CommitIsSupressed: Boolean; var GenJnlPostLine: Codeunit "Gen. Jnl.-Post Line")
     begin
         GenJnlLine."Original PO Number" := PurchHeader."No.";
+        GenJnlLine."Created By" := PurchHeader."Created By";
     end;
 
 
@@ -388,6 +404,23 @@ codeunit 50001 "Purchase Posting"
 
         if gintCount <> gintCount2 then
             Error('TDS has not been calculated.');
+    end;
+
+    procedure CalculatePurchaseSubPageTotalsCustom(var TotalPurchaseHeader: Record "Purchase Header"; var TotalPurchaseLine: Record "Purchase Line")
+    var
+        PurchaseLine2: Record "Purchase Line";
+        TotalPurchaseLine2: Record "Purchase Line";
+        PurchasesPayablesSetup: Record "Purchases & Payables Setup";
+    begin
+        PurchasesPayablesSetup.GetRecordOnce;
+        TotalPurchaseLine2.Copy(TotalPurchaseLine);
+        TotalPurchaseLine2.Reset();
+        TotalPurchaseLine2.SetRange("Document Type", TotalPurchaseHeader."Document Type");
+        TotalPurchaseLine2.SetRange("Document No.", TotalPurchaseHeader."No.");
+
+        TotalPurchaseLine2.CalcSums(Amount, "Amount Including VAT", "Line Amount", "Line Discount Amount", TotalPurchaseLine2."VAT Amount Input");
+
+        TotalPurchaseLine := TotalPurchaseLine2;
     end;
 
 

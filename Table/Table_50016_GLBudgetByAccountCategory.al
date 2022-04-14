@@ -80,6 +80,10 @@ table 50016 "G/L Budget by Account Category"
             Caption = 'Planned Budget for Current Year + 3';
             DataClassification = ToBeClassified;
         }
+        field(22; "Line no."; Integer)
+        {
+            ObsoleteState = Removed;
+        }
     }
 
     keys
@@ -88,6 +92,10 @@ table 50016 "G/L Budget by Account Category"
         {
             Clustered = true;
         }
+        // key(PK2; "Line no.")
+        // {
+
+        // }
     }
 
 }

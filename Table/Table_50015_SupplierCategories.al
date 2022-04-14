@@ -45,9 +45,9 @@ table 50015 "Supplier Categories"
         field(13; "Payment Terms Code"; Code[10]) { }
         field(14; "VAT Registration No."; text[20]) { }
         field(15; "Business Registration No."; Text[20]) { }
-        field(16; Categories; Text[20]) { }
+        field(16; Categories; Text[20]) { TableRelation = "New Categories".Code where("Table Name" = filter('Purchase Header'), "Field Name" = filter('PO Category')); }
         field(17; "Sub Categories"; Text[150]) { }
-        field(18; Type; Text[50]) { }
+        field(18; Type; Text[50]) { TableRelation = "New Categories".Code where("Table Name" = filter('Purchase Header'), "Field Name" = filter('Category of Successful Bidder')); }
         field(19; "Mobile No."; Text[30]) { }
     }
 
