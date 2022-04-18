@@ -109,6 +109,12 @@ report 50114 "Remittance Voucher Detailed"
 
             end;
 
+            trigger OnPreDataItem()
+            begin
+                if EntryNoGlobal <> 0 then
+                    SetRange("Entry No.", EntryNoGlobal);
+            end;
+
         }
     }
 
@@ -138,4 +144,11 @@ report 50114 "Remittance Voucher Detailed"
         gdecTDSAmt: Decimal;
         DescriptionVar: Text;
         gvendorinvno: Text;
+
+        EntryNoGlobal: Integer;
+
+    procedure Setfilter(EntryNo: Integer)
+    begin
+        EntryNoGlobal := EntryNo;
+    end;
 }

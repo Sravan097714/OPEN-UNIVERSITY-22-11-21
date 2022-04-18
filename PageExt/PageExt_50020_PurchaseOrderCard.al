@@ -267,6 +267,7 @@ pageextension 50020 PurchOrderCardExt extends "Purchase Order"
         {
             field("Supplier Invoice Date"; "Supplier Invoice Date")
             {
+                caption = 'Vendor Invoice Date';
                 ApplicationArea = all;
             }
             field("Original PO Number"; "Original PO Number")

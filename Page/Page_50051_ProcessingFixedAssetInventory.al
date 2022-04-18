@@ -18,13 +18,21 @@ page 50051 "Process Fixed Asset Inventory"
             {
 
 
-                field("Fixed Asset No."; "Fixed Asset No.") { ApplicationArea = All; }
-                field(Description; Description) { ApplicationArea = All; }
-                field("FA Class Code"; "FA Class Code") { ApplicationArea = ALl; }
-                field("FA Subclass Code"; "FA Subclass Code") { ApplicationArea = all; }
+                field("Fixed Asset No."; "Fixed Asset No.") { ApplicationArea = All; Editable = false; }
+                field(Description; Description) { ApplicationArea = All; Editable = false; }
+                field("FA Class Code"; "FA Class Code") { ApplicationArea = ALl; Editable = false; }
+                field("FA Subclass Code"; "FA Subclass Code") { ApplicationArea = all; Editable = false; }
+
+                field("Serial No."; "Serial No.") { ApplicationArea = All; Editable = false; }
+                field(Make; Make) { ApplicationArea = All; Editable = false; }
+                field(Model; Model) { ApplicationArea = All; Editable = false; }
+                field("Insurance Type"; "Insurance Type") { ApplicationArea = ALl; Editable = false; }
+                field("Scanned By"; "Scanned By") { ApplicationArea = All; Editable = false; }
+                field("Scanned On"; "Scanned On") { ApplicationArea = All; Editable = false; }
                 field("FA Location Code"; "FA Location Code")
                 {
                     ApplicationArea = All;
+                    Editable = FALocationEditable;
                     trigger OnLookup(var Text: Text): Boolean
                     var
                         FALocationPage: Page "FA Locations";
@@ -63,14 +71,9 @@ page 50051 "Process Fixed Asset Inventory"
                         end;
 
 
+
                     end;
                 }
-                field("Serial No."; "Serial No.") { ApplicationArea = All; }
-                field(Make; Make) { ApplicationArea = All; }
-                field(Model; Model) { ApplicationArea = All; }
-                field("Insurance Type"; "Insurance Type") { ApplicationArea = ALl; }
-                field("Scanned By"; "Scanned By") { ApplicationArea = All; }
-                field("Scanned On"; "Scanned On") { ApplicationArea = All; }
                 field("Scan Here"; "Scan Here")
                 {
                     ApplicationArea = All;
@@ -99,6 +102,7 @@ page 50051 "Process Fixed Asset Inventory"
 
 
 
+
                             end else
                                 Message('Asset %1 does not exist in Fixed asset list', "Scan Here");
                         end;
@@ -115,6 +119,7 @@ page 50051 "Process Fixed Asset Inventory"
     {
         area(Processing)
         {
+
             action("Update Location Code")
             {
                 ApplicationArea = Basic, Suite;
@@ -229,10 +234,38 @@ page 50051 "Process Fixed Asset Inventory"
 
                 end;
             }
+            action("Enable FA Location Code")
+            {
+                ApplicationArea = All;
+                PromotedIsBig = true;
+                Promoted = true;
+                PromotedCategory = Process;
+
+                trigger OnAction()
+                begin
+                    FALocationEditable := true;
+                    CurrPage.Update();
+                end;
+            }
+            action("Disable FA Location Code")
+            {
+                ApplicationArea = All;
+                PromotedIsBig = true;
+                Promoted = true;
+                PromotedCategory = Process;
+
+                trigger OnAction()
+                begin
+                    FALocationEditable := false;
+                    CurrPage.Update();
+                end;
+            }
         }
     }
     var
         FANosGlobal: Code[10];
+        FALocationEditable: Boolean;
+        Scan: Boolean;
 
     trigger OnInsertRecord(BelowxRec: Boolean): Boolean
 
@@ -246,6 +279,11 @@ page 50051 "Process Fixed Asset Inventory"
     procedure InitFANos(FANosLocal: Code[10])
     begin
         FANosGlobal := FANosLocal;
+    end;
+
+    trigger OnOpenPage()
+    begin
+        FALocationEditable := false;
     end;
 
 }

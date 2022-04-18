@@ -14,8 +14,9 @@ pageextension 50064 CashReceiptJournal extends "Cash Receipt Journal"
         }
         modify("Amount (LCY)")
         {
-            Visible = false;
+            Visible = true;
         }
+        moveafter(Amount; "Amount (LCY)")
         modify("Credit Amount")
         {
             Visible = false;

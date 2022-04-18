@@ -116,6 +116,7 @@ pageextension 50048 PostedPurchInvCardExt extends "Posted Purchase Invoice"
         {
             field("Supplier Invoice Date"; "Supplier Invoice Date")
             {
+                Caption = 'Vendor Invoice Date';
                 ApplicationArea = all;
                 Editable = false;
             }

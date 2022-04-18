@@ -58,6 +58,11 @@ pageextension 50030 PurchHdrArchiveCardExt extends "Purchase Order Archive"
             {
                 ApplicationArea = All;
             }
+            field("Supplier Invoice Date"; "Supplier Invoice Date")
+            {
+                Caption = 'Vendor Invoice Date';
+                ApplicationArea = all;
+            }
             field("Date Time Released"; Rec."Date Time Released")
             {
                 ApplicationArea = All;
