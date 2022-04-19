@@ -6,7 +6,7 @@ table 50016 "G/L Budget by Account Category"
     {
         field(1; "Entry No."; Integer)
         {
-            AutoIncrement = true;
+            // AutoIncrement = true;
         }
         field(2; "Account Category"; Enum "G/L Account Category") { }
         field(3; Description; Text[250]) { }

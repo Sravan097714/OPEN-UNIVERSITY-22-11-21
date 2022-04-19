@@ -35,8 +35,11 @@ report 50084 "Import Budget"
         ExcelBuf.ReadSheet;
         GetLastRowandColumn;
 
-        FOR X := 2 TO TotalRows DO
+        FOR X := 2 TO TotalRows DO begin
+            LineNo += 10000;
             InsertData(X);
+
+        end;
 
         ExcelBuf.DELETEALL;
         MESSAGE('%1 lines have been uploaded in the system.', gintCounter);
@@ -67,11 +70,14 @@ report 50084 "Import Budget"
     var
         grecGLBudgetAccCategory2: Record "G/L Budget by Account Category";
     BEGIN
+
+
         clear(grecGLBudgetAccCategory);
         grecGLBudgetAccCategory2.Reset();
         grecGLBudgetAccCategory2.SetRange("Budget Name", GetValueAtCell(RowNo, 1));
         grecGLBudgetAccCategory2.SetRange("Budget Category", GetValueAtCell(RowNo, 2));
         if grecGLBudgetAccCategory2.FindFirst() then begin
+            grecGLBudgetAccCategory2."Entry No." := LineNo + 10000;
             evaluate(grecGLBudgetAccCategory2."Date From", GetValueAtCell(RowNo, 4));
             evaluate(grecGLBudgetAccCategory2."Date To", GetValueAtCell(RowNo, 5));
             case GetValueAtCell(RowNo, 6) of
@@ -143,7 +149,9 @@ report 50084 "Import Budget"
             gintCounter += 1;
             grecGLBudgetAccCategory2.Modify();
         end else begin
+
             grecGLBudgetAccCategory.Init();
+            grecGLBudgetAccCategory."Entry No." := LineNo + 10000;
             grecGLBudgetAccCategory."Budget Name" := GetValueAtCell(RowNo, 1);
             grecGLBudgetAccCategory."Budget Category" := GetValueAtCell(RowNo, 2);
             grecGLBudgetAccCategory.Description := GetValueAtCell(RowNo, 3);
@@ -227,6 +235,8 @@ report 50084 "Import Budget"
         ServerFileName: Text[250];
         SheetName: Text[250];
         TotalRows: Integer;
+        LineNo: Integer;
+
         TotalColumns: Integer;
         FileMgt: Codeunit 419;
         Text006: Label 'Import Excel File';
