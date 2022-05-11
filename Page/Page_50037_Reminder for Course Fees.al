@@ -50,17 +50,11 @@ page 50037 "Reminder for Course Fees"
                     QuickEntry = false;
                     ToolTip = 'Specifies additional address information.';
                 }
-                field("Post Code"; "Post Code")
+                field(County; County)
                 {
                     ApplicationArea = Basic, Suite;
                     QuickEntry = false;
-                    ToolTip = 'Specifies the postal code.';
-                }
-                field(City; City)
-                {
-                    ApplicationArea = Basic, Suite;
-                    QuickEntry = false;
-                    ToolTip = 'Specifies the city name of the customer the reminder is for.';
+                    ToolTip = 'Specifies additional address information.';
                 }
                 field(Contact; Contact)
                 {

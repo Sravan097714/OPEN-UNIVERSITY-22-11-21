@@ -342,7 +342,15 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>* Note: Payment may be made either in full ot in eight **consecutive equal monthly instalments. the first instalment must be paid at the finance section, Reduit and the remaining ones by the eay of a bank standing order as per standing order form below. Payment at the cash counter should be in the form of cash (exact amount to be tendered, please) or banker's cheque.</Value>
+                                  <Value>* Note: Payment may be made either in full or in </Value>
+                                  <Style />
+                                </TextRun>
+                                <TextRun>
+                                  <Value>=LCASE(First(Fields!InstallmentText.Value, "DataSet_Result"))</Value>
+                                  <Style />
+                                </TextRun>
+                                <TextRun>
+                                  <Value> **consecutive equal monthly instalments. the first instalment must be paid at the finance section, Reduit and the remaining ones by the eay of a bank standing order as per standing order form below. Payment at the cash counter should be in the form of cash (exact amount to be tendered, please) or banker's cheque.</Value>
                                   <Style />
                                 </TextRun>
                               </TextRuns>
@@ -1580,6 +1588,9 @@ End Function
         <Field Name="Semester">
           <DataField>Semester</DataField>
         </Field>
+        <Field Name="No__of_Installments">
+          <DataField>No__of_Installments</DataField>
+        </Field>
         <Field Name="No__of_Module">
           <DataField>No__of_Module</DataField>
         </Field>
@@ -1594,6 +1605,9 @@ End Function
         </Field>
         <Field Name="DescriptionLine2">
           <DataField>DescriptionLine2</DataField>
+        </Field>
+        <Field Name="InstallmentText">
+          <DataField>InstallmentText</DataField>
         </Field>
         <Field Name="AmountText">
           <DataField>AmountText</DataField>

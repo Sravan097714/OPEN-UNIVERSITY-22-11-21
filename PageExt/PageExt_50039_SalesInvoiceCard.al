@@ -146,7 +146,7 @@ pageextension 50039 SalesInvoiceCardExt extends "Sales Invoice"
         }
         modify("Foreign Trade")
         {
-            Visible = true;
+            Visible = false;
         }
         modify("Bill-to Contact No.")
         {
@@ -198,6 +198,14 @@ pageextension 50039 SalesInvoiceCardExt extends "Sales Invoice"
         {
             Editable = false;
         }
+        Modify("Transaction Type")
+        {
+            ApplicationArea = all;
+            Caption = 'Category';
+            Visible = true;
+        }
+        moveafter(Status; "Transaction Type")
+
     }
 
     actions

@@ -30,6 +30,7 @@ pageextension 50042 SalesCrMemoCardExt extends "Sales Credit Memo"
         {
             Visible = false;
         }
+        // addafter(categ)
         modify("Assigned User ID")
         {
             Visible = false;
@@ -108,6 +109,25 @@ pageextension 50042 SalesCrMemoCardExt extends "Sales Credit Memo"
             field("Our Ref"; "Our Ref") { ApplicationArea = All; }
             field("Your Ref"; "Your Ref") { ApplicationArea = All; }
         }
+        modify("Transaction Type")
+        {
+            ApplicationArea = all;
+            Caption = 'Category';
+            Visible = true;
+        }
+        moveafter(Status; "Transaction Type")
+        addafter(Status)
+        {
+            field("From OU Portal"; "From OU Portal")
+            {
+                ApplicationArea = all;
+            }
+            field("Bank Code"; "Bank Code")
+            {
+                ApplicationArea = all;
+            }
+        }
+
     }
     actions
     {
@@ -127,5 +147,44 @@ pageextension 50042 SalesCrMemoCardExt extends "Sales Credit Memo"
                 end;
             }
         }
+        modify(CopyDocument)
+        {
+            Visible = false;
+        }
+        addafter(CopyDocument)
+        {
+            action(CopyDocument2)
+            {
+                ApplicationArea = Suite;
+                Caption = 'Copy Document';
+                Ellipsis = true;
+                Enabled = "No." <> '';
+                Image = CopyDocument;
+                Promoted = true;
+                PromotedCategory = Category7;
+                ToolTip = 'Copy document lines and header information from another sales document to this document. You can copy a posted sales invoice into a new sales invoice to quickly create a similar document.';
+
+                trigger OnAction()
+
+                var
+                    CopySalesDocument: Report "Copy Sales Document Cust";
+                    IsHandled: Boolean;
+                begin
+                    IsHandled := false;
+                    OnBeforeCopyDocument(Rec, IsHandled);
+                    if IsHandled then
+                        exit;
+
+                    CopySalesDocument.SetSalesHeader(Rec);
+                    CopySalesDocument.RunModal;
+                    if Get("Document Type", "No.") then;
+                end;
+            }
+        }
     }
+
+    [IntegrationEvent(false, false)]
+    local procedure OnBeforeCopyDocument(var SalesHeader: Record "Sales Header"; var IsHandled: Boolean);
+    begin
+    end;
 }

@@ -42,6 +42,7 @@ report 50120 "Cancelled Payment Listing"
             {
 
             }
+            column(Amount; Amount) { }
             column(reason; ReasonTxt)
             {
 

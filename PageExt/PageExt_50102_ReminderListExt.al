@@ -43,6 +43,14 @@ pageextension 50102 ReminderListExt extends "Reminder List"
             end;
             
         }*/
+        modify(CreateReminders)
+        {
+            trigger OnBeforeAction()
+            begin
+                REPORT.RunModal(REPORT::"Create Reminders - Normal");
+                Error('');
+            end;
+        }
     }
     trigger OnOpenPage()
     begin

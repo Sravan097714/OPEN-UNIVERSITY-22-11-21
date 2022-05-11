@@ -1,7 +1,7 @@
 report 50013 "Standard_Statement"
 {
     WordLayout = 'Report\Layout\Standard Statement.docx';
-    Caption = 'Standard Statement';
+    Caption = 'Standard Statement Custom';
     DefaultLayout = Word;
     UsageCategory = ReportsAndAnalysis;
     ApplicationArea = All;
@@ -658,7 +658,7 @@ report 50013 "Standard_Statement"
             trigger OnAfterGetRecord()
             begin
                 TempAgingBandBuf.DELETEALL;
-                CurrReport.LANGUAGE := Language.GetLanguageID("Language Code");
+                //CurrReport.LANGUAGE := Language.GetLanguageID("Language Code");
                 PrintLine := FALSE;
                 Cust2 := Customer;
                 COPYFILTER("Currency Filter", TempCurrency2.Code);
@@ -965,7 +965,7 @@ report 50013 "Standard_Statement"
         DueDate: Date;
         CustAddr: array[8] of Text[90];
         CompanyAddr: array[8] of Text[90];
-        Description: Text[50];
+        Description: Text[100];
         StartBalance: Decimal;
         CustBalance: Decimal;
         RemainingAmount: Decimal;
@@ -989,7 +989,7 @@ report 50013 "Standard_Statement"
         [InDataSet]
         LogInteractionEnable: Boolean;
         PeriodSeparatorLbl: Label '-%1', Comment = 'Negating the period length: %1 is the period length';
-        StatementCaptionLbl: Label 'Statement';
+        StatementCaptionLbl: Label 'Statement of Accounts';
         PhoneNo_CompanyInfoCaptionLbl: Label 'Phone No.';
         VATRegNo_CompanyInfoCaptionLbl: Label 'VAT Registration No.';
         GiroNo_CompanyInfoCaptionLbl: Label 'Giro No.';

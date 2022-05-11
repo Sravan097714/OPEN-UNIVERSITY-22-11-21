@@ -1,4 +1,4 @@
-pageextension 50105 ReminderExt extends Reminder
+pageextension 50104 ReminderExt extends Reminder
 {
     layout
     {

@@ -10,6 +10,8 @@ report 50110 "List of Stud payby Stan.Orders"
     {
         dataitem("Bank Standing Orders"; "Bank Standing Orders")
         {
+            // RequestFilterFields = "Name of Bank";
+            DataItemTableView = where(Archived = const(false));
             column(BankDetailsContactTitle; BankDetails."Contact Title")
             {
 
@@ -90,7 +92,11 @@ report 50110 "List of Stud payby Stan.Orders"
             {
 
             }
-            column(Name_of_Bank_2; "Name of Bank 2")
+            // column(Name_of_Bank_2; "Name of Bank 2")
+            // {
+
+            // }
+            column(Name_of_Bank_2; LearnerBank)
             {
 
             }
@@ -131,18 +137,24 @@ report 50110 "List of Stud payby Stan.Orders"
             var
                 BankStandardOrder: Record "Bank Standing Orders";
             begin
-                if BankCode <> '' then
-                    SetRange("Bank Code", BankCode);
+                // if BankCode <> '' then
+                //     SetRange("Bank Code", BankCode);
+                SetRange("Name of Bank", LearnerBank);
                 SetRange("From Month", FromDate, ToDate);
                 Companyinfo.Get();
                 Period := StrSubstNo(PERIOD_Lbl, format(FromDate), format(ToDate));
-                if BankDetails.Get(BankCode) then;
+
+                BankDetails.SetRange("Bank Name", "Bank Standing Orders"."Name of Bank 2");
+                if BankDetails.FindFirst() then;
+
                 BankStandardOrder.CopyFilters("Bank Standing Orders");
-                PleaseFindTxt := StrSubstNo(PleaseFind_Lbl, BankStandardOrder.Count, FromDate)
+                PleaseFindTxt := StrSubstNo(PleaseFind_Lbl, BankStandardOrder.Count, FromDate);
             end;
 
             trigger OnAfterGetRecord()
             begin
+                if "Name of Bank" <> LearnerBank then
+                    CurrReport.Skip();
                 Sno += 1;
             end;
         }
@@ -156,9 +168,15 @@ report 50110 "List of Stud payby Stan.Orders"
             {
                 group(GroupName)
                 {
+                    /*
                     field("Bank Code"; BankCode)
                     {
                         TableRelation = "Bank Details"."Bank Code";
+                        ApplicationArea = all;
+                    }
+                    */
+                    field("Learner Bank"; LearnerBank)
+                    {
                         ApplicationArea = all;
                     }
                     field("From Date"; FromDate)
@@ -194,6 +212,8 @@ report 50110 "List of Stud payby Stan.Orders"
         Amount_Lbl: Label 'AMOUNT PER INST(Rs)';
         FROM_Lbl: Label 'FROM';
         To_Lbl: Label 'TO';
+        LearnerBank: Option "ABC BANKING CORPORATION LTD","ABSA BANK (MAURITIUS) LIMITED","AfrAsia BANK LIMITED","BANK OF MAURITIUS LTD","BANK OF BARODA","BANK ONE LIMITED","BCP BANK (MAURITIUS)","BANYAN TREE BANK LTD","DEVELOPMENT BANK OF MAURITIUS","HABIB BANK LIMITED","HONGKONG AND SHANGHAI BANKING CORPORATION LIMITED - MAURITIUS","MauBank LTD","STATE BANK OF MAURITIUS LTD","STANDARD BANK MAURITIUS LTD","THE MAURITIUS COMMERCIAL BANK LIMITED";
+
         Companyinfo: Record "Company Information";
         BankCode: Code[20];
         FromDate: Date;

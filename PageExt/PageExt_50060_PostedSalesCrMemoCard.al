@@ -8,12 +8,18 @@ Pageextension 50060 PostedSalesCrMemoCardExt extends "Posted Sales Credit Memo"
         }
         modify("External Document No.")
         {
-            Visible = false;
+            Visible = true;
         }
         addafter("Sell-to Customer Name")
         {
             field("Posting Description"; Rec."Posting Description")
             {
+                Editable = false;
+            }
+            field("Transaction Type"; "Transaction Type")
+            {
+                ApplicationArea = all;
+                Caption = 'Category';
                 Editable = false;
             }
         }
@@ -120,6 +126,19 @@ Pageextension 50060 PostedSalesCrMemoCardExt extends "Posted Sales Credit Memo"
             field("Contact Email"; "Contact Email") { ApplicationArea = All; }
             field("Our Ref"; "Our Ref") { ApplicationArea = All; }
             field("Your Ref"; "Your Ref") { ApplicationArea = All; }
+        }
+        addbefore("User ID")
+        {
+            field("From OU Portal"; "From OU Portal")
+            {
+                ApplicationArea = all;
+            }
+            field("Bank Code"; "Bank Code")
+            {
+                ApplicationArea = all;
+            }
+
+
         }
     }
     trigger OnOpenPage();

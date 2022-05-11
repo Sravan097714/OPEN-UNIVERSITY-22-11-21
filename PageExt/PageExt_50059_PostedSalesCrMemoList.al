@@ -72,6 +72,14 @@ pageextension 50059 PostedSalesCrMemoListExt extends "Posted Sales Credit Memos"
 
         addlast(Control1)
         {
+            field("From OU Portal"; "From OU Portal")
+            {
+                ApplicationArea = all;
+            }
+            field("Bank Code"; "Bank Code")
+            {
+                ApplicationArea = all;
+            }
             field("Pre-Assigned No."; Rec."Pre-Assigned No.")
             {
                 Editable = false;

@@ -104,6 +104,18 @@ pageextension 50129 AccountantRoleCenterExt extends "Accountant Role Center"
                     RunObject = report "Bank Reconciliation Report";
                 }
             }
+            group("Payroll Reports")
+            {
+                action("AP - Payroll GL Entries")
+                {
+                    ApplicationArea = All;
+                    Promoted = true;
+                    PromotedCategory = Process;
+                    RunObject = report "AP - Payroll GL Entries";
+                }
+
+            }
+
 
             group("Fixed Assets Reports")
             {
@@ -136,6 +148,35 @@ pageextension 50129 AccountantRoleCenterExt extends "Accountant Role Center"
                     PromotedCategory = Process;
                     RunObject = report "Aged Accounts Receivable";
                 }
+                action("List of Posted Sales Invoice")
+                {
+                    ApplicationArea = All;
+                    Promoted = true;
+                    PromotedCategory = Process;
+                    RunObject = report "List of Posted Sales Invoices";
+                }
+                action("List of Posted Sales Cr. Note")
+                {
+                    ApplicationArea = All;
+                    Promoted = true;
+                    PromotedCategory = Process;
+                    RunObject = report "List of Posted Sales Cr. Note";
+                }
+                action("List of Open Sales Invoices")
+                {
+                    ApplicationArea = All;
+                    Promoted = true;
+                    PromotedCategory = Process;
+                    RunObject = report "List of Open Sales Invoices";
+                }
+                action("List of Open Sales Cr. Note")
+                {
+                    ApplicationArea = All;
+                    Promoted = true;
+                    PromotedCategory = Process;
+                    RunObject = report "List of Open Sales Cr. Note";
+                }
+
             }
 
             group("Inventory Reports")

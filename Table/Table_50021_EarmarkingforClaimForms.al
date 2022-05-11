@@ -66,6 +66,10 @@ table 50021 "Earmarking Claim Forms Table"
         {
             DataClassification = ToBeClassified;
         }
+        field(17; Marked; Boolean)
+        {
+            DataClassification = ToBeClassified;
+        }
     }
 
     keys

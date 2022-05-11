@@ -21,15 +21,54 @@ pageextension 50106 IssuedReminderListExt extends "Issued Reminder List"
 
     actions
     {
+        // modify("&Print")
+        // {
+        //     trigger OnBeforeAction()
+        //     begin
+        //         /*
+        //         if "Shortcut Dimension 1 Code" = '' then
+        //             error('');
+        //         */
+        //     end;
+        // }
         modify("&Print")
         {
-            trigger OnBeforeAction()
-            begin
-                /*
-                if "Shortcut Dimension 1 Code" = '' then
-                    error('');
-                */
-            end;
+            Visible = false;
+        }
+        addafter("&Print")
+        {
+            action("Print ")
+            {
+                ApplicationArea = Basic, Suite;
+                Caption = '&Print';
+                Ellipsis = true;
+                Image = Print;
+                Promoted = true;
+                PromotedCategory = Category4;
+                ToolTip = 'Prepare to print the document. A report request window for the document opens where you can specify what to include on the print-out.';
+
+                trigger OnAction()
+                var
+                    IsHandled: Boolean;
+                begin
+                    IssuedReminderHeader := Rec;
+                    /* IsHandled := false;
+                    OnBeforePrintRecords(Rec, IssuedReminderHeader, IsHandled);
+                    if IsHandled then
+                        exit; */
+                    CurrPage.SetSelectionFilter(IssuedReminderHeader);
+                    //IssuedReminderHeader.PrintRecords(true, false, false);
+                    Report.Run(50080, true, true, IssuedReminderHeader);
+                end;
+            }
+
         }
     }
+    trigger OnOpenPage()
+    begin
+        SetRange("Course Reminder", false);
+    end;
+
+    var
+        IssuedReminderHeader: Record "Issued Reminder Header";
 }

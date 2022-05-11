@@ -262,7 +262,7 @@ page 50072 "Sale Inv Gov Grant OU List"
                 field(RDAP; RDAP) { ApplicationArea = All; }
                 field(RDBL; RDBL) { ApplicationArea = All; }
                 field(PTN; PTN) { ApplicationArea = All; }
-                field("Transaction Type"; Rec."Transaction Type") { ApplicationArea = all; }
+                field("Transaction Type"; Rec."Transaction Type") { ApplicationArea = all; Caption = 'Category'; }
                 field(Instalment; Rec.Instalment) { ApplicationArea = all; }
                 field("Gov Grant"; Rec."Gov Grant") { ApplicationArea = all; }
                 field(NIC; Rec.NIC) { ApplicationArea = all; }

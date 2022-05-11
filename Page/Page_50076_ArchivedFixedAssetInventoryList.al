@@ -1,6 +1,5 @@
 page 50076 "Archived Fixed Asset Inventory"
 {
-    Editable = false;
     InsertAllowed = false;
     AutoSplitKey = true;
     DelayedInsert = true;
@@ -19,6 +18,8 @@ page 50076 "Archived Fixed Asset Inventory"
             {
                 field("Scan Here"; "Scan Here")
                 {
+                    Editable = false;
+
                     ApplicationArea = All;
                     trigger OnValidate()
                     begin
@@ -26,11 +27,12 @@ page 50076 "Archived Fixed Asset Inventory"
                         "Scanned On" := CurrentDateTime;
                     end;
                 }
-                field("Fixed Asset No."; "Fixed Asset No.") { ApplicationArea = All; }
-                field(Description; Description) { ApplicationArea = All; }
-                field("FA Class Code"; "FA Class Code") { ApplicationArea = ALl; }
+                field("Fixed Asset No."; "Fixed Asset No.") { ApplicationArea = All; Editable = false; }
+                field(Description; Description) { ApplicationArea = All; Editable = false; }
+                field("FA Class Code"; "FA Class Code") { ApplicationArea = ALl; Editable = false; }
                 field("FA Location Code"; "FA Location Code")
                 {
+
                     ApplicationArea = All;
                     trigger OnLookup(var Text: Text): Boolean
                     var
@@ -49,12 +51,12 @@ page 50076 "Archived Fixed Asset Inventory"
                         end;
                     end;
                 }
-                field("Serial No."; "Serial No.") { ApplicationArea = All; }
-                field(Make; Make) { ApplicationArea = All; }
-                field(Model; Model) { ApplicationArea = All; }
-                field("Insurance Type"; "Insurance Type") { ApplicationArea = ALl; }
-                field("Scanned By"; "Scanned By") { ApplicationArea = All; }
-                field("Scanned On"; "Scanned On") { ApplicationArea = All; }
+                field("Serial No."; "Serial No.") { ApplicationArea = All; Editable = false; }
+                field(Make; Make) { ApplicationArea = All; Editable = false; }
+                field(Model; Model) { ApplicationArea = All; Editable = false; }
+                field("Insurance Type"; "Insurance Type") { ApplicationArea = ALl; Editable = false; }
+                field("Scanned By"; "Scanned By") { ApplicationArea = All; Editable = false; }
+                field("Scanned On"; "Scanned On") { ApplicationArea = All; Editable = false; }
 
             }
         }

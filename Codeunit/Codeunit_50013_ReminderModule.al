@@ -187,6 +187,10 @@ codeunit 50013 "Reminder Module"
                                 InitReminderLine(
                                   ReminderLine, ReminderHeader."No.", ReminderLine."Line Type"::"Reminder Line", '', NextLineNo);
                                 ReminderLine.Type := ReminderLine.Type::"Customer Ledger Entry";
+                                //ktm
+                                ReminderLine."Global Dimension 1" := CustLedgEntry."Global Dimension 1 Code";
+                                ReminderLine."Global Dimension 2" := CustLedgEntry."Global Dimension 2 Code";
+                                //ktm
                                 ReminderLine.Validate("Entry No.", CustLedgEntry."Entry No.");
                                 SetReminderLevel(ReminderHeader, ReminderLine, ReminderLevel."No.");
                                 OnBeforeReminderLineInsert(ReminderLine, ReminderHeader, ReminderLevel, CustLedgEntry);
@@ -232,6 +236,10 @@ codeunit 50013 "Reminder Module"
                             ReminderLine.Type := ReminderLine.Type::"Customer Ledger Entry";
                             ReminderLine.Validate("Entry No.", CustLedgEntryOnHoldTEMP."Entry No.");
                             ReminderLine."No. of Reminders" := 0;
+                            //ktm
+                            ReminderLine."Global Dimension 1" := CustLedgEntryOnHoldTEMP."Global Dimension 1 Code";
+                            ReminderLine."Global Dimension 2" := CustLedgEntryOnHoldTEMP."Global Dimension 2 Code";
+                            //ktm
                             ReminderLine.Insert();
                         until CustLedgEntryOnHoldTEMP.Next = 0;
                     end;
@@ -275,6 +283,10 @@ codeunit 50013 "Reminder Module"
                   ReminderLine, ReminderHeader."No.", ReminderLine."Line Type"::"Not Due", '', NextLineNo);
                 ReminderLine.Type := ReminderLine.Type::"Customer Ledger Entry";
                 ReminderLine.Validate("Entry No.", CustLedgEntry."Entry No.");
+                //ktm
+                ReminderLine."Global Dimension 1" := CustLedgEntry."Global Dimension 1 Code";
+                ReminderLine."Global Dimension 2" := CustLedgEntry."Global Dimension 2 Code";
+                //ktm
                 ReminderLine."No. of Reminders" := 0;
                 ReminderLine.Insert();
                 AmountsNotDueLineInserted := true;
@@ -510,6 +522,10 @@ codeunit 50013 "Reminder Module"
         ReminderLine.Validate("No. of Reminders", ReminderLevel."No.");
         ReminderLine.Validate("Applies-to Document Type", CustLedgEntry."Document Type");
         ReminderLine.Validate("Applies-to Document No.", CustLedgEntry."Document No.");
+        //ktm
+        ReminderLine."Global Dimension 1" := CustLedgEntry."Global Dimension 1 Code";
+        ReminderLine."Global Dimension 2" := CustLedgEntry."Global Dimension 2 Code";
+        //ktm
         ReminderLine.Validate("Due Date", CalcDate(ReminderLevel."Due Date Calculation", ReminderHeader."Document Date"));
         ReminderLine.Insert(true);
     end;

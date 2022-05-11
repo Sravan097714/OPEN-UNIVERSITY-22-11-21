@@ -14,7 +14,7 @@ report 50099 "Bank Copy"
             column(Address_2; "Address 2") { }
             column(Current_Savings_Account_no_; "Current_Savings Account no.") { }
             column(AmountText; AmountText) { }
-            column(Total_Fee_for_Installments; "Total Fee for Installments") { }
+            column(Total_Fee_for_Installments; "Total Fee per Installment") { }
             column(From_Month; format("From Month")) { }
             column(To_Month; format("To Month")) { }
             column(Full_Name_of_Applicant; "Full Name of Applicant") { }
@@ -26,7 +26,7 @@ report 50099 "Bank Copy"
                 // ReportCheck.InitTextVariable();                
                 // ReportCheck.FormatNoText(DescriptionLine, "Total Fee for Installments", '');
                 InitTextVariable;
-                FormatNoText(DescriptionLine, "Total Fee for Installments", '');
+                FormatNoText(DescriptionLine, "Total Fee per Installment", '');
                 AmountText := DescriptionLine[1] + '' + DescriptionLine[2];
             end;
         }

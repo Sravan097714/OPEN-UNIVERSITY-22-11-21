@@ -857,7 +857,65 @@ page 50033 "Print Remittance Voucher"
         DebitCreditVisible: Boolean;
         VendNameVisible: Boolean;
         ExportToPaymentFileConfirmTxt: Label 'Editing the Exported to Payment File field will change the payment suggestions in the Payment Journal. Edit this field only if you must correct a mistake.\Do you want to continue?';
+    /*
+        procedure SendEmail(EntryNo: Integer)
+        var
+            FileName: Text;
+            VendLedEntryRecLocal: Record "Vendor Ledger Entry";
+            FileMgt: Codeunit "File Management";
+            grepRemittance: Report "Remittance Voucher Detailed";
+            VendorRec: Record Vendor;
+            SMTP: Codeunit "SMTP Mail";
+            Attachment: Text;
+            SenderName: Text[250];
+            SenderAddress: Text[250];
+            Recepient: list of [text];
+            Subject: Text[250];
+            InStrm: InStream;
+            HonorificText: Label 'Sir / Madam';
+            OutStrm: OutStream;
+            EmailBigTxt: BigText;
+            CompanyInfo: Record "Company Information";
+            NewBody: Label '<p><br><br>Dear %1 ,<br><br> Please find attached copy of your remittance advice . <br><br>Kind regards,<br><br><br><Strong>Finance Division<Strong><br><Strong>%2<Strong></p>';
+            Body: Text;
+        begin
 
+            VendLedEntryRecLocal.Get(EntryNo);
+
+            FileName := FileMgt.GetDirectoryName(FileMgt.ServerTempFileName('pdf')) + '\' + STRSUBSTNO('%1 %2.pdf', 'Remittance Voucher', VendLedEntryRecLocal."PV Number");
+            IF EXISTS(FileName) THEN
+                ERASE(FileName);
+
+            Clear(Body);
+            Clear(Recepient);
+
+
+
+            CompanyInfo.Get;
+            CompanyInfo.TestField(Name);
+            CompanyInfo.TestField("E-Mail");
+            SenderName := CompanyInfo.Name;
+            SenderAddress := CompanyInfo."E-Mail";
+            Subject := 'Remitt. Voucher';
+
+            if VendorRec.Get(VendLedEntryRecLocal."Vendor No.") then;
+            Body := StrSubstNo(NewBody, HonorificText, CompanyInfo.Name);
+
+            CLEAR(grepRemittance);
+            grepRemittance.Setfilter(EntryNo);
+            grepRemittance.SETTABLEVIEW(VendLedEntryRecLocal);
+            grepRemittance.USEREQUESTPAGE(FALSE);
+            IF grepRemittance.SAVEASPDF(FileName) THEN BEGIN
+                Recepient.Add(VendorRec."E-Mail");
+                SMTP.CreateMessage(SenderName, SenderAddress, Recepient, Subject, '');
+                SMTP.AppendBody(StrSubstNo(Body));
+
+                SMTP.AddAttachment(FileName, Attachment);
+                SMTP.Send;
+
+            end;
+        end;
+        */
     procedure SendEmail(EntryNo: Integer)
     var
         FileName: Text;
@@ -865,18 +923,29 @@ page 50033 "Print Remittance Voucher"
         FileMgt: Codeunit "File Management";
         grepRemittance: Report "Remittance Voucher Detailed";
         VendorRec: Record Vendor;
-        SMTP: Codeunit "SMTP Mail";
+        // SMTP: Codeunit "SMTP Mail";
         Attachment: Text;
         SenderName: Text[250];
         SenderAddress: Text[250];
         Recepient: list of [text];
         Subject: Text[250];
         InStrm: InStream;
+        HonorificText: Label 'Sir / Madam';
         OutStrm: OutStream;
         EmailBigTxt: BigText;
         CompanyInfo: Record "Company Information";
-        NewBody: Label '<p><br><br>Dear %1 ,<br><br> Find attached copy of your remittance voucher report . <br><br>Kind regards,<br><br><Strong>%2<Strong></p>';
+        NewBody: Label '<p><br><br>Dear %1 ,<br><br> Please find attached copy of your remittance advice . <br><br>Kind regards,<br><br><br><Strong>Finance Division<Strong><br><Strong>%2<Strong></p>';
         Body: Text;
+        Email: Codeunit Email;
+        EmailMessage: Codeunit "Email Message";
+        TempBlob: Codeunit "Temp Blob";
+        AttachmentInStream: InStream;
+        AttachmentOutStream: OutStream;
+        Parameters: Text;
+        RecRef: RecordRef;
+        XParameter: text;
+        TempFile: File;
+        MemoryStream: DotNet MemoryStream;
     begin
 
         VendLedEntryRecLocal.Get(EntryNo);
@@ -887,30 +956,39 @@ page 50033 "Print Remittance Voucher"
 
         Clear(Body);
         Clear(Recepient);
-
+        Clear(SenderAddress);
+        Clear(SenderName);
+        Clear(Subject);
 
 
         CompanyInfo.Get;
         CompanyInfo.TestField(Name);
         CompanyInfo.TestField("E-Mail");
-        SenderName := CompanyInfo.Name;
-        SenderAddress := CompanyInfo."E-Mail";
         Subject := 'Remitt. Voucher';
 
         if VendorRec.Get(VendLedEntryRecLocal."Vendor No.") then;
-        Body := StrSubstNo(NewBody, VendorRec.Name, CompanyInfo.Name);
+        Body := StrSubstNo(NewBody, HonorificText, CompanyInfo.Name);
 
         CLEAR(grepRemittance);
         grepRemittance.Setfilter(EntryNo);
         grepRemittance.SETTABLEVIEW(VendLedEntryRecLocal);
         grepRemittance.USEREQUESTPAGE(FALSE);
         IF grepRemittance.SAVEASPDF(FileName) THEN BEGIN
-            Recepient.Add(VendorRec."E-Mail");
-            SMTP.CreateMessage(SenderName, SenderAddress, Recepient, Subject, '');
-            SMTP.AppendBody(StrSubstNo(Body));
 
-            SMTP.AddAttachment(FileName, Attachment);
-            SMTP.Send;
+            EmailMessage.Create(VendorRec."E-Mail", Subject, Body, true);
+
+            TempFile.OPEN(FileName);
+            TempFile.CREATEINSTREAM(AttachmentInStream);
+
+            TempBlob.CREATEOUTSTREAM(AttachmentOutstream);
+            COPYSTREAM(AttachmentOutstream, AttachmentInStream);
+            TempBlob.CREATEINSTREAM(AttachmentInStream);
+
+            MemoryStream := MemoryStream.MemoryStream();
+            COPYSTREAM(MemoryStream, AttachmentInStream);
+            EmailMessage.AddAttachment('Remitt Voucher.pdf', 'PDF', MemoryStream);
+            Email.Send(EmailMessage, Enum::"Email Scenario"::"Remittance Voucher");
+            TempFile.Close();
 
         end;
     end;

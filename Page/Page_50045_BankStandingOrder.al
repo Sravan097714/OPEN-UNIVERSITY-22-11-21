@@ -116,7 +116,7 @@ page 50045 "Bank Standing Order"
                     GridLayout = Rows;
                     group("        ")
                     {
-                        field("Name of Bank"; "Name of Bank") { ApplicationArea = All; }
+                        field("Name of Bank"; "Name of Bank") { ApplicationArea = All; Caption = 'Learner Bank'; }
                         field("Address "; "Address 2") { ApplicationArea = All; Caption = 'Branch/ Head Office'; }
                         field("Current_Savings Account no."; "Current_Savings Account no.") { ApplicationArea = All; }
                         field("Instalment amount to Debit"; "Instalment amount to Debit") { ApplicationArea = All; }

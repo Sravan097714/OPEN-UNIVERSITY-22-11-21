@@ -111,6 +111,10 @@ tableextension 50000 GLEntryExt extends "G/L Entry"
             DataClassification = ToBeClassified;
             Editable = false;
         }
+        field(50042; Marked; Boolean)
+        {
+
+        }
     }
 
     trigger OnInsert()

@@ -4,6 +4,8 @@ tableextension 50065 PurchLineArchive extends "Purchase Line Archive"
     {
         // Add changes to table fields here
         field(50015; "Date Earmarked"; Date) { }
+        field(50016; "Original Amount"; Decimal) { }
+
     }
 
     var

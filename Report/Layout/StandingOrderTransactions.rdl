@@ -775,7 +775,6 @@
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -1342,7 +1341,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value />
+                                  <Value>=Fields!Total_Fee_for_Installments.Value - Fields!Amount.Value</Value>
                                   <Style />
                                 </TextRun>
                               </TextRuns>
@@ -1425,7 +1424,7 @@
       </Body>
       <Width>16.88542in</Width>
       <Page>
-        <PageWidth>17in</PageWidth>
+        <PageWidth>18in</PageWidth>
         <Style />
       </Page>
     </ReportSection>

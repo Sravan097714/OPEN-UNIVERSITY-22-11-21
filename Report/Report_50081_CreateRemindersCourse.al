@@ -7,7 +7,7 @@ report 50081 "Create Reminders - Course"
     {
         dataitem(Customer; Customer)
         {
-            DataItemTableView = SORTING("No.");
+            DataItemTableView = SORTING("No.") where("Gen. Bus. Posting Group" = filter('STUDENTS'));
             RequestFilterFields = "No.";
 
             trigger OnAfterGetRecord()
@@ -56,6 +56,7 @@ report 50081 "Create Reminders - Course"
                 NoOfRecords := Count;
                 SalesSetup.Get();
                 SalesSetup.TestField("Reminder Nos.");
+                SetFilter("Gen. Bus. Posting Group", 'STUDENTS');
                 if NoOfRecords = 1 then
                     Window.Open(Text001)
                 else begin

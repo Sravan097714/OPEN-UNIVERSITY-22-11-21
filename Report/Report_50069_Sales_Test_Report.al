@@ -49,6 +49,12 @@ report 50069 "Sales Test Report"
                     column(DESCRIPTION_Caption; DESCRIPTION_CaptionLbl) { }
                     column(UOM_Caption; UOM_CaptionLbl) { }
                     column(QTY_Caption; QTY_CaptionLbl) { }
+                    column(IntakeCode; IntakeCode) { }
+                    column(IntakeText; IntakeText) { }
+                    column(Dimension1LBL; Dimension1LBL) { }
+                    column(Dimension2LBL; Dimension2LBL) { }
+                    column(ProgrammeCode; ProgrammeCode) { }
+                    column(ProgrammeDesc; ProgrammeDesc) { }
                     column(UNIT_PRICE_Caption; UNIT_PRICE_CaptionLbl) { }
                     column(DISCOUNT_Caption; DISCOUNT_CaptionLbl) { }
                     column(NET_PRICE_Caption; NET_PRICE_CaptionLbl) { }
@@ -649,7 +655,45 @@ report 50069 "Sales Test Report"
                     BankAddress := BankAccGRec.Address;
                 if "Currency Factor" <> 0 then
                     ExchangeRate := Round(1 / "Currency Factor", 0.01, '=');
+
+
+                //ktm
+                //dimension
+                Clear(ProgrammeCode);
+                Clear(IntakeCode);
+                Clear(ProgrammeDesc);
+                Clear(IntakeText);
+                clear(Dimension1LBL);
+                Clear(Dimension2LBL);
+
+                GLSetup.get();
+                Dimension1LBL := GLSetup."Global Dimension 1 Code";
+                Dimension2LBL := GLSetup."Global Dimension 2 Code";
+
+                ProgrammeCode := "Sales Header"."Shortcut Dimension 1 Code";
+                IntakeCode := "Sales Header"."Shortcut Dimension 2 Code";
+
+
+                DimensionValueRec.Reset();
+                DimensionValueRec.SetRange(Code, ProgrammeCode);
+                if DimensionValueRec.FindFirst() then
+                    if DimensionValueRec."Name 2" <> '' then
+                        ProgrammeDesc := DimensionValueRec."Name 2"
+                    else
+                        ProgrammeDesc := DimensionValueRec.Name;
+
+
+                DimensionValueRec.Reset();
+                DimensionValueRec.SetRange(Code, IntakeCode);
+                if DimensionValueRec.FindFirst() then
+                    if DimensionValueRec."Name 2" <> '' then
+                        IntakeText := DimensionValueRec."Name 2"
+                    else
+                        IntakeText := DimensionValueRec.Name;
+
+
             end;
+
 
 
         }
@@ -747,6 +791,8 @@ report 50069 "Sales Test Report"
         VatAmount: Decimal;
         ReferenceText: Text[30];
         TotalText: Text[50];
+        DimensionValueRec: Record "Dimension Value";
+
         TotalExclVATText: Text[50];
         TotalInclVATText: Text[50];
         MoreLines: Boolean;
@@ -764,6 +810,11 @@ report 50069 "Sales Test Report"
         LogInteraction: Boolean;
         Title: array[3] of Text[30];
         Item: Record 27;
+        ProgrammeCode: code[20];
+        ProgrammeDesc: Text;
+
+        IntakeCode: Code[20];
+        IntakeText: Text;
         VATStatus: Text[1];
         Formataddress: Codeunit 50008;
         ContactName: Text[250];
@@ -797,6 +848,8 @@ report 50069 "Sales Test Report"
         Text007: Label 'YOUR REF ';
         Text008: Label ':';
         Text009: Label 'VAT Registration No.';
+        Dimension1LBL: Text;
+        Dimension2LBL: Text;
         Text010: Label 'BRN No.';
         B_UNIT_CaptionLbl: Label 'B/UNIT';
         INVOICE_NO_CaptionLbl: Label 'INVOICE NO.';

@@ -42,5 +42,16 @@ tableextension 50007 SalesCrMemoHeaderExt extends "Sales Cr.Memo Header"
         field(50013; "Contact Email"; Text[50]) { Editable = false; }
         field(50014; "Our Ref"; Text[50]) { }
         field(50015; "Your Ref"; Text[100]) { }
+        field(50029; "Bank Code"; code[50])
+        {
+            DataClassification = ToBeClassified;
+            // TableRelation = "Bank Account";
+        }
+        field(50031; "Copied From Inv No."; code[20])
+        {
+            ObsoleteState = Removed;
+            //used from Copy document - from sales credit memo
+
+        }
     }
 }

@@ -21,6 +21,7 @@ report 50016 "Sales Invoice"
             column(VATText; VATText) { }
             column(Our_Ref; "Our Ref") { }
             column(Amount; Amount) { }
+            column(From_OU_Portal; "From OU Portal") { }
             column(Amount_Including_VAT; "Amount Including VAT") { }
             column(Your_Ref; "Your Ref") { }
             column(VatDisplay; VatDisplay) { }
@@ -51,6 +52,13 @@ report 50016 "Sales Invoice"
                     column(DESCRIPTION_Caption; DESCRIPTION_CaptionLbl) { }
                     column(UOM_Caption; UOM_CaptionLbl) { }
                     column(QTY_Caption; QTY_CaptionLbl) { }
+                    column(Dimension1LBL; Dimension1LBL) { }
+                    column(Dimension2LBL; Dimension2LBL) { }
+                    column(IntakeCode; IntakeCode) { }
+                    column(IntakeText; IntakeText) { }
+                    column(ProgrammeCode; ProgrammeCode) { }
+                    column(ProgrammeDesc; ProgrammeDesc) { }
+
                     column(UNIT_PRICE_Caption; UNIT_PRICE_CaptionLbl) { }
                     column(DISCOUNT_Caption; DISCOUNT_CaptionLbl) { }
                     column(NET_PRICE_Caption; NET_PRICE_CaptionLbl) { }
@@ -593,6 +601,45 @@ report 50016 "Sales Invoice"
                 grecSalesReceivableSetup.get;
                 if not BankAccGRec.Get("Bank Code") then
                     Clear(BankAccGRec);
+
+
+                //ktm
+                //dimension
+                Clear(ProgrammeCode);
+                Clear(IntakeCode);
+                Clear(ProgrammeDesc);
+                Clear(IntakeText);
+                clear(Dimension1LBL);
+                Clear(Dimension2LBL);
+
+                GLSetup.get();
+                Dimension1LBL := GLSetup."Global Dimension 1 Code";
+                Dimension2LBL := GLSetup."Global Dimension 2 Code";
+
+
+                ProgrammeCode := "Sales Invoice Header"."Shortcut Dimension 1 Code";
+                IntakeCode := "Sales Invoice Header"."Shortcut Dimension 2 Code";
+
+
+                DimensionValueRec.Reset();
+                DimensionValueRec.SetRange(Code, ProgrammeCode);
+                if DimensionValueRec.FindFirst() then
+                    if DimensionValueRec."Name 2" <> '' then
+                        ProgrammeDesc := DimensionValueRec."Name 2"
+                    else
+                        ProgrammeDesc := DimensionValueRec.Name;
+
+
+                DimensionValueRec.Reset();
+                DimensionValueRec.SetRange(Code, IntakeCode);
+                if DimensionValueRec.FindFirst() then
+                    if DimensionValueRec."Name 2" <> '' then
+                        IntakeText := DimensionValueRec."Name 2"
+                    else
+                        IntakeText := DimensionValueRec.Name;
+
+
+
             end;
         }
     }
@@ -647,6 +694,7 @@ report 50016 "Sales Invoice"
         gtextCurrency: text;
         grecSalesReceivableSetup: Record "Sales & Receivables Setup";
         GLSetup: Record 98;
+        DimensionValueRec: Record "Dimension Value";
         ShipmentMethod: Record 10;
         grecItem: Record Item;
         PaymentTerms: Record 3;
@@ -656,9 +704,17 @@ report 50016 "Sales Invoice"
         CompanyInfo2: Record 79;
         SalesSetup: Record 311;
         Cust: Record 18;
+        ProgrammeCode: code[20];
+        ProgrammeDesc: Text;
+
+        IntakeCode: Code[20];
+        IntakeText: Text;
+
         VATAmountLine: Record 290 temporary;
         RespCenter: Record 5714;
         Language: Record 8;
+        Dimension1LBL: Text;
+        Dimension2LBL: Text;
         SalesInvCountPrinted: Codeunit 315;
         FormatAddr: Codeunit 365;
         SegManagement: Codeunit SegManagement;

@@ -23,6 +23,7 @@ report 50017 "Sales Credit Memo"
             column(Our_Ref; "Our Ref") { }
             column(Your_Ref; "Your Ref") { }
             column(Pre_Assigned_No_; "Pre-Assigned No.") { }
+            column(Copied_From_Inv_No_; "Applies-to Doc. No.") { }
             column(User_ID; "User ID") { }
             dataitem(CopyLoop; Integer)
             {
@@ -37,6 +38,12 @@ report 50017 "Sales Credit Memo"
                     column(CompanyBRN; CompanyInfo.BRN) { }
                     column(CompanyVATRegNo; CompanyInfo."VAT Registration No.") { }
                     column(CompanyPhoneNo; CompanyInfo."Phone No.") { }
+                    column(IntakeCode; IntakeCode) { }
+                    column(IntakeText; IntakeText) { }
+                    column(Dimension1LBL; Dimension1LBL) { }
+                    column(Dimension2LBL; Dimension2LBL) { }
+                    column(ProgrammeCode; ProgrammeCode) { }
+                    column(ProgrammeDesc; ProgrammeDesc) { }
                     column(CompanyEmail2; CompanyInfo."E-Mail") { }
                     column(PostalAddress; CompanyInfo."Postal Address") { }
                     column(ShortcutDimension1Code_SalesCrMemoHeader; "Sales Cr.Memo Header"."Shortcut Dimension 1 Code")
@@ -680,6 +687,43 @@ report 50017 "Sales Credit Memo"
 
                 if Customer.get("Sales Cr.Memo Header"."Sell-to Customer No.") then
                     gtextCustomerBRN := Customer.BRN;
+
+                //ktm
+                //dimension
+                Clear(ProgrammeCode);
+                Clear(IntakeCode);
+                Clear(ProgrammeDesc);
+                Clear(IntakeText);
+
+                clear(Dimension1LBL);
+                Clear(Dimension2LBL);
+
+                GLSetup.get();
+                Dimension1LBL := GLSetup."Global Dimension 1 Code";
+                Dimension2LBL := GLSetup."Global Dimension 2 Code";
+
+                ProgrammeCode := "Sales Cr.Memo Header"."Shortcut Dimension 1 Code";
+                IntakeCode := "Sales Cr.Memo Header"."Shortcut Dimension 2 Code";
+
+
+                DimensionValueRec.Reset();
+                DimensionValueRec.SetRange(Code, ProgrammeCode);
+                if DimensionValueRec.FindFirst() then
+                    if DimensionValueRec."Name 2" <> '' then
+                        ProgrammeDesc := DimensionValueRec."Name 2"
+                    else
+                        ProgrammeDesc := DimensionValueRec.Name;
+
+
+                DimensionValueRec.Reset();
+                DimensionValueRec.SetRange(Code, IntakeCode);
+                if DimensionValueRec.FindFirst() then
+                    if DimensionValueRec."Name 2" <> '' then
+                        IntakeText := DimensionValueRec."Name 2"
+                    else
+                        IntakeText := DimensionValueRec.Name;
+
+
             end;
         }
     }
@@ -746,6 +790,8 @@ report 50017 "Sales Credit Memo"
         Text011: Label 'BRN: ';
         B_UNIT_CaptionLbl: Label 'B/UNIT';
         INVOICE_NO_CaptionLbl: Label 'CREDIT NOTE NO.';
+        DimensionValueRec: Record "Dimension Value";
+
         DATE_CaptionLbl: Label 'DATE';
         PAGE_NO_CaptionLbl: Label 'PAGE NO';
         CLIENT_CODE_CaptionLbl: Label 'CLIENT CODE';
@@ -805,6 +851,11 @@ report 50017 "Sales Credit Memo"
         Continue: Boolean;
         LogInteraction: Boolean;
         FirstValueEntryNo: Integer;
+        ProgrammeCode: code[20];
+        ProgrammeDesc: Text;
+
+        IntakeCode: Code[20];
+        IntakeText: Text;
         PostedReceiptDate: Date;
         NextEntryNo: Integer;
         Title: array[3] of Text[30];
@@ -833,6 +884,8 @@ report 50017 "Sales Credit Memo"
         SalesCrMemoLine: Record 115;
         CustomerName: Text;
         CustomerVAT: Text;
+        Dimension1LBL: Text;
+        Dimension2LBL: Text;
         gtextItemCode2: Text;
         grecItem: Record Item;
         grecUsers: Record User;

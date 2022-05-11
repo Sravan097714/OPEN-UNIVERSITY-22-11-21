@@ -8,7 +8,10 @@ report 50082 "Create Reminders - Normal"
         dataitem(Customer; Customer)
         {
             DataItemTableView = SORTING("No.");
+            // DataItemTableView = SORTING("No.");
+
             RequestFilterFields = "No.";
+
 
             trigger OnAfterGetRecord()
             begin
@@ -56,6 +59,8 @@ report 50082 "Create Reminders - Normal"
                 NoOfRecords := Count;
                 SalesSetup.Get();
                 SalesSetup.TestField("Reminder Nos.");
+                SetFilter("Gen. Bus. Posting Group", 'DEBTORS');
+
                 if NoOfRecords = 1 then
                     Window.Open(Text001)
                 else begin

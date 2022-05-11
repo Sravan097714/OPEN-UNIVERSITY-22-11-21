@@ -174,7 +174,9 @@ page 50036 "Reminder List for Course Fees"
                     begin
                         Customer.Reset();
                         Customer.SetRange("No.", Rec."Customer No.");
-                        REPORT.RunModal(REPORT::"Create Reminders - Course", true, false, Customer);
+                        // REPORT.RunModal(REPORT::"Create Reminders - Course", true, false, Customer);
+                        REPORT.RunModal(REPORT::"Create Reminders - Course");
+
                     end;
                 }
                 action(SuggestReminderLines)

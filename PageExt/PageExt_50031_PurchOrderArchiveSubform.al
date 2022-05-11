@@ -42,5 +42,13 @@ pageextension 50031 PurchOrderArchiveSubform extends "Purchase Order Archive Sub
                 ApplicationArea = All;
             }
         }
+        addbefore(Quantity)
+        {
+            field("Original Amount"; "Original Amount")
+            {
+                ApplicationArea = all;
+                Editable = false;
+            }
+        }
     }
 }

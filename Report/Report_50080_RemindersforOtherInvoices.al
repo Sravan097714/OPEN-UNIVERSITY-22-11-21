@@ -18,6 +18,7 @@ report 50080 "Reminders for Other Invoices"
 
             column(Name; Name) { }
             column(Address; Address) { }
+            column(Address_2; "Address 2") { }
             column(Deadline_for_Payment; Format("Deadline for Payment", 0, '<Day,2> <Month Text> <Year4>')) { }
 
             column(CompanyName; grecCompanyInfo.Name) { }

@@ -90,6 +90,11 @@ tableextension 50003 SalesHeaderExt extends "Sales Header"
             Caption = 'Learner/Student ID';
             Editable = false;
         }
+        field(50031; "Copied From Inv No."; code[20])
+        {
+            ObsoleteState = Removed;
+
+        }
     }
 
     trigger OnInsert()

@@ -136,6 +136,8 @@ page 50051 "Process Fixed Asset Inventory"
                     FixedAssetInvRec: Record "Fixed Asset Inventories";
                     FAInventoryList: Record "FA Inventory List";
                     Text001: Label 'Do you want to update location code on the fixed assets on the page?';
+                    Text002: Label 'Do you wish to continue scanning later ?';
+
                 begin
 
                     if not ConfirmManagement.GetResponseOrDefault(Text001, true) then
@@ -155,6 +157,11 @@ page 50051 "Process Fixed Asset Inventory"
                             until Next() = 0
                         end;
                     end;
+
+                    Message('Location Code has been updated on all fixed assets on the page');
+
+                    if ConfirmManagement.GetResponseOrDefault(Text002, true) then
+                        exit;
 
                     FixedAssetInvRec.Reset();
                     with FixedAssetInvRec do begin
@@ -179,7 +186,7 @@ page 50051 "Process Fixed Asset Inventory"
 
                     CurrPage.Update();
 
-                    Message('Location Code has been updated on all fixed assets on the page');
+                    Message('Entries have been moved to Updated Fixed Asset Inv. List');
                 end;
             }
             action("Archive Data")

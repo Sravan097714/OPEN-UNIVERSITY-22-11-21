@@ -75,6 +75,14 @@ pageextension 50041 S41alesCrMemoListExt extends "Sales Credit Memos"
                 Editable = false;
                 ApplicationArea = All;
             }
+            field("From OU Portal"; "From OU Portal")
+            {
+                ApplicationArea = all;
+            }
+            field("Bank Code"; "Bank Code")
+            {
+                ApplicationArea = all;
+            }
             field("Customer Posting Group"; "Customer Posting Group") { ApplicationArea = All; }
 
             field("Created By"; Rec."Created By")

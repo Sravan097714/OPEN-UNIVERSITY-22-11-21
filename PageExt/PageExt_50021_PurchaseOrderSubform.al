@@ -21,11 +21,11 @@ pageextension 50021 PurchaseOrderSubformExt extends "Purchase Order Subform"
         {
             Visible = false;
         }
-        modify("Line Discount %")
-        {
-            Visible = true;
-            ApplicationArea = All;
-        }
+        // modify("Line Discount %")
+        // {
+        //     Visible = true;
+        //     ApplicationArea = All;
+        // }
         modify("Promised Receipt Date")
         {
             Visible = false;
@@ -428,6 +428,29 @@ pageextension 50021 PurchaseOrderSubformExt extends "Purchase Order Subform"
             }
         }
         //RCTS-SRA1.0 <<
+        modify(Quantity)
+        {
+            trigger OnAfterValidate()
+            begin
+                "Original Amount" := "Line Amount";
+            end;
+        }
+        modify("Direct Unit Cost")
+        {
+            trigger OnAfterValidate()
+            begin
+                "Original Amount" := "Line Amount";
+            end;
+        }
+        modify("Line Discount %")
+        {
+            Visible = true;
+            ApplicationArea = All;
+            trigger OnAfterValidate()
+            begin
+                "Original Amount" := "Line Amount";
+            end;
+        }
     }
 
     actions

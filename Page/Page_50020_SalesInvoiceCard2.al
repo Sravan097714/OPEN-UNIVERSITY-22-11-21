@@ -269,6 +269,12 @@ page 50020 "Sales Invoice OU Portal"
                     StyleExpr = StatusStyleTxt;
                     ToolTip = 'Specifies whether the document is open, waiting to be approved, has been invoiced for prepayment, or has been released to the next stage of processing.';
                 }
+                field("Transaction Type"; "Transaction Type")
+                {
+                    ApplicationArea = all;//ktm
+                    Caption = 'Category';
+                    Visible = true;
+                }
                 field("Job Queue Status"; "Job Queue Status")
                 {
                     ApplicationArea = All;
@@ -309,6 +315,7 @@ page 50020 "Sales Invoice OU Portal"
                 {
                     ApplicationArea = all;//ktm
                 }
+
                 field("Portal Payment Mode"; "Portal Payment Mode") { ApplicationArea = All; }
                 field("MyT Money Ref"; "MyT Money Ref") { ApplicationArea = All; }
                 field("Payment Amount"; "Payment Amount") { ApplicationArea = All; }
@@ -877,11 +884,11 @@ page 50020 "Sales Invoice OU Portal"
                     ApplicationArea = BasicEU;
                     ToolTip = 'Specifies a specification of the document''s transaction, for the purpose of reporting to INTRASTAT.';
                 }
-                field("Transaction Type"; "Transaction Type")
-                {
-                    ApplicationArea = BasicEU;
-                    ToolTip = 'Specifies the type of transaction that the document represents, for the purpose of reporting to INTRASTAT.';
-                }
+                // field("Transaction Type"; "Transaction Type")
+                // {
+                //     ApplicationArea = BasicEU;
+                //     ToolTip = 'Specifies the type of transaction that the document represents, for the purpose of reporting to INTRASTAT.';
+                // }
                 field("Transport Method"; "Transport Method")
                 {
                     ApplicationArea = BasicEU;

@@ -29,7 +29,7 @@ page 50044 "Bank Standing Order List"
                 field("No. of Installments"; "No. of Installments") { ApplicationArea = All; }
                 field("Total Fee for Installments"; "Total Fee for Installments") { ApplicationArea = All; }
                 field("Currency Code 2"; "Currency Code 2") { ApplicationArea = All; }
-                field("Name of Bank"; "Name of Bank") { ApplicationArea = All; }
+                field("Name of Bank"; "Name of Bank") { ApplicationArea = All; Caption = 'Learner Bank'; }
                 field("Address 2"; "Address 2") { ApplicationArea = All; }
                 field("Current_Savings Account no."; "Current_Savings Account no.") { ApplicationArea = All; }
                 field("Instalment amount to Debit"; "Instalment amount to Debit") { ApplicationArea = All; }

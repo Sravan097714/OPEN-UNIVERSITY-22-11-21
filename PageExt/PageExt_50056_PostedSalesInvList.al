@@ -63,6 +63,11 @@ pageextension 50056 PostedSalesInvListExt extends "Posted Sales Invoices"
             Visible = false;
             ApplicationArea = All;
         }
+        modify("External Document No.")
+        {
+            Visible = false;
+        }
+
 
         addlast(Control1)
         {
@@ -70,6 +75,14 @@ pageextension 50056 PostedSalesInvListExt extends "Posted Sales Invoices"
             {
                 Editable = false;
                 ApplicationArea = All;
+            }
+            field("From OU Portal"; "From OU Portal")
+            {
+                ApplicationArea = all;
+            }
+            field("Bank Code"; "Bank Code")
+            {
+                ApplicationArea = all;
             }
             field("User ID"; Rec."User ID")
             {
@@ -90,10 +103,10 @@ pageextension 50056 PostedSalesInvListExt extends "Posted Sales Invoices"
             {
                 ApplicationArea = All;
             }
-            field("From OU Portal"; "From OU Portal")
-            {
-                ApplicationArea = All;
-            }
+            // field("From OU Portal"; "From OU Portal")
+            // {
+            //     ApplicationArea = All;
+            // }
             field("Transaction Type"; Rec."Transaction Type") { ApplicationArea = all; }
             field(Instalment; Rec.Instalment) { ApplicationArea = all; }
             field("Gov Grant"; Rec."Gov Grant") { ApplicationArea = all; }

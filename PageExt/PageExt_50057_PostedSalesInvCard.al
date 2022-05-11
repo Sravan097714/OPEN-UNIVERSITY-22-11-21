@@ -17,7 +17,16 @@ pageextension 50057 PostedSalesInvCardExt extends "Posted Sales Invoice"
                 Editable = false;
                 ApplicationArea = All;
             }
+
+            field("Transaction Type"; "Transaction Type")
+            {
+                ApplicationArea = all;
+                Caption = 'Category';
+                Editable = false;
+            }
+
         }
+
         modify("Responsibility Center")
         {
             Visible = false;
@@ -44,7 +53,8 @@ pageextension 50057 PostedSalesInvCardExt extends "Posted Sales Invoice"
         }
         modify("External Document No.")
         {
-            Visible = false;
+            Visible = true;
+            Editable = false;
         }
         modify("Shipment Date")
         {
@@ -82,6 +92,7 @@ pageextension 50057 PostedSalesInvCardExt extends "Posted Sales Invoice"
         {
             Visible = false;
         }
+
         modify(SelectedPayments)
         {
             Visible = false;
@@ -139,6 +150,7 @@ pageextension 50057 PostedSalesInvCardExt extends "Posted Sales Invoice"
                 ApplicationArea = All;
             }
         }
+
         addlast(General)
         {
             field("Created By"; Rec."Created By")
@@ -185,6 +197,7 @@ pageextension 50057 PostedSalesInvCardExt extends "Posted Sales Invoice"
             field("Amount Returned"; Rec."Amount Returned") { ApplicationArea = all; }
             field("Bank Code"; "Bank Code") { ApplicationArea = all; }
             field("Learner ID"; Rec."Learner ID") { ApplicationArea = all; }
+
         }
         addbefore("Sell-to Contact")
         {

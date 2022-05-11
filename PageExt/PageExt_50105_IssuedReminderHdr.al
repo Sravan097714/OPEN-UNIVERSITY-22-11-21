@@ -1,4 +1,4 @@
-pageextension 50104 IssuedReminderExt extends "Issued Reminder"
+pageextension 50105 IssuedReminderExt extends "Issued Reminder"
 {
     layout
     {
@@ -46,5 +46,39 @@ pageextension 50104 IssuedReminderExt extends "Issued Reminder"
             end;
         }
         */
+        modify("&Print")
+        {
+            Visible = false;
+        }
+        addafter("&Print")
+        {
+            action("Print ")
+            {
+                ApplicationArea = Basic, Suite;
+                Caption = '&Print';
+                Ellipsis = true;
+                Image = Print;
+                Promoted = true;
+                PromotedCategory = Category4;
+                ToolTip = 'Prepare to print the document. A report request window for the document opens where you can specify what to include on the print-out.';
+
+                trigger OnAction()
+                var
+                    IsHandled: Boolean;
+                begin
+                    IssuedReminderHeader := Rec;
+                    /* IsHandled := false;
+                    OnBeforePrintRecords(Rec, IssuedReminderHeader, IsHandled);
+                    if IsHandled then
+                        exit; */
+                    CurrPage.SetSelectionFilter(IssuedReminderHeader);
+                    //IssuedReminderHeader.PrintRecords(true, false, false);
+                    Report.Run(50080, true, true, IssuedReminderHeader);
+                end;
+            }
+
+        }
     }
+    var
+        IssuedReminderHeader: Record "Issued Reminder Header";
 }

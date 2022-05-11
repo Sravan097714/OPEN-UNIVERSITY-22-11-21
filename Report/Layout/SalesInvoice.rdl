@@ -5852,8 +5852,8 @@
                                   </FilterValues>
                                 </Filter>
                               </Filters>
-                              <Top>9.58299cm</Top>
-                              <Left>0.14377cm</Left>
+                              <Top>9.37132cm</Top>
+                              <Left>16.67494cm</Left>
                               <Height>0.63506cm</Height>
                               <Width>1.03336cm</Width>
                               <ZIndex>1</ZIndex>
@@ -7315,8 +7315,8 @@ Cstr(Last(Fields!CompanyInfoAddr2_BankName.Value)),2)</Hidden>
                                 </TablixMembers>
                               </TablixRowHierarchy>
                               <DataSetName>DataSet_Result</DataSetName>
-                              <Top>9.57459cm</Top>
-                              <Left>1.47287cm</Left>
+                              <Top>9.36292cm</Top>
+                              <Left>18.00404cm</Left>
                               <Height>0.47628cm</Height>
                               <Width>0.63504cm</Width>
                               <ZIndex>2</ZIndex>
@@ -7333,16 +7333,10 @@ Cstr(Last(Fields!CompanyInfoAddr2_BankName.Value)),2)</Hidden>
                               <TablixBody>
                                 <TablixColumns>
                                   <TablixColumn>
-                                    <Width>1.01836cm</Width>
+                                    <Width>7.42837cm</Width>
                                   </TablixColumn>
                                   <TablixColumn>
-                                    <Width>2.97625cm</Width>
-                                  </TablixColumn>
-                                  <TablixColumn>
-                                    <Width>6.53538cm</Width>
-                                  </TablixColumn>
-                                  <TablixColumn>
-                                    <Width>8.378cm</Width>
+                                    <Width>7.02185cm</Width>
                                   </TablixColumn>
                                 </TablixColumns>
                                 <TablixRows>
@@ -7351,78 +7345,23 @@ Cstr(Last(Fields!CompanyInfoAddr2_BankName.Value)),2)</Hidden>
                                     <TablixCells>
                                       <TablixCell>
                                         <CellContents>
-                                          <Textbox Name="Textbox78">
+                                          <Textbox Name="Textbox9">
                                             <CanGrow>true</CanGrow>
                                             <KeepTogether>true</KeepTogether>
                                             <Paragraphs>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Fields!Dimension_CodeLBL.Value</Value>
+                                                    <Value>=Fields!Dimension1LBL.Value</Value>
                                                     <Style>
                                                       <FontSize>7pt</FontSize>
-                                                      <FontWeight>Bold</FontWeight>
                                                     </Style>
                                                   </TextRun>
                                                 </TextRuns>
                                                 <Style />
                                               </Paragraph>
                                             </Paragraphs>
-                                            <rd:DefaultName>Textbox8</rd:DefaultName>
-                                            <Style>
-                                              <Border>
-                                                <Style>Solid</Style>
-                                              </Border>
-                                              <TopBorder>
-                                                <Color>Black</Color>
-                                                <Style>Solid</Style>
-                                                <Width>1pt</Width>
-                                              </TopBorder>
-                                              <BottomBorder>
-                                                <Color>Black</Color>
-                                                <Style>Solid</Style>
-                                                <Width>1pt</Width>
-                                              </BottomBorder>
-                                              <LeftBorder>
-                                                <Color>Black</Color>
-                                                <Style>Solid</Style>
-                                                <Width>1pt</Width>
-                                              </LeftBorder>
-                                              <RightBorder>
-                                                <Color>Black</Color>
-                                                <Style>Solid</Style>
-                                                <Width>1pt</Width>
-                                              </RightBorder>
-                                              <PaddingLeft>2pt</PaddingLeft>
-                                              <PaddingRight>2pt</PaddingRight>
-                                              <PaddingTop>2pt</PaddingTop>
-                                              <PaddingBottom>2pt</PaddingBottom>
-                                            </Style>
-                                          </Textbox>
-                                          <ColSpan>2</ColSpan>
-                                        </CellContents>
-                                      </TablixCell>
-                                      <TablixCell />
-                                      <TablixCell>
-                                        <CellContents>
-                                          <Textbox Name="Textbox114">
-                                            <CanGrow>true</CanGrow>
-                                            <KeepTogether>true</KeepTogether>
-                                            <Paragraphs>
-                                              <Paragraph>
-                                                <TextRuns>
-                                                  <TextRun>
-                                                    <Value>=Fields!Dimension_Value_CodeLBL.Value</Value>
-                                                    <Style>
-                                                      <FontSize>7pt</FontSize>
-                                                      <FontWeight>Bold</FontWeight>
-                                                    </Style>
-                                                  </TextRun>
-                                                </TextRuns>
-                                                <Style />
-                                              </Paragraph>
-                                            </Paragraphs>
-                                            <rd:DefaultName>Textbox8</rd:DefaultName>
+                                            <rd:DefaultName>Textbox9</rd:DefaultName>
                                             <Style>
                                               <Border>
                                                 <Style>Solid</Style>
@@ -7457,24 +7396,23 @@ Cstr(Last(Fields!CompanyInfoAddr2_BankName.Value)),2)</Hidden>
                                       </TablixCell>
                                       <TablixCell>
                                         <CellContents>
-                                          <Textbox Name="Textbox116">
+                                          <Textbox Name="Textbox13">
                                             <CanGrow>true</CanGrow>
                                             <KeepTogether>true</KeepTogether>
                                             <Paragraphs>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Fields!Dimension_Value_NameLBL.Value</Value>
+                                                    <Value>=Fields!Dimension2LBL.Value</Value>
                                                     <Style>
                                                       <FontSize>7pt</FontSize>
-                                                      <FontWeight>Bold</FontWeight>
                                                     </Style>
                                                   </TextRun>
                                                 </TextRuns>
                                                 <Style />
                                               </Paragraph>
                                             </Paragraphs>
-                                            <rd:DefaultName>Textbox8</rd:DefaultName>
+                                            <rd:DefaultName>Textbox9</rd:DefaultName>
                                             <Style>
                                               <Border>
                                                 <Style>Solid</Style>
@@ -7510,18 +7448,18 @@ Cstr(Last(Fields!CompanyInfoAddr2_BankName.Value)),2)</Hidden>
                                     </TablixCells>
                                   </TablixRow>
                                   <TablixRow>
-                                    <Height>0.46771cm</Height>
+                                    <Height>0.6cm</Height>
                                     <TablixCells>
                                       <TablixCell>
                                         <CellContents>
-                                          <Textbox Name="Textbox233">
+                                          <Textbox Name="Textbox246">
                                             <CanGrow>true</CanGrow>
                                             <KeepTogether>true</KeepTogether>
                                             <Paragraphs>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Fields!Dimension_Code.Value</Value>
+                                                    <Value>=Fields!ProgrammeDesc.Value</Value>
                                                     <Style>
                                                       <FontSize>7pt</FontSize>
                                                     </Style>
@@ -7561,20 +7499,18 @@ Cstr(Last(Fields!CompanyInfoAddr2_BankName.Value)),2)</Hidden>
                                               <PaddingBottom>2pt</PaddingBottom>
                                             </Style>
                                           </Textbox>
-                                          <ColSpan>2</ColSpan>
                                         </CellContents>
                                       </TablixCell>
-                                      <TablixCell />
                                       <TablixCell>
                                         <CellContents>
-                                          <Textbox Name="Textbox234">
+                                          <Textbox Name="Textbox243">
                                             <CanGrow>true</CanGrow>
                                             <KeepTogether>true</KeepTogether>
                                             <Paragraphs>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Fields!Dimension_Value_Code.Value</Value>
+                                                    <Value>=Fields!IntakeText.Value</Value>
                                                     <Style>
                                                       <FontSize>7pt</FontSize>
                                                     </Style>
@@ -7583,7 +7519,7 @@ Cstr(Last(Fields!CompanyInfoAddr2_BankName.Value)),2)</Hidden>
                                                 <Style />
                                               </Paragraph>
                                             </Paragraphs>
-                                            <rd:DefaultName>Textbox229</rd:DefaultName>
+                                            <rd:DefaultName>Textbox215</rd:DefaultName>
                                             <Style>
                                               <Border>
                                                 <Style>Solid</Style>
@@ -7616,37 +7552,6 @@ Cstr(Last(Fields!CompanyInfoAddr2_BankName.Value)),2)</Hidden>
                                           </Textbox>
                                         </CellContents>
                                       </TablixCell>
-                                      <TablixCell>
-                                        <CellContents>
-                                          <Textbox Name="Textbox235">
-                                            <CanGrow>true</CanGrow>
-                                            <KeepTogether>true</KeepTogether>
-                                            <Paragraphs>
-                                              <Paragraph>
-                                                <TextRuns>
-                                                  <TextRun>
-                                                    <Value>=Fields!DimensionName2.Value</Value>
-                                                    <Style>
-                                                      <FontSize>7pt</FontSize>
-                                                    </Style>
-                                                  </TextRun>
-                                                </TextRuns>
-                                                <Style />
-                                              </Paragraph>
-                                            </Paragraphs>
-                                            <rd:DefaultName>Textbox231</rd:DefaultName>
-                                            <Style>
-                                              <Border>
-                                                <Style>Solid</Style>
-                                              </Border>
-                                              <PaddingLeft>2pt</PaddingLeft>
-                                              <PaddingRight>2pt</PaddingRight>
-                                              <PaddingTop>2pt</PaddingTop>
-                                              <PaddingBottom>2pt</PaddingBottom>
-                                            </Style>
-                                          </Textbox>
-                                        </CellContents>
-                                      </TablixCell>
                                     </TablixCells>
                                   </TablixRow>
                                 </TablixRows>
@@ -7655,27 +7560,18 @@ Cstr(Last(Fields!CompanyInfoAddr2_BankName.Value)),2)</Hidden>
                                 <TablixMembers>
                                   <TablixMember />
                                   <TablixMember />
-                                  <TablixMember />
-                                  <TablixMember />
                                 </TablixMembers>
                               </TablixColumnHierarchy>
                               <TablixRowHierarchy>
                                 <TablixMembers>
                                   <TablixMember>
                                     <Visibility>
-                                      <Hidden>=IIF(Fields!Dimension_Code.Value = "", True, False)</Hidden>
+                                      <Hidden>=IIF((Fields!IntakeCode.Value = "") AND (Fields!ProgrammeCode.Value =""), True, False)</Hidden>
                                     </Visibility>
                                   </TablixMember>
                                   <TablixMember>
-                                    <Group Name="Details6" />
-                                    <SortExpressions>
-                                      <SortExpression>
-                                        <Value>=Fields!Dimension_Code.Value</Value>
-                                        <Direction>Descending</Direction>
-                                      </SortExpression>
-                                    </SortExpressions>
                                     <Visibility>
-                                      <Hidden>=IIF(Fields!Dimension_Code.Value = "", True, False)</Hidden>
+                                      <Hidden>=IIF(Fields!IntakeCode.Value = "", True, False)</Hidden>
                                     </Visibility>
                                   </TablixMember>
                                 </TablixMembers>
@@ -7683,8 +7579,8 @@ Cstr(Last(Fields!CompanyInfoAddr2_BankName.Value)),2)</Hidden>
                               <DataSetName>DataSet_Result</DataSetName>
                               <Top>8.4537cm</Top>
                               <Left>0cm</Left>
-                              <Height>0.8825cm</Height>
-                              <Width>18.90799cm</Width>
+                              <Height>1.01479cm</Height>
+                              <Width>14.45022cm</Width>
                               <ZIndex>3</ZIndex>
                               <Style>
                                 <Border>
@@ -8701,7 +8597,7 @@ Cstr(Fields!CustName.Value)+Chr(177)+Cstr(Fields!CompanyBRN.Value)+Chr(177)+Cstr
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>Cheque to be made to &lt;Open University of Mauritius&gt;.</Value>
+                      <Value>=IIF(Fields!CurrencyCode_SalesInvoiceHeader.Value&lt;&gt;"MUR","Cheque to be made to &lt;Open University of Mauritius&gt;.",iif(Fields!From_OU_Portal.Value = False, "Payment should be made in favour of ‘Open University of Mauritius’ or by bank transfer on the following account: SBM Bank Account 61025100001120", "Payment should be made in favour of ‘Open University of Mauritius’ or by bank transfer on the following account: SBM Bank Account 61025100004526"))</Value>
                       <Style>
                         <FontWeight>Bold</FontWeight>
                       </Style>
@@ -8716,9 +8612,6 @@ Cstr(Fields!CustName.Value)+Chr(177)+Cstr(Fields!CompanyBRN.Value)+Chr(177)+Cstr
               <Height>0.6cm</Height>
               <Width>18.90799cm</Width>
               <ZIndex>3</ZIndex>
-              <Visibility>
-                <Hidden>=IIF(Fields!CurrencyCode_SalesInvoiceHeader.Value&lt;&gt;"MUR",TRUE,FALSE)</Hidden>
-              </Visibility>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -8913,6 +8806,9 @@ End Function
         <Field Name="AmountFormat">
           <DataField>AmountFormat</DataField>
         </Field>
+        <Field Name="From_OU_Portal">
+          <DataField>From_OU_Portal</DataField>
+        </Field>
         <Field Name="Amount_Including_VAT">
           <DataField>Amount_Including_VAT</DataField>
         </Field>
@@ -8984,6 +8880,24 @@ End Function
         </Field>
         <Field Name="QTY_Caption">
           <DataField>QTY_Caption</DataField>
+        </Field>
+        <Field Name="Dimension1LBL">
+          <DataField>Dimension1LBL</DataField>
+        </Field>
+        <Field Name="Dimension2LBL">
+          <DataField>Dimension2LBL</DataField>
+        </Field>
+        <Field Name="IntakeCode">
+          <DataField>IntakeCode</DataField>
+        </Field>
+        <Field Name="IntakeText">
+          <DataField>IntakeText</DataField>
+        </Field>
+        <Field Name="ProgrammeCode">
+          <DataField>ProgrammeCode</DataField>
+        </Field>
+        <Field Name="ProgrammeDesc">
+          <DataField>ProgrammeDesc</DataField>
         </Field>
         <Field Name="UNIT_PRICE_Caption">
           <DataField>UNIT_PRICE_Caption</DataField>

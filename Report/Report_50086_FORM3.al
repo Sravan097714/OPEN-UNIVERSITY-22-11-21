@@ -19,12 +19,14 @@ report 50086 "Print Finance Copy"
             column(Intake; Intake) { }
             column(Year; Year) { }
             column(Semester; Semester) { }
+            column(No__of_Installments; "No. of Installments") { }
             column(No__of_Module; "No. of Module") { }
             column(Total_Fee_per_Installment; "Total Fee per Installment") { }
             column(DescriptionLine1; DescriptionLine[1]) { }
             column(DescriptionLine2; DescriptionLine[2]) { }
+            column(InstallmentText; InstallmentText) { }
             column(AmountText; AmountText) { }
-            column(Total_Fee_for_Installments; "Total Fee for Installments") { }
+            column(Total_Fee_for_Installments; "Total Fee per Installment") { }
             column(Name_of_Bank; "Name of Bank") { }
             column(Address_2; "Address 2") { }
             column(Current_Savings_Account_no_; "Current_Savings Account no.") { }
@@ -43,8 +45,20 @@ report 50086 "Print Finance Copy"
                 // ReportCheck.InitTextVariable();                
                 // ReportCheck.FormatNoText(DescriptionLine, "Total Fee for Installments", '');
                 InitTextVariable;
-                FormatNoText(DescriptionLine, "Total Fee for Installments", '');
+                FormatNoText(DescriptionLine, "Total Fee per Installment", '');
                 AmountText := DescriptionLine[1] + '' + DescriptionLine[2];
+
+                InitTextVariable;
+                Clear(InstallmentNoWord);
+                //FormatNoText2
+
+                //FormatNoText2
+                FormatNoText2(InstallmentNoWord, "No. of Installments", '');
+                InstallmentText := InstallmentNoWord[1] + '' + InstallmentNoWord[2];
+
+
+
+
             end;
         }
     }
@@ -59,7 +73,8 @@ report 50086 "Print Finance Copy"
         AmountText: Text;
         ReportCheck: Report Check;
         DescriptionLine: array[2] of Text[70];
-
+        InstallmentNoWord: array[2] of Text[70];
+        InstallmentText: Text;
         Text029: Label '%1 results in a written number that is too long.';
         Text026: Label 'ZERO';
         Text027: Label 'HUNDRED';
@@ -117,6 +132,14 @@ report 50086 "Print Finance Copy"
             FormatNoTextFR(NoText, No, CurrencyCode)
         else
             FormatNoTextINTL(NoText, No, CurrencyCode);
+    end;
+
+    procedure FormatNoText2(var NoText: array[2] of Text[70]; No: Decimal; CurrencyCode: Code[10])
+    begin
+        //>>TBS82
+        //IF (CurrencyCode = '') OR (CurrencyCode = 'FRF') THEN
+
+        FormatNoTextNumberOnly(NoText, No, CurrencyCode);
     end;
 
     local procedure AddToNoText(var NoText: array[2] of Text[70]; var NoTextIndex: Integer; var PrintExponent: Boolean; AddText: Text[30])
@@ -335,6 +358,87 @@ report 50086 "Print Finance Copy"
             if No = 0 then
                 AddToNoText(NoText, NoTextIndex, PrintExponent, Text067);
             AddToNoText(NoText, NoTextIndex, PrintExponent, Text066);
+        end;
+
+        if CurrencyCode <> '' then
+            AddToNoText(NoText, NoTextIndex, PrintExponent, CurrencyCode);
+    end;
+
+    procedure FormatNoTextNumberOnly(var NoText: array[2] of Text[70]; No: Decimal; CurrencyCode: Code[10])
+    var
+        PrintExponent: Boolean;
+        Ones: Integer;
+        Tens: Integer;
+        Hundreds: Integer;
+        Exponent: Integer;
+        NoTextIndex: Integer;
+    begin
+        Clear(NoText);
+        NoTextIndex := 1;
+        NoText[1] := '';
+        //kt
+        if No < 1 then
+            AddToNoText(NoText, NoTextIndex, PrintExponent, Text026)
+        else begin
+            for Exponent := 4 downto 1 do begin
+                PrintExponent := false;
+                Ones := No div Power(1000, Exponent - 1);
+                Hundreds := Ones div 100;
+                Tens := (Ones mod 100) div 10;
+                Ones := Ones mod 10;
+                if Hundreds > 0 then begin
+                    AddToNoText(NoText, NoTextIndex, PrintExponent, OnesText[Hundreds]);
+                    AddToNoText(NoText, NoTextIndex, PrintExponent, Text027);
+                end;
+                if Tens >= 2 then begin
+                    AddToNoText(NoText, NoTextIndex, PrintExponent, TensText[Tens]);
+                    if Ones > 0 then
+                        AddToNoText(NoText, NoTextIndex, PrintExponent, OnesText[Ones]);
+                end else
+                    if (Tens * 10 + Ones) > 0 then
+                        AddToNoText(NoText, NoTextIndex, PrintExponent, OnesText[Tens * 10 + Ones]);
+                if PrintExponent and (Exponent > 1) then
+                    AddToNoText(NoText, NoTextIndex, PrintExponent, ExponentText[Exponent]);
+                No := No - (Hundreds * 100 + Tens * 10 + Ones) * Power(1000, Exponent - 1);
+            end;
+        end;
+
+        if No <> 0 then begin
+            No := No * 100;
+            AddToNoText(NoText, NoTextIndex, PrintExponent, Text067);
+            AddToNoText(NoText, NoTextIndex, PrintExponent, Text028);
+            if No < 20 then begin
+
+                for x := 1 to 19 do begin
+                    if No = x then
+                        CentText := OnesText[x];
+                end;
+            end else begin
+                if No >= 20 then begin
+                    NewNo := No div 10;
+                    for x := 2 to 9 do begin
+                        if NewNo = x then begin
+                            CentText := TensText[x];
+                            No := No mod 10;
+                            for y := 1 to 9 do begin
+                                if No = y then
+                                    CentText := CentText + ' ' + OnesText[y];
+                            end;
+                        end;
+                    end;
+                end;
+            end;
+            AddToNoText(NoText, NoTextIndex, PrintExponent, CentText);
+            AddToNoText(NoText, NoTextIndex, PrintExponent, Text068);
+            // AddToNoText(NoText, NoTextIndex, PrintExponent, '' + Text066);
+            AddToNoText(NoText, NoTextIndex, PrintExponent, '' + '');
+
+        end else begin
+            if No = 0 then
+                AddToNoText(NoText, NoTextIndex, PrintExponent, Text067);
+            // AddToNoText(NoText, NoTextIndex, PrintExponent, Text066);
+            AddToNoText(NoText, NoTextIndex, PrintExponent, '');
+
         end;
 
         if CurrencyCode <> '' then
