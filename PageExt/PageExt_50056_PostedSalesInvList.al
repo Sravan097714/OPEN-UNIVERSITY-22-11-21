@@ -65,7 +65,7 @@ pageextension 50056 PostedSalesInvListExt extends "Posted Sales Invoices"
         }
         modify("External Document No.")
         {
-            Visible = false;
+            Visible = true;
         }
 
 
@@ -107,7 +107,7 @@ pageextension 50056 PostedSalesInvListExt extends "Posted Sales Invoices"
             // {
             //     ApplicationArea = All;
             // }
-            field("Transaction Type"; Rec."Transaction Type") { ApplicationArea = all; }
+            field("Transaction Type"; Rec."Transaction Type") { ApplicationArea = all; Caption = 'Category'; }
             field(Instalment; Rec.Instalment) { ApplicationArea = all; }
             field("Gov Grant"; Rec."Gov Grant") { ApplicationArea = all; }
             field(NIC; Rec.NIC) { ApplicationArea = all; }

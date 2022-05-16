@@ -72,6 +72,15 @@ pageextension 50059 PostedSalesCrMemoListExt extends "Posted Sales Credit Memos"
 
         addlast(Control1)
         {
+            field("External Document No."; "External Document No.")
+            {
+                ApplicationArea = all;
+            }
+            field("Transaction Type"; "Transaction Type")
+            {
+                ApplicationArea = all;
+                Caption = 'Category';
+            }
             field("From OU Portal"; "From OU Portal")
             {
                 ApplicationArea = all;
@@ -98,6 +107,7 @@ pageextension 50059 PostedSalesCrMemoListExt extends "Posted Sales Credit Memos"
             field("Delivery Date"; Rec."Delivery Date")
             {
                 ApplicationArea = All;
+                Visible = false;
             }
             field("Created By"; Rec."Created By")
             {

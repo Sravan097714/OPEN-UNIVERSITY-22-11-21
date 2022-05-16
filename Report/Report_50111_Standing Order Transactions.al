@@ -14,6 +14,9 @@ report 50111 "Standing Order Transactions"
             {
 
             }
+            column(CustomerNo_BankStandingOrders; "Customer No.")
+            {
+            }
             column(Name_Lbl; Name_Lbl)
             {
 

@@ -28,6 +28,8 @@ report 50110 "List of Stud payby Stan.Orders"
             {
 
             }
+            column(Name_of_Bank; "Name of Bank") { }
+            column(Address_2; "Address 2") { }
             column(BankDetails_Address2; BankDetails."Bank Address 2")
             {
 
@@ -144,9 +146,6 @@ report 50110 "List of Stud payby Stan.Orders"
                 Companyinfo.Get();
                 Period := StrSubstNo(PERIOD_Lbl, format(FromDate), format(ToDate));
 
-                BankDetails.SetRange("Bank Name", "Bank Standing Orders"."Name of Bank 2");
-                if BankDetails.FindFirst() then;
-
                 BankStandardOrder.CopyFilters("Bank Standing Orders");
                 PleaseFindTxt := StrSubstNo(PleaseFind_Lbl, BankStandardOrder.Count, FromDate);
             end;
@@ -155,6 +154,10 @@ report 50110 "List of Stud payby Stan.Orders"
             begin
                 if "Name of Bank" <> LearnerBank then
                     CurrReport.Skip();
+
+                BankDetails.SetRange("Bank Name", "Bank Standing Orders"."Name of Bank 2");
+                if BankDetails.FindFirst() then;
+
                 Sno += 1;
             end;
         }

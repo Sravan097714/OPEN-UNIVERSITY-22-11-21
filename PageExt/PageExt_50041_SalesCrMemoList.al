@@ -70,6 +70,11 @@ pageextension 50041 S41alesCrMemoListExt extends "Sales Credit Memos"
         movelast(Control1; Amount)
         addlast(Control1)
         {
+            field("Transaction Type"; "Transaction Type")
+            {
+                Caption = 'Category';
+                ApplicationArea = all;
+            }
             field("Amount Including VAT"; Rec."Amount Including VAT")
             {
                 Editable = false;

@@ -7,44 +7,45 @@ report 50072 "List of Cancelled Receipts "
 
     dataset
     {
-        dataitem("Bank Account"; "Bank Account")
+        dataitem("Bank Account Ledger Entry"; "Bank Account Ledger Entry")
         {
-            DataItemTableView = where("Receipts Only" = filter(true));
-
+            RequestFilterFields = "Bank Account No.";
+            DataItemTableView = sorting("Bank Account No.", "Posting Date") where("Source Code" = filter('REVERSAL'));
+            column(Bank_Account_No_; "Bank Account No.") { }
             column(CompanyInfoName; grecCompanyInfo.Name) { }
+            column(BankAccountName; grecBankAccount.Name) { }
+            column(Posting_Date; format("Posting Date")) { }
+            column(Description; Description) { }
+            column(Amount; abs(Amount)) { }
+            column(Currency_Code; "Currency Code") { }
+            column(Amount__LCY_; abs("Amount (LCY)")) { }
+            column(Programme; gtextProgramme) { }
+            column(Intake; gtextIntake) { }
+            column(User_ID; "User ID") { }
+            column(ReportFilters; ReportFilters) { }
+            column(gdateStartDate; gdateStartDate) { }
+            column(gdateEndDate; gdateEndDate) { }
 
-            dataitem("Bank Account Ledger Entry"; "Bank Account Ledger Entry")
-            {
-                DataItemTableView = sorting("Bank Account No.", "Posting Date") where("Source Code" = filter('REVERSAL'));
+            trigger OnPreDataItem()
+            begin
+                SetRange("Posting Date", gdateStartDate, gdateEndDate);
+            end;
 
-                column(Bank_Account_No_; "Bank Account No.") { }
-                column(BankAccountName; grecBankAccount.Name) { }
-                column(Posting_Date; format("Posting Date")) { }
-                column(Description; Description) { }
-                column(Amount; abs(Amount)) { }
-                column(Currency_Code; "Currency Code") { }
-                column(Amount__LCY_; abs("Amount (LCY)")) { }
-                column(Programme; gtextProgramme) { }
-                column(Intake; gtextIntake) { }
-                column(User_ID; "User ID") { }
+            trigger OnAfterGetRecord()
+            begin
+                if not grecBankAccount.get("Bank Account No.") then
+                    Clear(grecBankAccount);
+                if not grecBankAccount."Receipts Only" then
+                    CurrReport.Skip();
 
-                trigger OnPreDataItem()
-                begin
-                    SetRange("Posting Date", gdateStartDate, gdateEndDate);
-                end;
+                if grecDimValue.Get(grecGeneralLedgerSetup."Global Dimension 1 Code", "Global Dimension 1 Code") then
+                    gtextProgramme := grecDimValue."Name 2";
 
-                trigger OnAfterGetRecord()
-                begin
-                    if grecBankAccount.get("Bank Account No.") then;
-
-                    if grecDimValue.Get(grecGeneralLedgerSetup."Global Dimension 1 Code", "Global Dimension 1 Code") then
-                        gtextProgramme := grecDimValue."Name 2";
-
-                    if grecDimValue.Get(grecGeneralLedgerSetup."Global Dimension 2 Code", "Global Dimension 2 Code") then
-                        gtextIntake := grecDimValue.Name;
-                end;
-            }
+                if grecDimValue.Get(grecGeneralLedgerSetup."Global Dimension 2 Code", "Global Dimension 2 Code") then
+                    gtextIntake := grecDimValue.Name;
+            end;
         }
+
     }
 
     requestpage
@@ -64,6 +65,7 @@ report 50072 "List of Cancelled Receipts "
 
     trigger OnPreReport()
     begin
+        ReportFilters := "Bank Account Ledger Entry".GetFilters;
         grecCompanyInfo.get;
         grecGeneralLedgerSetup.Get;
         if (gdateStartDate = 0D) OR (gdateEndDate = 0D) then
@@ -82,4 +84,5 @@ report 50072 "List of Cancelled Receipts "
         gtextIntake: Text;
         grecDimValue: Record "Dimension Value";
         grecGeneralLedgerSetup: Record "General Ledger Setup";
+        ReportFilters: Text;
 }
