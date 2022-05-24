@@ -147,7 +147,7 @@ report 50110 "List of Stud payby Stan.Orders"
                 Period := StrSubstNo(PERIOD_Lbl, format(FromDate), format(ToDate));
 
                 BankStandardOrder.CopyFilters("Bank Standing Orders");
-                PleaseFindTxt := StrSubstNo(PleaseFind_Lbl, BankStandardOrder.Count, FromDate);
+                PleaseFindTxt := StrSubstNo(PleaseFind_Lbl, BankStandardOrder.Count, format(FromDate, 0, '<Month Text> <Year4>'));
             end;
 
             trigger OnAfterGetRecord()

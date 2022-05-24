@@ -178,6 +178,9 @@ report 50013 "Standard_Statement"
                 column(DocDateCaption; DocDateCaptionLbl)
                 {
                 }
+                column(CustomerCodeLbl; CustomerCodeCaption)
+                {
+                }
                 column(CurrReportPageNoCaption; CurrReportPageNoCaptionLbl)
                 {
                 }
@@ -998,6 +1001,7 @@ report 50013 "Standard_Statement"
         No1_CustCaptionLbl: Label 'Customer No.';
         StartDateCaptionLbl: Label 'Starting Date';
         EndDateCaptionLbl: Label 'Ending Date';
+        CustomerCodeCaption: Label 'Customer Code';
         LastStatmntNo_CustCaptionLbl: Label 'Statement No.';
         PostDate_DtldCustLedgEntriesCaptionLbl: Label 'Posting Date';
         DueDate_CustLedgEntry2CaptionLbl: Label 'Due Date';

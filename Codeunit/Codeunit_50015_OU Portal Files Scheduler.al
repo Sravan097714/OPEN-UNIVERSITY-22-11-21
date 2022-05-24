@@ -22,6 +22,8 @@ codeunit 50015 "OU Portal Files Scheduler"
                     "Parameter String" := 'Resit Fee';
                 5:
                     "Parameter String" := 'Full Program Fee';
+                6:
+                    "Parameter String" := 'Module Upload';
             END;
         END;
 
@@ -36,6 +38,8 @@ codeunit 50015 "OU Portal Files Scheduler"
                 ExemptionResitFee(false, ExemptionResitFeeGVar);
             'Full Program Fee':
                 FullPgmFee(FullPgmFeeGVar);
+            'Module Upload':
+                ModuleUpload(ModuleUploadGRec);
             ELSE
                 ERROR('Parameter mismatch');
         END;
@@ -49,6 +53,7 @@ codeunit 50015 "OU Portal Files Scheduler"
         ReRegistrationFeeGVar: Record "ReRegistration Fee OU Portal";
         ExemptionResitFeeGVar: Record "Exemption/Resit Fee OU Portal";
         FullPgmFeeGVar: Record "Full Prog. Fee From OU Protal";
+        ModuleUploadGRec: Record "Module Upload";
 
     procedure ModuleFee(var ModuleFee: Record "Module Fee From OU Portal")
     var
@@ -131,6 +136,30 @@ codeunit 50015 "OU Portal Files Scheduler"
                     Commit();
                 end;
             until FullPgmFee.Next() = 0;
+    end;
+
+    procedure ModuleUpload(var UploadModule: Record "Module Upload")
+    var
+        ModuleUpload: Record "Module Upload";
+        ProcessModuleUpload: Codeunit "Upload Module Process";
+        LinesCreated: Integer;
+    begin
+        Clear(LinesCreated);
+        UploadModule.SetCurrentKey("Entry No.");
+        UploadModule.SetRange("NAV Doc No.", '');
+        if UploadModule.FindSet() then
+            repeat
+                ModuleUpload := UploadModule;
+                ModuleUpload.Error := '';
+                if not ProcessModuleUpload.Run(ModuleUpload) then begin
+                    ModuleUpload.Error := copystr(GetLastErrorText(), 1, MaxStrLen(ModuleUpload.Error));
+                    ModuleUpload.Modify();
+                    Commit();
+                end else
+                    LinesCreated += 1;
+            until UploadModule.Next() = 0;
+        if GuiAllowed then
+            Message('%1 Modules has been created.', LinesCreated);
     end;
 }
 

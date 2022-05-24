@@ -105,6 +105,19 @@ page 50030 "Uploads from OU Portal"
                     Page.Run(50062);
                 end;
             }
+            action("Upload Modules")
+            {
+                ApplicationArea = All;
+                Promoted = true;
+                PromotedIsBig = true;
+                Image = ImportExcel;
+                PromotedCategory = Process;
+
+                trigger OnAction()
+                begin
+                    Page.Run(Page::"Module Upload");
+                end;
+            }
         }
 
 

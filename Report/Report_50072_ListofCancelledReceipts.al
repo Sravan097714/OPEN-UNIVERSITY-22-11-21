@@ -10,8 +10,11 @@ report 50072 "List of Cancelled Receipts "
         dataitem("Bank Account Ledger Entry"; "Bank Account Ledger Entry")
         {
             RequestFilterFields = "Bank Account No.";
-            DataItemTableView = sorting("Bank Account No.", "Posting Date") where("Source Code" = filter('REVERSAL'));
+            DataItemTableView = sorting("Bank Account No.", "Posting Date") where("Source Code" = filter('REVERSAL'), "Bal. Account Type" = Filter('Çustomer'));
             column(Bank_Account_No_; "Bank Account No.") { }
+            column(ReceiptNo_; "Bank Account Ledger Entry"."Document No.") { }
+            column(No_; "Bal. Account No.") { }
+            column(Name_; CustomerRec.Name) { }
             column(CompanyInfoName; grecCompanyInfo.Name) { }
             column(BankAccountName; grecBankAccount.Name) { }
             column(Posting_Date; format("Posting Date")) { }
@@ -43,6 +46,9 @@ report 50072 "List of Cancelled Receipts "
 
                 if grecDimValue.Get(grecGeneralLedgerSetup."Global Dimension 2 Code", "Global Dimension 2 Code") then
                     gtextIntake := grecDimValue.Name;
+
+                CustomerRec.Reset();
+                if CustomerRec.get("Bal. Account No.") then;
             end;
         }
 
@@ -79,10 +85,12 @@ report 50072 "List of Cancelled Receipts "
         grecCompanyInfo: Record "Company Information";
         gdateStartDate: Date;
         gdateEndDate: Date;
+        CusName: Text;
         grecBankAccount: Record "Bank Account";
         gtextProgramme: Text;
         gtextIntake: Text;
         grecDimValue: Record "Dimension Value";
         grecGeneralLedgerSetup: Record "General Ledger Setup";
         ReportFilters: Text;
+        CustomerRec: Record Customer;
 }
